@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/67/trunk/JGAF/src/jgaf/automaton/fa/simulation
+END
+DFASimulation.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/91/trunk/JGAF/src/jgaf/automaton/fa/simulation/DFASimulation.java
+END
+DFASimulationControlPanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/89/trunk/JGAF/src/jgaf/automaton/fa/simulation/DFASimulationControlPanel.java
+END
+DFASimulationControlPanel.form
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/89/trunk/JGAF/src/jgaf/automaton/fa/simulation/DFASimulationControlPanel.form
+END
+DFASimulationToolbar.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/!svn/ver/79/trunk/JGAF/src/jgaf/automaton/fa/simulation/DFASimulationToolbar.java
+END
+WrongInputException.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/!svn/ver/67/trunk/JGAF/src/jgaf/automaton/fa/simulation/WrongInputException.java
+END
+DFASimulationFace.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/89/trunk/JGAF/src/jgaf/automaton/fa/simulation/DFASimulationFace.java
+END

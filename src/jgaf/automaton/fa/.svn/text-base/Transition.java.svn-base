@@ -1,0 +1,213 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package jgaf.automaton.fa;
+
+import java.awt.Color;
+import java.io.Serializable;
+import java.util.ArrayList;
+import jgaf.automaton.State;
+import jgaf.automaton.Transition;
+
+
+/**
+ *
+ * @author hanis
+ */
+public class FATransition implements Serializable {
+
+    private final long serialVersionUID = 10275539472837495L;
+
+    private State from;
+    private State to;
+    private ArrayList<String> labels;
+
+    private boolean visible = true;
+    private boolean selected = false;
+
+    private int captionOffsetX = 0;
+    private int captionOffsetY = 0;
+
+    private int clickPositionX = 0;
+    private int clickPositionY = 0;
+
+    private double curveFactor = 1;
+    private double selfCurveAngle = 0;
+
+    public FATransition(State from, State to) {
+        this.from = from;
+        this.to = to;
+        labels = new ArrayList<String>();
+    }
+
+    public FATransition(State from, State to, ArrayList<String> labels) {
+        this.from = from;
+        this.to = to;
+        this.labels = labels;
+    }
+
+
+    public void addLabel(String label) {
+        if(!labels.contains(label)) {
+            labels.add(label);
+        }
+    }
+
+
+    @Override
+    public String toString() {
+        return getFromState() + " -" + writeLabels() + "-> " + getToState();
+    }
+    
+    private String writeLabels() {
+        if(labels.isEmpty()) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (String label : labels) {
+            sb.append(label).append(",");
+        }
+        return sb.substring(0, sb.length() - 2);
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    /**
+     * @return the captionOffsetX
+     */
+    public int getCaptionOffsetX() {
+        return captionOffsetX;
+    }
+
+    /**
+     * @param captionOffsetX the captionOffsetX to set
+     */
+    public void setCaptionOffsetX(int captionOffsetX) {
+        this.captionOffsetX = captionOffsetX;
+    }
+
+    /**
+     * @return the captionOffsetY
+     */
+    public int getCaptionOffsetY() {
+        return captionOffsetY;
+    }
+
+    /**
+     * @param captionOffsetY the captionOffsetY to set
+     */
+    public void setCaptionOffsetY(int captionOffsetY) {
+        this.captionOffsetY = captionOffsetY;
+    }
+
+    /**
+     * @return the clickPositionX
+     */
+    public int getClickPositionX() {
+        return clickPositionX;
+    }
+
+    /**
+     * @param clickPositionX the clickPositionX to set
+     */
+    public void setClickPositionX(int clickPositionX) {
+        this.clickPositionX = clickPositionX;
+    }
+
+    /**
+     * @return the clickPositionY
+     */
+    public int getClickPositionY() {
+        return clickPositionY;
+    }
+
+    /**
+     * @param clickPositionY the clickPositionY to set
+     */
+    public void setClickPositionY(int clickPositionY) {
+        this.clickPositionY = clickPositionY;
+    }
+
+    /**
+     * @return the curveFactor
+     */
+    public double getCurveFactor() {
+        return curveFactor;
+    }
+
+    /**
+     * @param curveFactor the curveFactor to set
+     */
+    public void setCurveFactor(double curveFactor) {
+        this.curveFactor = curveFactor;
+    }
+
+    /**
+     * @return the selfCurveAngle
+     */
+    public double getSelfCurveAngle() {
+        return selfCurveAngle;
+    }
+
+    /**
+     * @param selfCurveAngle the selfCurveAngle to set
+     */
+    public void setSelfCurveAngle(double selfCurveAngle) {
+        this.selfCurveAngle = selfCurveAngle;
+    }
+
+    public State getFromState() {
+        return from;
+    }
+
+    public void setFromState(State from) {
+        this.from = from;
+    }
+
+    public State getToState() {
+        return to;
+    }
+
+    public void setToState(State to) {
+        this.to = to;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null) {
+            return false;
+        }
+        if (obj instanceof FATransition) {
+            FATransition t = (FATransition) obj;
+            if (t.getFromState().equals(this.getFromState()) && t.getToState().equals(this.getToState())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + (this.from != null ? this.from.hashCode() : 0);
+        hash = 37 * hash + (this.to != null ? this.to.hashCode() : 0);
+        return hash;
+    }
+
+}

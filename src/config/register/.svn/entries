@@ -1,0 +1,42 @@
+10
+
+dir
+0
+https://jgaf.googlecode.com/svn/trunk/JGAF/src/config/register
+https://jgaf.googlecode.com/svn
+add
+
+
+
+
+
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+e12635a1-9c81-897d-2110-d53ba9cb667f
+
+editors.xml
+file
+
+
+
+add
+
+procedures.xml
+file
+
+
+
+add
+

@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/66/trunk/JGAF/src/jgaf/grammar
+END
+Symbol.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/78/trunk/JGAF/src/jgaf/grammar/Symbol.java
+END
+GrammarRepresenter.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/80/trunk/JGAF/src/jgaf/grammar/GrammarRepresenter.java
+END
+DescriptionDiaog.form
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/86/trunk/JGAF/src/jgaf/grammar/DescriptionDiaog.form
+END
+Terminal.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/52/trunk/JGAF/src/jgaf/grammar/Terminal.java
+END
+GrammarEditorFace.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/82/trunk/JGAF/src/jgaf/grammar/GrammarEditorFace.java
+END
+ProductionRule.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/82/trunk/JGAF/src/jgaf/grammar/ProductionRule.java
+END
+GrammarTableModel.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/86/trunk/JGAF/src/jgaf/grammar/GrammarTableModel.java
+END
+GrammarEditorToolbar.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/89/trunk/JGAF/src/jgaf/grammar/GrammarEditorToolbar.java
+END
+RulePopupMenu.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/83/trunk/JGAF/src/jgaf/grammar/RulePopupMenu.java
+END
+TablePopupListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/66/trunk/JGAF/src/jgaf/grammar/TablePopupListener.java
+END
+ProductionRuleAscendingComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/66/trunk/JGAF/src/jgaf/grammar/ProductionRuleAscendingComparator.java
+END
+ProductionRuleSide.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/83/trunk/JGAF/src/jgaf/grammar/ProductionRuleSide.java
+END
+RuleSidePopupMenu.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/83/trunk/JGAF/src/jgaf/grammar/RuleSidePopupMenu.java
+END
+GrammarTableRenderer.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/82/trunk/JGAF/src/jgaf/grammar/GrammarTableRenderer.java
+END
+Grammar.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/88/trunk/JGAF/src/jgaf/grammar/Grammar.java
+END
+Nonterminal.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/78/trunk/JGAF/src/jgaf/grammar/Nonterminal.java
+END
+DescriptionDiaog.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/86/trunk/JGAF/src/jgaf/grammar/DescriptionDiaog.java
+END
+ProductionRuleDescendingComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/!svn/ver/66/trunk/JGAF/src/jgaf/grammar/ProductionRuleDescendingComparator.java
+END
+GrammarEditor.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/92/trunk/JGAF/src/jgaf/grammar/GrammarEditor.java
+END
+GrammarTable.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/89/trunk/JGAF/src/jgaf/grammar/GrammarTable.java
+END
