@@ -7,9 +7,7 @@ package jgaf.grammar;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  *
@@ -191,22 +189,5 @@ public class ProductionRule implements Comparable<ProductionRule>, Cloneable {
 
 
 
-/**
-     * 
-     * added with LRextension
-     */
-    public boolean containsSymbol(Symbol symbol){
-        return leftHandSide.containsSymbol(symbol) || rightHandSide.containsSymbol(symbol);
-    }
-    
-    /**
-     * 
-     * added with LRextension
-     */
-    public  Set<Symbol> getNonterminals(){
-        Set<Symbol> nonTerminals = new HashSet<Symbol>();
-        nonTerminals.addAll(leftHandSide.getNonterminals());
-        nonTerminals.addAll(rightHandSide.getNonterminals());
-        return nonTerminals;  
-    }
+
 }

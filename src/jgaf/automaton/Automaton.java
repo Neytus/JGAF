@@ -114,7 +114,7 @@ private final long serialVersionUID = 10000000000001005L;
     }
 
 
-    public boolean hasTotalTransitionFunction() {
+public boolean hasTotalTransitionFunction() {
         for (State state : states) {
             for (String string : getAlphabet()) {
                 if(!containsTransitionFromUnder(state, string)) {
@@ -344,6 +344,7 @@ private final long serialVersionUID = 10000000000001005L;
     public void addTransition(Transition transition) {
         if(transitions.contains(transition)) {
             getTransitionFromTo(transition.getFromState(), transition.getToState()).addLabels(transition.getLabels());
+            getTransitionFromTo(transition.getFromState(), transition.getToState()).setVisualProperties(transition.getVisualProperties());
         } else {
             transitions.add(transition);
         }
@@ -392,9 +393,16 @@ private final long serialVersionUID = 10000000000001005L;
         }
         return list;
     }
-
-
-
+    
+    public List<Transition> getTransitionTo(State to) {
+        List<Transition> list = new ArrayList<Transition>();
+        for (Transition t : transitions) {
+            if (t.getToState().equals(to)) {
+                list.add(t);
+            }
+        }
+        return list;
+    }
 
     public List<Transition> getIncomingTransitions(State state) {
         List<Transition> incomingTransitions = new ArrayList<Transition>();
@@ -567,8 +575,17 @@ private final long serialVersionUID = 10000000000001005L;
         return getTransitionFromTo(transition.getToState(), transition.getFromState());
     }
 
-
-
+    public int getLongestStateNameLength(){
+        int longest = 0;
+        for(State state : states){
+            if(longest < state.getName().length()){
+                longest = state.getName().length();
+            }
+        }
+        return longest;
+    }
+    
+    @Override
     public Representation clone() {
         Automaton automatonObj = new Automaton();
         automatonObj.setName(name);

@@ -16,14 +16,18 @@ public class Symbol implements Comparable<Symbol>, Cloneable {
     public static final int TERMINAL = 0;
     public static final int NONTERMINAL = 1;
     public static final int EPSILON = 2;
-    //public static final String EPSYLON = "\u03b5";
 
     private int type;
     private String name;
 
     public Symbol(String name, int type) {
-        this.type = type;
-        this.name = name;
+        if(type == 2){
+            this.name = MathConstants.EPSILON;
+        }
+        else {
+            this.name = name;
+        }
+        this.type = type;   
     }
 
     public Symbol() {
@@ -51,6 +55,7 @@ public class Symbol implements Comparable<Symbol>, Cloneable {
 
     @Override
     public String toString() {
+        if(isEpsilon()) return MathConstants.EPSILON;
         return name;
     }
 

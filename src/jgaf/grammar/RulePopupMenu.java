@@ -20,7 +20,7 @@ import javax.swing.JPopupMenu;
 public class RulePopupMenu extends JPopupMenu {
 
     private GrammarEditor editor;
-    private ProductionRule rule;
+    private ProductionRules rule;
 
    // private JMenuItem changeButton;
     private JMenuItem deleteButton;
@@ -29,16 +29,6 @@ public class RulePopupMenu extends JPopupMenu {
     public RulePopupMenu(GrammarEditor editor) {
 
         this.editor = editor;
-
-//        changeButton = new JMenuItem("Rename");
-//        changeButton.setIcon(new ImageIcon(getClass().getResource("/jgaf/icons/popupmenus/rename.png")));
-//        changeButton.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                handleChangeAction(e);
-//            }
-//        });
-//        this.add(changeButton);
-
 
         deleteButton = new JMenuItem("Delete");
         deleteButton.setIcon(new ImageIcon(getClass().getResource("/jgaf/icons/popupmenus/delete.png")));
@@ -52,7 +42,7 @@ public class RulePopupMenu extends JPopupMenu {
     }
 
 
-    public void show(ProductionRule rule, Component comp, Point at) {
+    public void show(ProductionRules rule, Component comp, Point at) {
         this.rule = rule;
         show(comp, at.x, at.y);
     }

@@ -197,6 +197,7 @@ public class RegularExpressionEditor extends Editor {
 
     @Override
     public void setData(Representation data) {
+        System.out.println("Data = "+data.toString());
         RegularExpression re = (RegularExpression) data;
         initiate(re);
     }
