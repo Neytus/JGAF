@@ -185,9 +185,11 @@ public class GrammarEditorToolbar extends JToolBar {
                 switch(type) {
                     case -1: answer += "not well-formed."; break;
                     case 0: answer += "recursively enumerable grammar (type 0)."; break;
-                    case 1: answer += "context-sensitive grammar (type 1)."; break;
-                    case 2: answer += "context-free grammar (type 2)."; break;
-                    case 3: answer += "regular grammar (type 3)."; break;
+                    case 10: answer += "context-sensitive grammar (type 1)."; break;
+                    case 20: answer += "context-free grammar (type 2)."; break;
+                    case 30: answer += "regular grammar (type 3)."; break;
+                    case 21: answer += "context-free grammar with epsilon rules (but type 4 by traditional definition)."; break;
+                    case 31: answer += "regular grammar with epsilon rules (but type 4 by traditional definition)."; break;
                 }
                 JOptionPane.showMessageDialog(editor.getFace(), answer, " Grammar type",
                         JOptionPane.PLAIN_MESSAGE);

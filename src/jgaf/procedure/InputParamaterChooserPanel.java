@@ -18,7 +18,7 @@ import java.awt.Toolkit;
  *
  * @author hanis
  */
-public class InputParamaterChooserPanel extends javax.swing.JPanel {
+public class InputParamaterChooserPanel extends javax.swing.JPanel implements ParameterPanInterface {
 
     private ProcedureParameter parameter;
 

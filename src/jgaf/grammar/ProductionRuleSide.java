@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import sun.security.util.Length;
 
 /**
  *
@@ -61,6 +62,14 @@ public class ProductionRuleSide implements Cloneable, Comparable<ProductionRuleS
 
     public void addSymbolsFromString(String string) {
         string = string.trim();
+        
+        //added with lr extension{
+        if (string.equalsIgnoreCase("eps.")){
+            addSymbol(new Symbol());
+            return;
+        }
+        //}
+        
         for (int i = 0; i < string.length(); i++) {
             String letter = String.valueOf(string.charAt(i));
             if(letter.equals(letter.toUpperCase())) {
@@ -176,5 +185,45 @@ public class ProductionRuleSide implements Cloneable, Comparable<ProductionRuleS
         this.bgColor = bgColor;
     }
 
+    
+    /**
+     * added with LR extension
+     *
+     */
+    public Symbol getFirst() {
+        return symbols.get(0);
+    }
+
+    /**
+     * added with LR extension
+     *
+     */
+    public Symbol getSymbolAt(int pos) {
+        return symbols.get(pos);
+    }
+
+    /**
+     * added with LR extension
+     *
+     */
+    public boolean containsSymbol(Symbol symbol) {
+        return symbols.contains(symbol);
+    }
+
+    /**
+     * added with LR extension
+     *
+     */
+    public List<Symbol> getNonterminals() {
+        ArrayList<Symbol> nonts = new ArrayList<Symbol>();
+        for (Symbol s : symbols) {
+            if (s.isNonterminal()) {
+                nonts.add(s);
+            }
+        }
+        return nonts;
+    }
+    
+    
 
 }

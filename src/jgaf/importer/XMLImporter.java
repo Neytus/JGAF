@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import jgaf.Constants.MathConstants;
 import jgaf.JgafFileException;
 import jgaf.automaton.Automaton;
 import jgaf.automaton.State;
@@ -325,7 +326,10 @@ public class XMLImporter {
                 if (terminals.contains(symbol)) {
                     symbol.setType(Symbol.TERMINAL);
                 } else if (!nonterminals.contains(symbol)) {
-                    System.out.println("ERR1");
+                    if (symbolElem.getText().equals(MathConstants.EPSILON)) {
+                        symbol.setType(Symbol.EPSILON);
+                    }else{
+                    System.out.println("ERR1");}
                 }
                 leftRuleSide.addSymbol(symbol);
             }
@@ -341,7 +345,10 @@ public class XMLImporter {
                 if (terminals.contains(symbol)) {
                     symbol.setType(Symbol.TERMINAL);
                 } else if (!nonterminals.contains(symbol)) {
-                    System.out.println("ERR1");
+                   if (symbolElem.getText().equals(MathConstants.EPSILON)) {
+                        symbol.setType(Symbol.EPSILON);
+                    }else{
+                    System.out.println("ERR1");}
                 }
                 rightRuleSide.addSymbol(symbol);
             }
@@ -406,6 +413,18 @@ public class XMLImporter {
                 ProcedureParameter parameter = new ProcedureParameter();
                 parameter.setDescription(description);
                 descriptor.addParameter(parameter);
+                
+                //PARAMETER WITH FORCED OPTIONS, added with lr extension
+                List optionNodes = element.selectNodes("poptions/poption");
+                if (!optionNodes.isEmpty()){
+                    ArrayList<String> forcedOptions = new ArrayList<String>();
+                    Iterator oiterator = optionNodes.iterator();
+                while(oiterator.hasNext()) {
+                    Node name =(Node) oiterator.next();
+                    forcedOptions.add(name.getText());
+                }
+                    parameter.setForcedOptions(forcedOptions);
+                }
             }
             //OUTPUT REPRESENTATION
             Node outputNode = procedureElem.selectSingleNode("output");

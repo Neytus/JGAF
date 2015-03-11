@@ -9,11 +9,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import jgaf.Constants.MathConstants;
@@ -28,12 +25,13 @@ public class Grammar implements Representation {
     //private List<Terminal> terminalSymbols;
     //private List<Nonterminal> nonterminalSymbols;
     
-    public static final int INCORRECT = -1;
-    public static final int TYPE0 = 0; //Recursively enumerable
-    public static final int TYPE1 = 1; //Context-sensitive
-    public static final int TYPE2 = 2; //Context-free
-    public static final int TYPE3 = 3; //Regular
-    
+    private static final int INCORRECT = -1;
+    private static final int TYPE0 = 0; //Recursively enumerable
+    private static final int TYPE1 = 10; //Context-sensitive
+    private static final int TYPE2 = 20; //Context-free
+    private static final int TYPE3 = 30; //Regular
+    private static final int TYPE2E = 21; //Context-free epsilon rules
+    private static final int TYPE3E = 31; //regular epsilon rules
 
 
     private Symbol startNonterminal;
@@ -425,6 +423,8 @@ public class Grammar implements Representation {
             if(!containsNonterminal) {
                 return false;
             }
+            if (productionRule.getRightHandSide().size()==0){
+            return false;}
         }
         return true;
     }
@@ -434,15 +434,23 @@ public class Grammar implements Representation {
     }
 
     public boolean isContextFree() {
-        return getType() >= TYPE2;
+        return getType() == TYPE2 || getType() ==TYPE3;
     }
 
     public boolean isContextSensitive() {
-        return getType() >= TYPE1;
+        return (getType() == TYPE1 || getType()== TYPE2 || getType() == TYPE3);
     }
 
     public boolean isRecursivelyEnumerable() {
         return getType() >= TYPE0;
+    }
+    
+    public boolean isContextFreeE(){
+    return (getType() >= TYPE2);
+    }
+    
+    public boolean isRegularE(){
+    return (getType() >= TYPE3 );
     }
     
     public int getType() {
@@ -452,13 +460,19 @@ public class Grammar implements Representation {
         boolean regular = true;
         boolean cfg = true;
         boolean csg = true;
+        boolean regularE = true;
+        boolean cfgE=true;
+        
         for (ProductionRule rule : productionRules) {
+            boolean eRule=false;
             int leftSize = rule.getLeftHandSide().size();
             int rightSize = rule.getRightHandSide().size();
             //boolean singleLeftNonterminal = false;
             if(leftSize > 1 || !rule.getLeftHandSide().getSymbols().get(0).isNonterminal()) {
                 regular = false;
                 cfg = false;
+                regularE=false;
+                cfgE=false;
             }
             
             if(rightSize == 1 && rule.getRightHandSide().getSymbols().get(0).isEpsilon()) {
@@ -467,33 +481,45 @@ public class Grammar implements Representation {
                     cfg = false;
                     csg = false;
                 } else {
-                    continue;
+                    
                 }
+                eRule=true;
             }
             
-            boolean rightRegular = false;
-            if((rightSize == 1 && rule.getRightHandSide().getSymbols().get(0).isTerminal()) ||
+            boolean rightRegularOrE = false;
+            if((rightSize == 1 && rule.getRightHandSide().getSymbols().get(0).isTerminal()) || eRule ||
                     (rightSize == 2 && rule.getRightHandSide().getSymbols().get(0).isTerminal() &&
                     rule.getRightHandSide().getSymbols().get(1).isNonterminal())) {
-                rightRegular = true;
+                rightRegularOrE = true;
+                
             }
-            if(!rightRegular) {
+            if(!rightRegularOrE) {
                 regular = false;
+                regularE= false;
             }
             
             if(leftSize > rightSize) {
-                csg = false;
+                csg = false;                
             }
         }      
         if(regular) {
             return TYPE3;
         }
+        
+        if (regularE) {
+           return TYPE3E;
+        }
         if(cfg) {
             return TYPE2;
         }
+        if (cfgE){ 
+            return TYPE2E;
+                    }
         if(csg) {
             return TYPE1;
         }
+        
+        
         return TYPE0;
     }
 
