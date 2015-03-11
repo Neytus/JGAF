@@ -4,8 +4,7 @@
  */
 package jgaf.exporter;
 
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;

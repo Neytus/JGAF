@@ -19,5 +19,11 @@
     <classPath>jgaf.regex.RegularExpressionEditor</classPath>
     <name>Regular Expression</name>
     <description>Regular Expression Editor</description>
-  </editor>  
+  </editor>
+  <editor id="GrammarLoader">
+    <classPath>jgaf.IA006.editors.GrammarLoader</classPath>
+    <name>LL and SLL checker</name>
+    <description>LL and SLL checker</description>
+  </editor>
+ 
 </editors>	

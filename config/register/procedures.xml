@@ -31,11 +31,6 @@
       </parameter>
     </parameters>    
   </procedure>
-
-
-
-
-
   <procedure type="S">
     <classPath>jgaf.automaton.pda.simulation.PDASimulation</classPath>
     <name>PDA Simulation</name>
@@ -47,10 +42,6 @@
       </input>
     </inputs>   
   </procedure>
-
-
-
-
   <procedure type="A">
     <classPath>jgaf.procedure.DFAEquality</classPath>
     <name>DFA Equality</name>
@@ -66,9 +57,6 @@
       </input>      
     </inputs>		
   </procedure>
-
-
-
   <procedure type="T">
     <classPath>jgaf.procedure.EpsilonStepsElimination</classPath>
     <name>Epsilon steps elimination</name>
@@ -84,10 +72,6 @@
       <description>Fa without epsilon steps.</description>
     </output>
   </procedure>
-
-
-
-
   <procedure type="T">
     <classPath>jgaf.procedure.RegularGrammarToFA</classPath>
     <name>Regular Grammar to FA</name>
@@ -103,8 +87,6 @@
       <description>Finite-state automaton.</description>
     </output>
   </procedure>
-  
-  
   <procedure type="T">
     <classPath>jgaf.procedure.InaccessibleStatesElimination</classPath>
     <name>Inaccessible states Elimination</name>
@@ -120,9 +102,6 @@
       <description>Finite-state automaton without inaccessible states</description>
     </output>
   </procedure>
-
-
-
   <procedure type="T">
     <classPath>jgaf.procedure.NFAtoDFA</classPath>
     <name>NFA to DFA</name>
@@ -138,8 +117,6 @@
       <description>Deterministic finite-state automaton</description>		
     </output>
   </procedure>
-
-
   <procedure type="T">
     <classPath>jgaf.procedure.AutomataComposition</classPath>
     <name>Parallel asynchronous composition</name>
@@ -158,7 +135,7 @@
       <id>FA</id>
       <description>First deterministic finite-state automaton</description>		
     </output>
-  </procedure>
+  </procedure>  
   
 </procedures>
 

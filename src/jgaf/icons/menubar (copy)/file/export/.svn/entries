@@ -4,7 +4,7 @@ dir
 91
 https://jgaf.googlecode.com/svn/trunk/JGAF/src/jgaf/icons/menubar%20(copy)/file/export
 https://jgaf.googlecode.com/svn
-
+delete
 
 
 2011-05-29T21:08:18.403704Z
@@ -26,14 +26,14 @@ honza.rychtar
 
 e12635a1-9c81-897d-2110-d53ba9cb667f
 
-txt.png
+htm.png
 file
 
 
 
-
-2010-12-05T23:45:37.000000Z
-e1fbe456ad0b2ab8d068c4f6e5b93d5f
+delete
+2010-12-05T23:44:59.000000Z
+7eb7ef7c55052ac4f55d4b8466c71b8b
 2011-05-29T21:08:18.403704Z
 91
 honza.rychtar
@@ -58,48 +58,14 @@ has-props
 
 
 
-1782
-
-svg.png
-file
-
-
-
-
-2010-12-05T23:50:34.000000Z
-c2d4a6fea618aaf2d23f04580d7493d4
-2011-05-29T21:08:18.403704Z
-91
-honza.rychtar
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1690
+1717
 
 jpg.png
 file
 
 
 
-
+delete
 2010-12-05T23:49:02.000000Z
 5766ab4ac3fee0214ff218eba8e377b6
 2011-05-29T21:08:18.403704Z
@@ -128,46 +94,12 @@ has-props
 
 1704
 
-xml.png
-file
-
-
-
-
-2010-12-05T23:44:37.000000Z
-3196092a02b4cc7b9cd295cc51e166e7
-2011-05-29T21:08:18.403704Z
-91
-honza.rychtar
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1733
-
 png.png
 file
 
 
 
-
+delete
 2010-12-05T23:50:20.000000Z
 aee0d71951e754ded5431d476ce87c1c
 2011-05-29T21:08:18.403704Z
@@ -196,14 +128,14 @@ has-props
 
 1694
 
-htm.png
+svg.png
 file
 
 
 
-
-2010-12-05T23:44:59.000000Z
-7eb7ef7c55052ac4f55d4b8466c71b8b
+delete
+2010-12-05T23:50:34.000000Z
+c2d4a6fea618aaf2d23f04580d7493d4
 2011-05-29T21:08:18.403704Z
 91
 honza.rychtar
@@ -228,5 +160,73 @@ has-props
 
 
 
-1717
+1690
+
+txt.png
+file
+
+
+
+delete
+2010-12-05T23:45:37.000000Z
+e1fbe456ad0b2ab8d068c4f6e5b93d5f
+2011-05-29T21:08:18.403704Z
+91
+honza.rychtar
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1782
+
+xml.png
+file
+
+
+
+delete
+2010-12-05T23:44:37.000000Z
+3196092a02b4cc7b9cd295cc51e166e7
+2011-05-29T21:08:18.403704Z
+91
+honza.rychtar
+has-props
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1733
 
