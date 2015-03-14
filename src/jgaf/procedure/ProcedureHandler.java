@@ -46,7 +46,7 @@ public class ProcedureHandler {
     }
 
     public ProcedureRegister getProcedureRegister() {
-        System.out.println("procedury "+procedureRegister.toString());
+        //System.out.println("procedury "+procedureRegister.toString());
         return procedureRegister;
     }
 
@@ -157,7 +157,7 @@ public class ProcedureHandler {
 
     public Procedure createProcedure(ProcedureDescriptor descriptor) {
         Procedure procedure = null;
-        System.out.println("descriptor je : "+descriptor.toString());
+        //System.out.println("descriptor je : "+descriptor.toString());
         try {
             try {
                 //editor = (Editor) Class.forName("jgaf.automaton.fa.FSAutomatonEditor").newInstance();

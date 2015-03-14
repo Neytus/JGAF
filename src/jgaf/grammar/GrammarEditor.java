@@ -123,6 +123,7 @@ public class GrammarEditor extends Editor {
         this.grammarRepsresenter = grammarRepsresenter;
     }
 
+    //TO DO - pravdepodobne chyba
     public void changeRuleSide(ProductionRulesSide ruleSide, String newRuleSideString) {
         Grammar oldGrammar = (Grammar) grammar.clone();
         ProductionRulesSide oldRuleSide = (ProductionRulesSide) ruleSide.clone();
