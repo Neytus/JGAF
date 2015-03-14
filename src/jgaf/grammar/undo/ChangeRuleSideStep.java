@@ -6,7 +6,7 @@
 package jgaf.grammar.undo;
 
 import jgaf.automaton.fa.undo.UndoRedoStep;
-import jgaf.grammar.ProductionRuleSide;
+import jgaf.grammar.ProductionRulesSide;
 
 /**
  *
@@ -14,24 +14,23 @@ import jgaf.grammar.ProductionRuleSide;
  */
 public class ChangeRuleSideStep implements UndoRedoStep {
 
-    private ProductionRuleSide oldRuleSide;
-    private ProductionRuleSide newRuleSide;
-    private ProductionRuleSide ruleSide;
+    private ProductionRulesSide oldRuleSide;
+    private ProductionRulesSide newRuleSide;
+    private ProductionRulesSide ruleSide;
 
-    public ChangeRuleSideStep(ProductionRuleSide ruleSide,
-            ProductionRuleSide oldRuleSide, ProductionRuleSide newRuleSide) {
+    public ChangeRuleSideStep(ProductionRulesSide ruleSide,
+            ProductionRulesSide oldRuleSide, ProductionRulesSide newRuleSide) {
         this.ruleSide = ruleSide;
         this.oldRuleSide = oldRuleSide;
         this.newRuleSide = newRuleSide;
     }
 
     public void undo() {
-        //System.out.println("undo: " + oldRuleSide.getSymbols());
-        ruleSide.setSymbols(oldRuleSide.getSymbols());
+        ruleSide.setRules(oldRuleSide.getRules());
     }
 
     public void redo() {
-        ruleSide.setSymbols(newRuleSide.getSymbols());
+        ruleSide.setRules(oldRuleSide.getRules());
     }
 
     public String type() {

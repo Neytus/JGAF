@@ -12,6 +12,7 @@ import jgaf.automaton.Transition;
 import jgaf.grammar.Grammar;
 import jgaf.grammar.Nonterminal;
 import jgaf.grammar.ProductionRule;
+import jgaf.grammar.ProductionRules;
 import jgaf.grammar.Terminal;
 
 /**
@@ -32,7 +33,6 @@ public class FAtoRegularGrammar extends DefaultProcedure {
         grammar.clearHighlighting();
         automaton.clearHighlighting();
     }
-
     public void startProcedure() {
         clearHighlighting();
         logState("start");
@@ -43,7 +43,7 @@ public class FAtoRegularGrammar extends DefaultProcedure {
             transition.getFromState().getVisualProperties().setFillColor(Color.GREEN);
             transition.getToState().getVisualProperties().setFillColor(Color.GREEN);
             for (String label : transition.getLabels()) {
-                ProductionRule production = new ProductionRule(
+                ProductionRules production = new ProductionRules(
                         new Nonterminal(transition.getFromState().getName()),
                         new Terminal(label),
                         new Nonterminal(transition.getToState().getName()));
@@ -59,7 +59,7 @@ public class FAtoRegularGrammar extends DefaultProcedure {
             if (transition.getToState().isAccepting()) {
                 transition.getToState().getVisualProperties().setFillColor(Color.ORANGE);
                 for (String label : transition.getLabels()) {
-                    ProductionRule production = new ProductionRule(
+                    ProductionRules production = new ProductionRules(
                             new Nonterminal(transition.getFromState().getName()),
                             new Terminal(label));
                     grammar.addRule(production);
@@ -75,7 +75,7 @@ public class FAtoRegularGrammar extends DefaultProcedure {
             }            
         }
         if (automaton.getInitialState().isAccepting()) {
-            ProductionRule production = new ProductionRule(
+            ProductionRules production = new ProductionRules(
                     new Nonterminal(automaton.getInitialState().getName()));
             grammar.addRule(production);
             production.setFgColor(Color.RED);
@@ -86,7 +86,7 @@ public class FAtoRegularGrammar extends DefaultProcedure {
 
         logState("done");
     }
-
+    
     @Override
     public String checkInputRepresentation() {        
         int type = automaton.getType();

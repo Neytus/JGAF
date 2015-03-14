@@ -21,8 +21,8 @@ import jgaf.Constants.MathConstants;
 public class RuleSidePopupMenu extends JPopupMenu {
 
     private GrammarEditor editor;
-    private ProductionRuleSide ruleSide;
-
+    private ProductionRuleSide leftRuleSide;
+    private ProductionRulesSide ruleSide;
 //    private JMenuItem changeButton;
     private JMenuItem deleteButton;
     private JMenuItem epsilonButton;
@@ -40,18 +40,6 @@ public class RuleSidePopupMenu extends JPopupMenu {
         });
         this.add(epsilonButton);
 
-
-
-//        changeButton = new JMenuItem("Rename");
-//        changeButton.setIcon(new ImageIcon(getClass().getResource("/jgaf/icons/popupmenus/rename.png")));
-//        changeButton.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                handleChangeAction(e);
-//            }
-//        });
-//        this.add(changeButton);
-
-
         deleteButton = new JMenuItem("Clear");
         deleteButton.setIcon(new ImageIcon(getClass().getResource("/jgaf/icons/popupmenus/delete.png")));
         deleteButton.addActionListener(new ActionListener() {
@@ -63,13 +51,16 @@ public class RuleSidePopupMenu extends JPopupMenu {
 
     }
 
-
-    public void show(ProductionRuleSide ruleSide, Component comp, Point at, boolean right) {
+    public void show(ProductionRulesSide ruleSide, Component comp, Point at, boolean right) {
         epsilonButton.setVisible(right);
         this.ruleSide = ruleSide;
         show(comp, at.x, at.y);
     }
-
+    public void show(ProductionRuleSide ruleSide, Component comp, Point at, boolean right) {
+        epsilonButton.setVisible(right);
+        this.leftRuleSide = ruleSide;
+        show(comp, at.x, at.y);
+    }
 
     public void handleChangeAction(ActionEvent e) {
       //  System.out.println("handling change action");
@@ -82,7 +73,14 @@ public class RuleSidePopupMenu extends JPopupMenu {
     }
 
     public void handleDeleteStateAction(ActionEvent e) {
-        editor.clearRuleSide(ruleSide);
+        
+        if(ruleSide != null){
+            editor.clearRuleSide(ruleSide); 
+        }
+        if(leftRuleSide != null){
+             editor.clearRuleSide(leftRuleSide);             
+        }
+           
     }
 
     public void handleEpsilonAction(ActionEvent e) {

@@ -91,7 +91,7 @@ public final class DefaultProcedureFace extends JPanel {
         }
         if(procedure.hasOutput()) {
             outputEditor = editorHandler.createEditor(procedure.getDescriptor().getOutputRepresentation().getId());
-            outputEditor.setEditable(false);
+            outputEditor.setEditable(true);
         }
     }
     

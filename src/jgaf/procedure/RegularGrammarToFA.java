@@ -6,7 +6,9 @@ import jgaf.automaton.Automaton;
 import jgaf.automaton.State;
 import jgaf.automaton.Transition;
 import jgaf.grammar.Grammar;
-import jgaf.grammar.ProductionRule;
+import jgaf.grammar.ProductionRuleSide;
+import jgaf.grammar.ProductionRules;
+import jgaf.grammar.ProductionRulesSide;
 import jgaf.grammar.Symbol;
 
 public class RegularGrammarToFA extends DefaultProcedure {
@@ -16,10 +18,10 @@ public class RegularGrammarToFA extends DefaultProcedure {
 
     public RegularGrammarToFA() {
     }
-
-
+    
     public void startProcedure() {
         automaton.clearHighlighting();
+         
         logState("start");
         int x = 40;
         int y = 160;
@@ -58,41 +60,45 @@ public class RegularGrammarToFA extends DefaultProcedure {
         automaton.addAcceptingState(newState);
         logState("setting $K$ as accepting");
         automaton.clearHighlighting();
-        for (ProductionRule rule : grammar.getProductionRules()) {
-            if(grammar.isStartToEpsRule(rule)) {
-                continue;
-            }
-            State from = automaton.getStateByName(rule.getLeftHandSide().getSymbols().get(0).getName());
-            String label = rule.getRightHandSide().getSymbols().get(0).getName();
-            if(rule.getRightHandSide().size() == 2) {
-                rule.setFgColor(Color.RED);                
-                State to = automaton.getStateByName(rule.getRightHandSide().getSymbols().get(1).getName());
-                Transition transition = new Transition(from, to, label);
-                transition.getVisualProperties().setStrokeColor(Color.RED);
-                transition.getVisualProperties().setFontColor(Color.GREEN);
-                if(transition.isReflexive()) {
-                    transition.getVisualProperties().setCurveFactor(Math.PI/2);
-                } else {
-                    transition.getVisualProperties().setCurveFactor(1);
+        
+        for (ProductionRules rule : grammar.getProductionRules()) {
+            ProductionRuleSide leftHandSide = rule.getLeftHandSide();
+            ProductionRulesSide rightHandSide = rule.getRightHandSide();
+            for(ProductionRuleSide oneRule : rightHandSide.getRules()){
+                if(grammar.isStartToEpsRule(leftHandSide, oneRule)) {
+                    continue;
                 }
-                automaton.addTransition(transition);
-                logState(rule.toString() + " -----> " + transition.toString());
-                rule.setFgColor(Color.BLACK);
-                automaton.clearHighlighting();
-            } else {
-                rule.setFgColor(Color.RED);                
-                Transition transition = new Transition(from, newState, label);
-                transition.getVisualProperties().setStrokeColor(Color.RED);
-                transition.getVisualProperties().setFontColor(Color.GREEN);
-                automaton.addTransition(transition);
-                logState(rule.toString() + " -----> " + transition.toString());
-                automaton.clearHighlighting();
-                rule.setFgColor(Color.BLACK);
+                State from = automaton.getStateByName(leftHandSide.getSymbols().get(0).getName());
+                String label = oneRule.getSymbols().get(0).getName();
+                if(oneRule.size() == 2) {
+                    rule.setFgColor(Color.RED);                
+                    State to = automaton.getStateByName(oneRule.getSymbols().get(1).getName());
+                    Transition transition = new Transition(from, to, label);
+                    transition.getVisualProperties().setStrokeColor(Color.RED);
+                    transition.getVisualProperties().setFontColor(Color.GREEN);
+                    if(transition.isReflexive()) {
+                        transition.getVisualProperties().setCurveFactor(Math.PI/2);
+                    } else {
+                        transition.getVisualProperties().setCurveFactor(1);
+                    }
+                    automaton.addTransition(transition);
+                    logState(rule.getLeftHandSide().toString()+" -> "+oneRule.toString() + " -----> " + transition.toString());
+                    rule.setFgColor(Color.BLACK);
+                    automaton.clearHighlighting();
+                } else {
+                    rule.setFgColor(Color.RED);                
+                    Transition transition = new Transition(from, newState, label);
+                    transition.getVisualProperties().setStrokeColor(Color.RED);
+                    transition.getVisualProperties().setFontColor(Color.GREEN);
+                    automaton.addTransition(transition);
+                    logState(rule.getLeftHandSide().toString()+" -> "+oneRule.toString() + " -----> " + transition.toString());
+                    automaton.clearHighlighting();
+                    rule.setFgColor(Color.BLACK);
+                }
             }
         }
         logState("done");
     }
-
     
     @Override
     public String checkInputRepresentation() {
@@ -114,7 +120,7 @@ public class RegularGrammarToFA extends DefaultProcedure {
 
     @Override
     public void assignOutputRepresentation(Representation outputRepresentation) {
-        automaton = (Automaton) outputRepresentation;
+       automaton = (Automaton) outputRepresentation;
     }
 
     @Override

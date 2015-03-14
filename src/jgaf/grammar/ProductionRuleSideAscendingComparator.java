@@ -11,7 +11,7 @@ import java.util.Comparator;
  *
  * @author hanis
  */
-public class ProductionRuleAscendingComparator implements Comparator<ProductionRuleSide>{
+public class ProductionRuleSideAscendingComparator implements Comparator<ProductionRuleSide>{
 
     public int compare(ProductionRuleSide o1, ProductionRuleSide o2) {
         return o1.compareTo(o2);
