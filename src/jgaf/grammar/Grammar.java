@@ -9,15 +9,12 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import jgaf.Constants.MathConstants;
 import jgaf.Representation;
-import jgaf.grammar.algorithms.FAalgorithms;
 //import jgaf.grammar.algorithms.FAalgorithms;
 
 /**
@@ -29,14 +26,22 @@ public class Grammar implements Representation {
     //private List<Terminal> terminalSymbols;
     //private List<Nonterminal> nonterminalSymbols;
     
+    /*
+    private static final int INCORRECT = -1;
+    private static final int TYPE0 = 00; //Recursively enumerable
+    private static final int TYPE1 = 10; //Context-sensitive
+    private static final int TYPE2 = 20; //Context-free
+    private static final int TYPE3 = 30; //Regular   
+    private static final int TYPE2E = 21; //Context-free epsilon rules
+    private static final int TYPE3E = 31; //regular epsilon rules
+    */
+    
     public static final int INCORRECT = -1;
     public static final int TYPE0 = 0; //Recursively enumerable
     public static final int TYPE1 = 1; //Context-sensitive
     public static final int TYPE2 = 2; //Context-free
     public static final int TYPE3 = 3; //Regular
     
-
-
     private Symbol startNonterminal;
     private String name = "G";
     //private List<ProductionRule> productionRules;
@@ -154,6 +159,7 @@ public class Grammar implements Representation {
     public List<ProductionRules> getProductionRules() {
         return productionRulesType2;
     }
+    
     public List<ProductionRules> getProductionRulesType2() {
         return productionRulesType2;
     }
@@ -226,7 +232,7 @@ public class Grammar implements Representation {
             //System.out.println("Testuji pravidlo:" +productionRule.toString());
             boolean a=productionRule.getLeftHandSide().isEmpty();
             boolean b=productionRule.getRightHandSide().isEmpty();
-            int size = productionRule.getRightHandSide().size();
+            //int size = productionRule.getRightHandSide().size();
             
 //            System.out.println("a = "+a+" b = "+b+" size = "+size+ " !"+productionRule.getRightHandSide().getRules().get(0)+"! ");
             if(a && b) {
@@ -397,7 +403,7 @@ public class Grammar implements Representation {
   
     public int removeRulesOfLeft(ProductionRuleSide leftHandSide){
         int index = 0;
-        List<ProductionRules> rulesToRemove = new ArrayList<ProductionRules>();
+        List<ProductionRules> rulesToRemove = new ArrayList<>();
         for(int i=0; i<productionRulesType2.size();i++){
             ProductionRules rule = productionRulesType2.get(i);
             if(rule.getLeftHandSide().equals(leftHandSide)){
@@ -793,6 +799,11 @@ public class Grammar implements Representation {
         return getType() >= TYPE0;
     }
     
+    
+    public boolean isContextFreeE(){
+        return (getType() >= TYPE2);
+    }   
+    
     public int getType() {
         if(!isCorrect()) {
             return INCORRECT;
@@ -852,8 +863,109 @@ public class Grammar implements Representation {
         }
         return TYPE0;
     }
+    
+    /*
+    
+    public boolean isRegular() {
+        return getType() == TYPE3;
+    }
+
+    public boolean isContextFree() {
+        return getType() == TYPE2 || getType() ==TYPE3;
+    }
+
+    public boolean isContextSensitive() {
+        return (getType() == TYPE1 || getType()== TYPE2 || getType() == TYPE3);
+    }
+
+    public boolean isRecursivelyEnumerable() {
+        return getType() >= TYPE0;
+    }
+    
+    public boolean isContextFreeE(){
+    return (getType() >= TYPE2);
+    }
+    
+    public boolean isRegularE(){
+    return (getType() >= TYPE3 );
+    }
+    
+    //TODO
+    public int getType() {
+        if(!isCorrect()) {
+            return INCORRECT;
+        }
+        boolean regular = true;
+        boolean cfg = true;
+        boolean csg = true;
+        boolean regularE = true;
+        boolean cfgE=true;
+        
+        for (ProductionRules rule : productionRulesType2) {
+            boolean eRule=false;
+            int leftSize = rule.getLeftHandSide().size();
+            int rightSize = rule.getRightHandSide().size();
+            //boolean singleLeftNonterminal = false;
+            if(leftSize > 1 || !rule.getLeftHandSide().getSymbols().get(0).isNonterminal()) {
+                regular = false;
+                cfg = false;
+                regularE=false;
+                cfgE=false;
+            }
+            
+            if(rightSize == 1 && rule.getRightHandSide().getSymbols().get(0).isEpsilon()) {
+                if(leftSize > 1 || !isStartNonterminal(rule.getLeftHandSide().getSymbols().get(0))) {
+                    regular = false;
+                    cfg = false;
+                    csg = false;
+                } else {
+                    
+                }
+                eRule=true;
+            }
+            
+            boolean rightRegularOrE = false;
+            if((rightSize == 1 && rule.getRightHandSide().getSymbols().get(0).isTerminal()) || eRule ||
+                    (rightSize == 2 && rule.getRightHandSide().getSymbols().get(0).isTerminal() &&
+                    rule.getRightHandSide().getSymbols().get(1).isNonterminal())) {
+                rightRegularOrE = true;
+                
+            }
+            if(!rightRegularOrE) {
+                regular = false;
+                regularE= false;
+            }
+            
+            if(leftSize > rightSize) {
+                csg = false;                
+            }
+        }      
+        if(regular) {
+            return TYPE3;
+        }
+        
+        if (regularE) {
+           return TYPE3E;
+        }
+        if(cfg) {
+            return TYPE2;
+        }
+        if (cfgE){ 
+            return TYPE2E;
+                    }
+        if(csg) {
+            return TYPE1;
+        }
+        
+        
+        return TYPE0;
+    }*/
 
 
+    
+    /*
+    TODO - pozri co je zle s "tohle nemuze byt"
+    */
     public boolean isStartToEpsRule(ProductionRuleSide leftHandSide, ProductionRuleSide rule) {
         if(!hasStartNonterminal()) {
             return false;
@@ -932,5 +1044,54 @@ public class Grammar implements Representation {
         return false;
     }
     
-
+    /**
+     * JB
+     * @return 
+     */
+    public boolean isNormalized(){
+        for(ProductionRules oneLine : productionRulesType2) {
+            if (oneLine.getRightHandSide().size() > 1) {
+                System.out.println("nie je normalizovana");
+                return false;
+            }
+        }
+        System.out.println("JE normalizovana");
+        return true;
+    }
+    
+    /**
+     * JB
+     */
+    public void normalize(){
+        if(!isNormalized()){
+            List<ProductionRules> newRules = new ArrayList<>();
+            List<Integer> rulesToDelete = new ArrayList<>();
+        
+            for(ProductionRules oneLine : productionRulesType2) {
+                if (oneLine.getRightHandSide().size() > 1) {
+                    System.out.println("normalizuje sa" + productionRulesType2.indexOf(oneLine) + ". pravidlo");
+                    
+                    rulesToDelete.add(productionRulesType2.indexOf(oneLine));
+                                       
+                    ProductionRulesSide oneSet = new ProductionRulesSide(oneLine.getRightHandSide().getRules());
+                    
+                    for (ProductionRuleSide side: oneSet.getRules()) {
+                        ProductionRulesSide addedRightSide = new ProductionRulesSide(side);
+                        ProductionRuleSide addedLeftSide = new ProductionRuleSide(oneLine.getLeftHandSide());
+                        newRules.add(new ProductionRules(addedLeftSide, addedRightSide));
+                    }
+                }
+            }
+            
+            for(int i = productionRulesType2.size() - 1; i > -1; i--) {
+                if(rulesToDelete.contains(i)) {
+                    productionRulesType2.remove(i);
+                }
+            }
+            
+            for (ProductionRules newRule : newRules) {
+                productionRulesType2.add(newRule);
+            }
+        }
+    }
 }

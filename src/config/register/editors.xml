@@ -1,23 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <editors>
-  <editor id="FA">
+    
+ <editor id="FA">
     <classPath>jgaf.automaton.fa.FSAutomatonEditor</classPath>
     <name>Finite-state Automaton</name>
     <description>Finite-state Automaton Editor</description>
   </editor>
+  
     <editor id="PDA">
     <classPath>jgaf.automaton.pda.PushdownAutomatonEditor</classPath>
     <name>Push-down Automaton</name>
     <description>Push-down Automaton Editor</description>
   </editor>
+  
   <editor id="G">
     <classPath>jgaf.grammar.GrammarEditor</classPath>
     <name>Grammar</name>
     <description>Grammar Editor</description>
   </editor>
+  
   <editor id="RE">
     <classPath>jgaf.regex.RegularExpressionEditor</classPath>
     <name>Regular Expression</name>
     <description>Regular Expression Editor</description>
-  </editor>  
+  </editor>   
+  
+  <editor id="GrammarLoader">
+    <classPath>jgaf.IA006.editors.GrammarLoader</classPath>
+    <name>LL and SLL checker</name>
+    <description>LL and SLL checker</description>
+  </editor>
+  
 </editors>	

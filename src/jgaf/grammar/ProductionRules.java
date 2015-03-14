@@ -7,6 +7,7 @@ package jgaf.grammar;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -45,18 +46,18 @@ public class ProductionRules implements Comparable<ProductionRules>, Cloneable {
     }
 
     public ProductionRules(Nonterminal leftNonterminal, List<ProductionRuleSide> rightHandSide) {
-        List<Symbol> leftNonterminalList = new ArrayList<Symbol>();
+        List<Symbol> leftNonterminalList = new ArrayList<>();
         this.leftHandSide = new ProductionRuleSide(leftNonterminalList);
         this.rightHandSide = new ProductionRulesSide(rightHandSide);
     }
 
     public ProductionRules(Nonterminal leftNonterminal, Terminal rightTerminal, Nonterminal rightNonterminal) {
-        List<Symbol> rightList = new ArrayList<Symbol>();
-        List<Symbol> leftList = new ArrayList<Symbol>();
+        List<Symbol> rightList = new ArrayList<>();
+        List<Symbol> leftList = new ArrayList<>();
         leftList.add(leftNonterminal);
         rightList.add(rightTerminal);
         rightList.add(rightNonterminal);
-        List<ProductionRuleSide> rightRule = new ArrayList<ProductionRuleSide>();
+        List<ProductionRuleSide> rightRule = new ArrayList<>();
         rightRule.add(new ProductionRuleSide(rightList));
         this.leftHandSide = new ProductionRuleSide(leftList);
         this.rightHandSide = new ProductionRulesSide(rightRule);
@@ -64,11 +65,11 @@ public class ProductionRules implements Comparable<ProductionRules>, Cloneable {
 
 
     public ProductionRules(Nonterminal leftNonterminal, Terminal rightTerminal) {
-        List<Symbol> rightList = new ArrayList<Symbol>();
-        List<Symbol> leftList = new ArrayList<Symbol>();
+        List<Symbol> rightList = new ArrayList<>();
+        List<Symbol> leftList = new ArrayList<>();
         leftList.add(leftNonterminal);
         rightList.add(rightTerminal);
-        List<ProductionRuleSide> rightRule = new ArrayList<ProductionRuleSide>();
+        List<ProductionRuleSide> rightRule = new ArrayList<>();
         rightRule.add(new ProductionRuleSide(rightList));
         this.leftHandSide = new ProductionRuleSide(leftList);
         this.rightHandSide = new ProductionRulesSide(rightRule);
@@ -88,10 +89,21 @@ public class ProductionRules implements Comparable<ProductionRules>, Cloneable {
 
     @Override
     public String toString() {
+        /*
         String string = "";
         int i = 0;
         for(ProductionRuleSide rule : rightHandSide.getRules()){
             string += "   "+writeLeftHandSide() + " -> " + rule.toString()+"\n";
+            i++;
+        }
+        return string.substring(0, string.length()-1);
+        */
+        
+        
+        String string = "";
+        int i = 0;
+        for(ProductionRuleSide rule : rightHandSide.getRules()){
+            string += ""+writeLeftHandSide() + " -> " + rule.toString()+"\n";
             i++;
         }
         return string.substring(0, string.length()-1);
@@ -200,8 +212,23 @@ public class ProductionRules implements Comparable<ProductionRules>, Cloneable {
         return obj;
     }
 
-
-
-
+    /**
+     * 
+     * added with LRextension
+     */ 
+    public boolean containsSymbol(Symbol symbol){
+        return leftHandSide.containsSymbol(symbol) || rightHandSide.containsSymbol(symbol);
+    }
+    
+    /**
+     * 
+     * added with LRextension
+     */   
+    public  Set<Symbol> getNonterminals(){
+        Set<Symbol> nonTerminals = new HashSet<>();
+        nonTerminals.addAll(leftHandSide.getNonterminals());
+        nonTerminals.addAll(rightHandSide.getNonterminals());
+        return nonTerminals;  
+    } 
 
 }

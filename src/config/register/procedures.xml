@@ -170,6 +170,59 @@
       <description>First deterministic finite-state automaton</description>		
     </output>
   </procedure>
+
+    <procedure type="A"> 
+        <classPath>jgaf.lrextension.procedures.FiFoProcedure</classPath> 
+        <name>First &amp; Follow</name> 
+        <description>Calculation FIRST and FOLLOW for CFG (with possible epsilon steps)</description> -
+        <inputs> -
+            <input> 
+                <id>G</id> 
+                <description>Any context-free grammar.</description> 
+            </input> 
+        </inputs> -
+        <parameters> -
+            <parameter> 
+                <description>k=</description> 
+                <poptions>-
+                    <poption>1</poption>
+                    <poption>2</poption>
+                    <poption>3</poption>
+                </poptions>
+            </parameter> 
+        </parameters> 
+    </procedure> 
+    
+     <procedure type="A"> 
+        <classPath>jgaf.lrextension.procedures.LRParserProcedure</classPath> 
+        <name>LR Parsing</name> 
+        <description>Generation and simulation of LR(k), LALR(k)  or SLR(k) parser for CFG (with possible epsilon steps). </description> -
+        <inputs> -
+            <input> 
+                <id>G</id> 
+                <description>Any context-free grammar.</description> 
+            </input> 
+        </inputs> -
+        <parameters> -
+            <parameter> 
+                <description>Parser type:</description> 
+                <poptions>-
+                    <poption>LR</poption>
+                    <poption>SLR</poption>
+                    <poption>LALR</poption>
+                </poptions>
+            </parameter>
+            <parameter> 
+                <description>k=</description> 
+                <poptions>-
+                    <poption>0</poption>
+                    <poption>1</poption>
+                    <poption>2</poption>
+                    <poption>3</poption>               
+                </poptions>
+            </parameter> 
+        </parameters> 
+    </procedure>  
   
     <procedure type="T">
     <classPath>jgaf.procedure.EliminateUnreachableSymbols</classPath>
@@ -192,7 +245,7 @@
     </parameters> 
   </procedure> 
   
-  <procedure type="T">
+  <procedure type="A">
     <classPath>jgaf.procedure.IsLanguageNotEmpty</classPath>
     <name>Is language not empty?</name>
     <description>Check if language is not empty</description>

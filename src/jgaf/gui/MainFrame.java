@@ -68,7 +68,10 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
 
 
-        FSAutomatonEditor faEditor = (FSAutomatonEditor) Environment.getInstance().getEditorHandler().createEditor("FA");
+        /*
+        JB commentaried
+        */
+        //FSAutomatonEditor faEditor = (FSAutomatonEditor) Environment.getInstance().getEditorHandler().createEditor("FA");
     }
 
     public JDesktopPane getDesktop() {
