@@ -33,13 +33,6 @@ public class GrammarTable extends JTable implements MouseListener, KeyListener {
 
     }
 
-//    @Override
-//    public boolean isEnabled() {
-//        if(editor == null) {
-//            return false;
-//        }
-//        return editor.isEditable();
-//    }
 
     private void init() {
         grammarTableModel = new GrammarTableModel(getEditor());
@@ -57,11 +50,7 @@ public class GrammarTable extends JTable implements MouseListener, KeyListener {
         getColumn(getColumnName(1)).setPreferredWidth(30);
         getColumn(getColumnName(2)).setPreferredWidth(150);
 
-//        getColumn(getColumnName(2)).sizeWidthToFit();
-  //      System.out.println("maxwidth: " + getColumn(getColumnName(2)).getMaxWidth());
-        
-    //    getGrammarTableRenderer().getTableCellRendererComponent(this, ui, rowSelectionAllowed, showVerticalLines, WIDTH, WIDTH)
-        //getColumn(getColumnName(2)).getCellEditor().
+
         setTableHeader(null);        
     }
 
@@ -121,10 +110,10 @@ public class GrammarTable extends JTable implements MouseListener, KeyListener {
                 ProductionRuleSide ruleSide = (ProductionRuleSide) getValueAt(row, column);
                 ruleSidePopupMenu.show(ruleSide, e.getComponent(), e.getPoint(), false);
             } else if(column == GrammarTableModel.RIGHT_SIDE_INDEX) {
-                ProductionRuleSide ruleSide = (ProductionRuleSide) getValueAt(row, column);
+                ProductionRulesSide ruleSide = (ProductionRulesSide) getValueAt(row, column);
                 ruleSidePopupMenu.show(ruleSide, e.getComponent(), e.getPoint(), true);
             } else if(column == GrammarTableModel.ARROW_INDEX) {
-                ProductionRule rule = grammarTableModel.getProductionRule(row);
+                ProductionRules rule = grammarTableModel.getProductionRuleType2(row);
                 rulePopupMenu.show(rule, e.getComponent(), e.getPoint());
             }      
         }
@@ -137,26 +126,6 @@ public class GrammarTable extends JTable implements MouseListener, KeyListener {
     }
 
 
-   // @Override
- //   public void tableChanged(TableModelEvent e) {
- //       System.out.println("table changed");
-        //        int row = e.getFirstRow();
-//        int column = e.getColumn();
-//        //TableModel model = (TableModel)e.getSource();
-//       // String columnName = getColumnName(column);
-//        if(column == 0) {
-//            System.out.println("left choosen");
-//            System.out.println((ProductionRuleSide) getValueAt(row, column));
-//        }
-//                if(column == 1) {
-//            System.out.println("arrow choosen");
-//            //System.out.println(getValueAt(row, column));
-//        }
-//        if(column == 2) {
-//            System.out.println("right choosen");
-//            System.out.println((ProductionRuleSide) getValueAt(row, column));
-//        }
-//    }
 
     public void keyTyped(KeyEvent e) {
 

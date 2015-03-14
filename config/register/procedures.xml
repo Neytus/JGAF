@@ -15,6 +15,7 @@
       <description>Output grammar</description>
     </output>
   </procedure>
+  
   <procedure type="S">
     <classPath>jgaf.automaton.fa.simulation.DFASimulation</classPath>
     <name>DFA Simulation</name>
@@ -67,8 +68,6 @@
     </inputs>		
   </procedure>
 
-
-
   <procedure type="T">
     <classPath>jgaf.procedure.EpsilonStepsElimination</classPath>
     <name>Epsilon steps elimination</name>
@@ -84,14 +83,27 @@
       <description>Fa without epsilon steps.</description>
     </output>
   </procedure>
-
-
-
+  
+  <procedure type="T">
+    <classPath>jgaf.procedure.AutomatonMinimization</classPath>
+    <name>Minimalize automaton </name>
+    <description>Minimalize finite automat</description>
+    <inputs>
+      <input>
+      	<id>FA</id>
+      	<description>DFA without unreachable with total transition function</description>		
+      </input>
+    </inputs>		
+    <output>
+      <id>FA</id>
+      <description>Minimal finite automaton</description>		
+    </output>
+  </procedure> 
 
   <procedure type="T">
     <classPath>jgaf.procedure.RegularGrammarToFA</classPath>
     <name>Regular Grammar to FA</name>
-    <description>Transforation of the regular grammar to finite-state automaton.</description>
+    <description>Transformation of the regular grammar to finite-state automaton.</description>
     <inputs>
       <input>
 	<id>G</id>
@@ -139,7 +151,6 @@
     </output>
   </procedure>
 
-
   <procedure type="T">
     <classPath>jgaf.procedure.AutomataComposition</classPath>
     <name>Parallel asynchronous composition</name>
@@ -160,6 +171,259 @@
     </output>
   </procedure>
   
+    <procedure type="T">
+    <classPath>jgaf.procedure.EliminateUnreachableSymbols</classPath>
+    <name>Eliminate unreachable symbols</name>
+    <description>Elimination of unreachable symbols in Grammar</description>
+    <inputs>
+      <input>
+      	<id>G</id>
+      	<description>Context free grammar</description>		
+      </input>
+    </inputs>		
+    <output>
+      <id>G</id>
+      <description>CFG without unreachable symbols</description>		
+    </output>
+    <parameters>
+      <parameter>
+	        <description>Set nonterminal</description>
+      </parameter>
+    </parameters> 
+  </procedure> 
+  
+  <procedure type="T">
+    <classPath>jgaf.procedure.IsLanguageNotEmpty</classPath>
+    <name>Is language not empty?</name>
+    <description>Check if language is not empty</description>
+    <inputs>
+      <input>
+      	<id>G</id>
+      	<description>Context free grammar</description>		
+      </input>
+    </inputs>		
+    <output>
+      <id>G</id>
+      <description>CFG without non-generating productions</description>		
+    </output>
+    <parameters>
+      <parameter>
+	        <description>Set nonterminal</description>
+      </parameter>
+    </parameters> 
+  </procedure> 
+  
+    <procedure type="T">
+    <classPath>jgaf.procedure.EliminateUselessSymbols</classPath>
+    <name>Eliminate useless symbols</name>
+    <description>Elimination of useless symbols in Grammar</description>
+    <inputs>
+      <input>
+      	<id>G</id>
+      	<description>Context free grammar</description>		
+      </input>
+    </inputs>		
+    <output>
+      <id>G</id>
+      <description>CFG without useless symbols</description>		
+    </output>
+    <parameters>
+      <parameter>
+	        <description>Order (classic/unusual)</description>
+      </parameter>
+    </parameters> 
+  </procedure>  
+  
+  <procedure type="T">
+    <classPath>jgaf.procedure.EliminateEpsilonProductions</classPath>
+    <name>Eliminate epsilon productions </name>
+    <description>Elimination of epsilon productions</description>
+    <inputs>
+      <input>
+      	<id>G</id>
+      	<description>Context free grammar</description>		
+      </input>
+    </inputs>		
+    <output>
+      <id>G</id>
+      <description>CFG without epsilon productions</description>		
+    </output>
+    <parameters>
+      <parameter>
+	        <description>Set nonterminal</description>
+      </parameter>
+    </parameters> 
+  </procedure> 
+  
+  <procedure type="T">
+    <classPath>jgaf.procedure.EliminateUnitRules</classPath>
+    <name>Eliminate unit rules </name>
+    <description>Elimination of unit rules</description>
+    <inputs>
+      <input>
+      	<id>G</id>
+      	<description>Context free grammar</description>		
+      </input>
+    </inputs>		
+    <output>
+      <id>G</id>
+      <description>CFG without unit rules</description>		
+    </output>
+    <parameters>
+      <parameter>
+	        <description>Set nonterminal</description>
+      </parameter>
+    </parameters> 
+  </procedure> 
+  
+  <procedure type="T">
+  <classPath>jgaf.procedure.EliminateDirectLeftRecursion</classPath>
+    <name>Eliminate direct left recursion</name>
+    <description>Elimination of direct left recursion</description>
+    <inputs>
+      <input>
+      	<id>G</id>
+      	<description>CFG</description>		
+      </input>
+    </inputs>		
+    <output>
+      <id>G</id>
+      <description>CFG</description>		
+    </output>
+    <parameters>
+      <parameter>
+	        <description>Set nonterminal or def</description>
+      </parameter>
+      <parameter>
+	        <description>Type</description>
+      </parameter>
+    </parameters>
+  </procedure>  
+  
+  <procedure type="T">
+    <classPath>jgaf.procedure.EliminateLeftRecursion</classPath>
+    <name>Eliminate left recursion</name>
+    <description>Elimination of left recursion</description>
+    <inputs>
+      <input>
+      	<id>G</id>
+      	<description>CFG</description>		
+      </input>
+    </inputs>		
+    <output>
+      <id>G</id>
+      <description>CFG</description>		
+    </output>
+    <parameters>
+      <parameter>
+	        <description>Set nonterminal or def</description>
+      </parameter>
+      <parameter>
+	        <description>Type</description>
+      </parameter>
+      <parameter>
+	        <description>Ordering</description>
+      </parameter>
+    </parameters>
+  </procedure>  
+  
+  <procedure type="T">
+    <classPath>jgaf.procedure.TransformToCNF</classPath>
+    <name>Transform to CNF </name>
+    <description>Transform CFG to CFG in Chomsky normal form</description>
+    <inputs>
+      <input>
+      	<id>G</id>
+      	<description>Context free grammar without unit rules, without epsion rules and without unuseable rules</description>		
+      </input>
+    </inputs>		
+    <output>
+      <id>G</id>
+      <description>CFG in Chomsky normal form</description>		
+    </output>
+    <parameters>
+      <parameter>
+	        <description>Set nonterminal</description>
+      </parameter>
+      <parameter>
+	        <description>Rules symbols</description>
+      </parameter>
+      <parameter>
+	        <description>Term symbols</description>
+      </parameter>
+    </parameters>
+  </procedure>
+  
+  <procedure type="T">
+    <classPath>jgaf.procedure.TransformToGNF</classPath>
+    <name>Transform to GNF </name>
+    <description>Transform CFG to CFG in Greibach normal form</description>
+    <inputs>
+      <input>
+      	<id>G</id>
+      	<description>CFG without unit, epsilon and useless productions</description>		
+      </input>
+    </inputs>		
+    <output>
+      <id>G</id>
+      <description>CFG in Greibach normal form</description>		
+    </output>
+    <parameters>
+      <parameter>
+	        <description>Set nonterminal</description>
+      </parameter>
+      <parameter>
+	        <description>Rules symbols</description>
+      </parameter>
+      <parameter>
+	        <description>Ordered list</description>
+      </parameter>
+    </parameters>
+  </procedure>
+  
+  
+  
+  <procedure type="T">
+    <classPath>jgaf.procedure.REtoFA</classPath>
+    <name>RE to FA </name>
+    <description>Transform Regular Expression to Finite Automaton</description>
+    <inputs>
+      <input>
+      	<id>RE</id>
+      	<description>Regular expression</description>		
+      </input>
+    </inputs>		
+    <output>
+      <id>FA</id>
+      <description>Finite Automaton</description>		
+    </output>
+    <parameters>
+      <parameter>
+	        <description>Running</description>
+      </parameter>
+    </parameters>
+  </procedure>  
+  
+  <procedure type="T">
+    <classPath>jgaf.procedure.FAtoRE</classPath>
+    <name>FA to RE </name>
+    <description>Transform Finite Automaton to Regular Expression</description>
+    <inputs>
+      <input>
+      	<id>FA</id>
+      	<description>Finite Automaton</description>		
+      </input>
+    </inputs>		
+    <output>
+      <id>RE</id>
+      <description>Regular expression</description>		
+    </output>
+    <parameters>
+      <parameter>
+	        <description>Running</description>
+      </parameter>
+    </parameters>
+  </procedure> 
 </procedures>
 
 
