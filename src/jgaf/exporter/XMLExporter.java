@@ -113,10 +113,8 @@ public class XMLExporter {
         Element elemTerminals = grammarElem.addElement("terminals");
         for (Symbol symbol : grammar.getTerminals()) {
             if(symbol.isEpsilon()){
-                /*
                 Element elemState = elemTerminals.addElement("epsilon");
                 elemState.addText(symbol.getName());
-                        */
             }else{
                 Element elemState = elemTerminals.addElement("terminal");
                 elemState.addText(symbol.getName());

@@ -294,7 +294,7 @@ public class AutomatonMinimization extends DefaultProcedure {
     public String checkInputRepresentation() {
         if(!automaton1.hasTotalTransitionFunction()){
            // System.out.println(automaton1.getTransitionTo(totalState).toString());
-            return "Automaton does not have total transition function";
+            return "Automaton hasn't total transition function";
         }
         switch(automaton1.getType()) {
             case Automaton.UFA: return "The automaton has no initial state.";

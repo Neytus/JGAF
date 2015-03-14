@@ -18,14 +18,14 @@ import java.awt.Toolkit;
  *
  * @author hanis
  */
-public class InputParamaterChooserPanel extends javax.swing.JPanel implements ParameterPanInterface {
+public class InputParamaterChooserPanel extends javax.swing.JPanel {
 
     private ProcedureParameter parameter;
 
     
     public InputParamaterChooserPanel(ProcedureParameter parameter) {
         this.parameter = parameter;
-        //System.out.println("yeah");
+        System.out.println("yeah");
         initComponents();
         initMyComponents();
         centerDialog();

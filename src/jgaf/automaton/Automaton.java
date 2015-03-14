@@ -404,8 +404,6 @@ public boolean hasTotalTransitionFunction() {
         return list;
     }
 
-
-
     public List<Transition> getIncomingTransitions(State state) {
         List<Transition> incomingTransitions = new ArrayList<Transition>();
         for (Transition transition : transitions) {

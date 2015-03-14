@@ -21,8 +21,5 @@ public abstract class MathConstants {
     public static final String UNION = "\u222A";
     public static final String STAR = "\u2217";
     public static final String IDENT = "\u2261";
-    //added in lr:
-    public static final String O_PLUS = "\u2295";
-    public static final String BETA = "\u03b2";
     
 }

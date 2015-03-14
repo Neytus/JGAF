@@ -11,10 +11,8 @@ package jgaf.grammar;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 public class ProductionRulesSide implements Cloneable {
     
@@ -24,14 +22,14 @@ public class ProductionRulesSide implements Cloneable {
     private List<ProductionRuleSide> rules;
 
     public ProductionRulesSide() {
-        this.rules = new ArrayList<>();
+        this.rules = new ArrayList<ProductionRuleSide>();
     }
 
      public ProductionRulesSide(List<ProductionRuleSide> rules) {
         this.rules = rules;
     }
      public ProductionRulesSide(ProductionRuleSide rules) {
-        this.rules = new ArrayList<>();
+        this.rules = new ArrayList<ProductionRuleSide>();
         this.rules.add(rules);
     }
 
@@ -185,92 +183,4 @@ public class ProductionRulesSide implements Cloneable {
         }
         return false;
     }
-    
-    /**
-     * added with LR extension
-     * JB
-     */
-    public Symbol getFirst() {
-        return (rules.get(0)).getFirst();
-    }
-
-    /**
-     * added with LR extension
-     * JB
-     */   
-    public Symbol getSymbolAt(int pos) {
-        /*
-        List<Symbol> symbols = new ArrayList<Symbol>();
-        for(ProductionRuleSide oneRule : rules){
-            for(Symbol ruleSymbol : oneRule.getSymbols()) {
-                if (!symbols.contains(ruleSymbol)) {
-                    symbols.add(ruleSymbol);
-                }
-            }
-        }
-        return symbols.get(pos);
-        */
-        
-        return rules.get(0).getSymbolAt(pos);
-    }
-
-    /**
-     * added with LR extension
-     * JB
-     */
-    public boolean containsSymbol(Symbol symbol) {
-        Boolean contains = false;
-        for(ProductionRuleSide oneRule : rules){
-            if (oneRule.containsSymbol(symbol)) {
-                contains = true;
-            }
-        }
-        return contains;
-    }
-
-    /**
-     * added with LR extension
-     * JB
-     */
-    public Set<Symbol> getNonterminals() {
-        Set<Symbol> nonterminals = new HashSet<>();
-        for(ProductionRuleSide oneRule : rules){
-            for(Symbol ruleSymbol : oneRule.getSymbols()) {
-                if (!nonterminals.contains(ruleSymbol) &&
-                        (ruleSymbol.isNonterminal())) {
-                    nonterminals.add(ruleSymbol);
-                }
-            }
-        }
-        return nonterminals;
-    }
-    
-    /**
-     * added with LR extension
-     * JB
-     */
-    public List<Symbol> getSymbols() {
-        List<Symbol> symbols = new ArrayList<>();
-        for (ProductionRuleSide ruleSide : rules) {
-            for (Symbol symbol: ruleSide.getSymbols()) {
-                if (!symbols.contains(symbol)) {
-                    symbols.add(symbol);
-                }
-            }
-        }
-        return symbols;
-    }
-    
-    /**
-     * added with LR extension
-     * JB
-     */
-    public boolean isEpsilon() {
-        boolean epsilon = false;
-        for(ProductionRuleSide ruleSide: rules) {
-            epsilon = ruleSide.isEpsilon();
-        }
-        return epsilon;
-    }
 }
-
