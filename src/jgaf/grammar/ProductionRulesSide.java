@@ -56,6 +56,8 @@ public class ProductionRulesSide implements Cloneable {
         rules = new ArrayList<ProductionRuleSide>();
     }
 
+    
+    //TO DO - problem s epsilonom
     public void setRulesFromString(List<String> list, boolean right) {
         clear();
         

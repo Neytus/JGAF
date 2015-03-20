@@ -92,8 +92,17 @@ public class GrammarTableModel extends AbstractTableModel {
 
                 if (string.matches("[[a-zA-Z][\\s][\\|][\u03b5]]*")) {
 
-                    ProductionRulesSide valuelol = (ProductionRulesSide) getValueAt(row, column);
+                    /*
+                    JB 
+                    */
+                    //ProductionRulesSide valuelol = (ProductionRulesSide) getValueAt(row, column);
+                    
+                    System.out.println("prechod changeRulesSide: ");
+                    System.out.println(((ProductionRulesSide) getValueAt(row, column)).toString());
+                    
                     editor.changeRuleSide((ProductionRulesSide) getValueAt(row, column), string);
+                    
+                    System.out.println("________________________");
                 }
                 break;
             }

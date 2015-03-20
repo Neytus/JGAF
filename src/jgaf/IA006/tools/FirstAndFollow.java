@@ -12,9 +12,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import jgaf.IA006.grammar.Epsilon;
-import jgaf.IA006.grammar.Grammar;
-import jgaf.IA006.grammar.Symbol;
+import jgaf.IA006.grammar.LLEpsilon;
+import jgaf.IA006.grammar.LLGrammar;
+import jgaf.IA006.grammar.LLSymbol;
 
 /**
  *
@@ -24,7 +24,7 @@ public class FirstAndFollow implements FirstAndFollowI
 {
 
     @Override
-    public List<Symbol> kLengthPrefix(List<Symbol> word,int k) throws IllegalArgumentException
+    public List<LLSymbol> kLengthPrefix(List<LLSymbol> word,int k) throws IllegalArgumentException
     {
         if(k < 0)
         {
@@ -38,15 +38,15 @@ public class FirstAndFollow implements FirstAndFollowI
         if(k == 0)
         {
             checkForNonTerminal(word);
-            Symbol s = new Epsilon();
+            LLSymbol s = new LLEpsilon();
             return Arrays.asList(s);
         }
         
-        List<Symbol> result = new ArrayList<>();
+        List<LLSymbol> result = new ArrayList<>();
         
         if(isMadeOutOfEpsilons(word))
         {
-            Symbol s = new Epsilon();
+            LLSymbol s = new LLEpsilon();
             return Arrays.asList(s);
         }
         else
@@ -54,7 +54,7 @@ public class FirstAndFollow implements FirstAndFollowI
             checkForNonTerminal(word);
             
             
-            for(Symbol s : word)
+            for(LLSymbol s : word)
             {
                 if(result.size() == k)
                 {
@@ -74,7 +74,7 @@ public class FirstAndFollow implements FirstAndFollowI
     }
 
     @Override
-    public List<Symbol> concatenateWordWithPrefix(List<Symbol> word1, List<Symbol> word2, int k) 
+    public List<LLSymbol> concatenateWordWithPrefix(List<LLSymbol> word1, List<LLSymbol> word2, int k) 
     {
         if(word1 == null || word1.isEmpty() || word2 == null || word2.isEmpty())
         {
@@ -89,14 +89,14 @@ public class FirstAndFollow implements FirstAndFollowI
         {
             checkForNonTerminal(word1);
             checkForNonTerminal(word2);
-            Symbol s = new Epsilon();
+            LLSymbol s = new LLEpsilon();
             return Arrays.asList(s);
         }
         
         word1 = kLengthPrefix(word1, k);
         word2 = kLengthPrefix(word2, k);
         
-        List<Symbol> result = new ArrayList<>(word1);
+        List<LLSymbol> result = new ArrayList<>(word1);
         result.addAll(word2);
         
         result = kLengthPrefix(result, k);
@@ -105,7 +105,7 @@ public class FirstAndFollow implements FirstAndFollowI
     }
 
     @Override
-    public Set<List<Symbol>> concatenateSetsWithPrefix(Set<List<Symbol>> set1, Set<List<Symbol>> set2, int k) throws IllegalArgumentException
+    public Set<List<LLSymbol>> concatenateSetsWithPrefix(Set<List<LLSymbol>> set1, Set<List<LLSymbol>> set2, int k) throws IllegalArgumentException
     {
         if(k < 0)
         {
@@ -115,12 +115,12 @@ public class FirstAndFollow implements FirstAndFollowI
         {
             return new HashSet<>();
         }
-        Set<List<Symbol>> result = new HashSet<>();
+        Set<List<LLSymbol>> result = new HashSet<>();
         
         
-        for(List<Symbol> word1 : set1)
+        for(List<LLSymbol> word1 : set1)
         {
-            for(List<Symbol> word2 : set2)
+            for(List<LLSymbol> word2 : set2)
             {
                 result.add(concatenateWordWithPrefix(word1, word2, k));
             }
@@ -133,10 +133,10 @@ public class FirstAndFollow implements FirstAndFollowI
      * Method checks if word contains nonterminal. After first NonTerminal Symbol is found exception with position is thrown.
      * @param list word to be checked
      */
-    public static void checkForNonTerminal(List<Symbol> list)
+    public static void checkForNonTerminal(List<LLSymbol> list)
     {
         int i = 0;
-        for(Symbol s : list)
+        for(LLSymbol s : list)
         {
             i++;
             if(s.isNonterminal())
@@ -151,7 +151,7 @@ public class FirstAndFollow implements FirstAndFollowI
      * @param list to be checked
      * @return false if input word contains any NonTerminal symbol, true otherwise.
      */
-    private boolean isWord(List<Symbol> list)
+    private boolean isWord(List<LLSymbol> list)
     {
         try
         {
@@ -169,10 +169,10 @@ public class FirstAndFollow implements FirstAndFollowI
      * @param word to be checked
      * @return true if word is made out of epsilon(s), false otherwise
      */
-    private boolean isMadeOutOfEpsilons(List<Symbol> word)
+    private boolean isMadeOutOfEpsilons(List<LLSymbol> word)
     {
         checkForNonTerminal(word);
-        for(Symbol s : word)
+        for(LLSymbol s : word)
         {
             if(!s.isEpsilon())
             {
@@ -184,7 +184,7 @@ public class FirstAndFollow implements FirstAndFollowI
     }
     
     @Override
-    public Map<Symbol, Set<List<Symbol>>> first(Grammar g,int k) throws IllegalArgumentException 
+    public Map<LLSymbol, Set<List<LLSymbol>>> first(LLGrammar g,int k) throws IllegalArgumentException 
     {
         if(g == null)
         {
@@ -195,8 +195,8 @@ public class FirstAndFollow implements FirstAndFollowI
             throw new IllegalArgumentException("ERROR: k is lower than 0");
         }
         
-        Map<Symbol,Set<List<Symbol>>> current = new HashMap<>();
-        Map<Symbol,Set<List<Symbol>>> previous = new HashMap<>();
+        Map<LLSymbol,Set<List<LLSymbol>>> current = new HashMap<>();
+        Map<LLSymbol,Set<List<LLSymbol>>> previous = new HashMap<>();
         
         //pozreme sa ci gramatika nieco generuje
         // teda pre kazde pravidlo A-> PQRSTW, sa pozrieme ci P-W su neterminaly, alebo epsilon,
@@ -204,10 +204,10 @@ public class FirstAndFollow implements FirstAndFollowI
         // A-> bCd je 
         // FI3(A) = FI3(b) +_3 FI3(C) +_3 FI3(d)
         // FI3(A) = {b} +_3 FI3(C) +_3 {d}
-        for(Symbol key : g.getProductionRules().keySet())
+        for(LLSymbol key : g.getProductionRules().keySet())
         {
-            Set<List<Symbol>> temp = new HashSet<>();
-            for(List<Symbol> rRside : g.getProductionRules().get(key))
+            Set<List<LLSymbol>> temp = new HashSet<>();
+            for(List<LLSymbol> rRside : g.getProductionRules().get(key))
             {
                 if(isWord(rRside))
                 {
@@ -225,7 +225,7 @@ public class FirstAndFollow implements FirstAndFollowI
         
         boolean hasSomething = false;
         // urcite nastane a to vtedy ked neexistuje terminujuce kombinacia
-        for(Symbol lSide : current.keySet())
+        for(LLSymbol lSide : current.keySet())
         {
             if(!current.get(lSide).isEmpty())
             {
@@ -245,16 +245,16 @@ public class FirstAndFollow implements FirstAndFollowI
             //previous = (Map<Symbol,Set<List<Symbol>>>) ((HashMap<Symbol,Set<List<Symbol>>>) current).clone();
             previous = new HashMap<>(current);
             
-            for(Symbol key : g.getProductionRules().keySet())
+            for(LLSymbol key : g.getProductionRules().keySet())
             {
-                Set<List<Symbol>> temp = new HashSet<>();
-                for(List<Symbol> rSide : g.getProductionRules().get(key))
+                Set<List<LLSymbol>> temp = new HashSet<>();
+                for(List<LLSymbol> rSide : g.getProductionRules().get(key))
                 {
-                    Set<List<Symbol>> temp2 = new HashSet<>(); // spracovana cast
-                    Symbol eps = new Epsilon();
+                    Set<List<LLSymbol>> temp2 = new HashSet<>(); // spracovana cast
+                    LLSymbol eps = new LLEpsilon();
                     temp2.add(Arrays.asList(eps));
                     
-                    for(Symbol s : rSide)
+                    for(LLSymbol s : rSide)
                     {
                         temp2 = firstKHelp(s, temp2, previous, k);
                     }
@@ -276,9 +276,9 @@ public class FirstAndFollow implements FirstAndFollowI
      * @param k size of lookahead set
      * @return List of words as result of current process
      */
-    private Set<List<Symbol>> firstKHelp(Symbol toAdd,Set<List<Symbol>> done, Map<Symbol,Set<List<Symbol>>> previous, int k)
+    private Set<List<LLSymbol>> firstKHelp(LLSymbol toAdd,Set<List<LLSymbol>> done, Map<LLSymbol,Set<List<LLSymbol>>> previous, int k)
     {
-        Set<List<Symbol>> result = new HashSet<>();
+        Set<List<LLSymbol>> result = new HashSet<>();
         if(toAdd.isEpsilon() || toAdd.isTerminal())
         {
             result.add(new ArrayList<>(Arrays.asList(toAdd)));
@@ -291,7 +291,7 @@ public class FirstAndFollow implements FirstAndFollowI
     }
 
     @Override
-    public Set<List<Symbol>> first(List<Symbol> input,Grammar g,int k) throws IllegalArgumentException 
+    public Set<List<LLSymbol>> first(List<LLSymbol> input,LLGrammar g,int k) throws IllegalArgumentException 
     {
         if(input == null)
         {
@@ -309,13 +309,13 @@ public class FirstAndFollow implements FirstAndFollowI
         {
             throw new IllegalArgumentException("ERROR: given k is less than 0");
         }
-       Map<Symbol,Set<List<Symbol>>> fiSet = first(g, k);
-       Set<List<Symbol>> result = new HashSet<>();
-       Symbol eps = new Epsilon();
+       Map<LLSymbol,Set<List<LLSymbol>>> fiSet = first(g, k);
+       Set<List<LLSymbol>> result = new HashSet<>();
+       LLSymbol eps = new LLEpsilon();
        
        result.add(Arrays.asList(eps));
        
-       for(Symbol s : input)
+       for(LLSymbol s : input)
        {
            if(s.isNonterminal())
            {
@@ -323,7 +323,7 @@ public class FirstAndFollow implements FirstAndFollowI
            }
            else
            {
-               Set<List<Symbol>> temp = new HashSet<>();
+               Set<List<LLSymbol>> temp = new HashSet<>();
                temp.add(Arrays.asList(s));
                result = concatenateSetsWithPrefix(result, temp, k);
            }
@@ -336,7 +336,7 @@ public class FirstAndFollow implements FirstAndFollowI
     }
 
     @Override
-    public Map<Symbol, Set<List<Symbol>>> follow(Grammar g,int k) throws IllegalArgumentException 
+    public Map<LLSymbol, Set<List<LLSymbol>>> follow(LLGrammar g,int k) throws IllegalArgumentException 
     {
         if(g == null)
         {
@@ -347,26 +347,26 @@ public class FirstAndFollow implements FirstAndFollowI
             throw new IllegalArgumentException("Error: given k is less than 0");
         }
         //mapy pouzite pri induktivnim napocitavani
-        Map<Symbol, List<Set<List<Symbol>>>> previous = new LinkedHashMap<>();
-        Map<Symbol, List<Set<List<Symbol>>>> actualMap = new LinkedHashMap<>();
+        Map<LLSymbol, List<Set<List<LLSymbol>>>> previous = new LinkedHashMap<>();
+        Map<LLSymbol, List<Set<List<LLSymbol>>>> actualMap = new LinkedHashMap<>();
 
         //nacteme si z gramatiky pravidla a pocatecni symbol a vsechny neterminaly
-        Map<Symbol, Set<List<Symbol>>> rules = g.getProductionRules();
-        Symbol start = g.getRootSymbol();
-        Set<Symbol> nonTerminals = rules.keySet();
+        Map<LLSymbol, Set<List<LLSymbol>>> rules = g.getProductionRules();
+        LLSymbol start = g.getRootSymbol();
+        Set<LLSymbol> nonTerminals = rules.keySet();
 
         //inicializace - pocatecni naplneni mapy
-        Set<List<Symbol>> helpSetEmpty = new HashSet<>();
-        List<Symbol> arrEps = new ArrayList<>();
-        Symbol eps = new Epsilon();
-        Set<List<Symbol>> helpSetEps = new HashSet<>();
+        Set<List<LLSymbol>> helpSetEmpty = new HashSet<>();
+        List<LLSymbol> arrEps = new ArrayList<>();
+        LLSymbol eps = new LLEpsilon();
+        Set<List<LLSymbol>> helpSetEps = new HashSet<>();
         
         arrEps.add(eps);
         helpSetEps.add(arrEps);
 
-        for (Symbol actNonTerm : nonTerminals) 
+        for (LLSymbol actNonTerm : nonTerminals) 
         {
-            List<Set<List<Symbol>>> helpArr1 = new ArrayList<>();
+            List<Set<List<LLSymbol>>> helpArr1 = new ArrayList<>();
             if (actNonTerm.equals(start)) 
             {
                 for (int i = 0; i <= k; i++) 
@@ -399,20 +399,20 @@ public class FirstAndFollow implements FirstAndFollowI
             //pocitame tak dlouho, dokud nedojdeme k mnozine FO_k
             for (int i = 1; i <= k; i++) {
                 //mnozinu napocitavame pro vsechny neterminaly
-                for (Symbol actNonTerm : nonTerminals) 
+                for (LLSymbol actNonTerm : nonTerminals) 
                 {
                     //pomoci metody findRulesForFollow najdeme pravidla, ktera
                     //obsahuji dany neterminal na prave strane pravidla.
-                    Map<Symbol, Set<List<Symbol>>> rulesWhereIsActNonTerm =  findRulesForFollow(actNonTerm, rules);
+                    Map<LLSymbol, Set<List<LLSymbol>>> rulesWhereIsActNonTerm =  findRulesForFollow(actNonTerm, rules);
                     //nemusim se bat ze by tam neexistovalo zadne pravidlo,
                     //protoze je to redukovana gramatika
                     //v nasledujicim cyklu pocitame pro postupne pro vsechny
                     //nalezene pravidla
-                    for (Map.Entry<Symbol, Set<List<Symbol>>> actCouple : rulesWhereIsActNonTerm.entrySet()) 
+                    for (Map.Entry<LLSymbol, Set<List<LLSymbol>>> actCouple : rulesWhereIsActNonTerm.entrySet()) 
                     {
-                        Set<List<Symbol>> actSetOfRules = actCouple.getValue();
+                        Set<List<LLSymbol>> actSetOfRules = actCouple.getValue();
                         //prochazim vsechna pravidla
-                        for (List<Symbol> actRule : actSetOfRules) 
+                        for (List<LLSymbol> actRule : actSetOfRules) 
                         {
                             //musim pocitat pro vsechny vyskyty neterminalu
                             //v pravidle
@@ -423,14 +423,14 @@ public class FirstAndFollow implements FirstAndFollowI
                                 {
                                     //retezec za vyskytem je prazdny nebo
                                     //se v jednom kroce prepise na prazdny
-                                    List<Set<List<Symbol>>> helpArrSets =new ArrayList<>();
+                                    List<Set<List<LLSymbol>>> helpArrSets =new ArrayList<>();
                                     helpArrSets.addAll(actualMap.get(actNonTerm));
                                     //zkontrolujeme zda se neprepise na eps
                                     if (nullable(j, actRule, g)) 
                                     {
-                                        Set<List<Symbol>> followA = new HashSet<>();
+                                        Set<List<LLSymbol>> followA = new HashSet<>();
                                         followA.addAll(actualMap.get(actNonTerm).get(i));
-                                        Set<List<Symbol>> followB =new HashSet<>();
+                                        Set<List<LLSymbol>> followB =new HashSet<>();
                                         followB.addAll(actualMap.get(actCouple.getKey()).get(i));
 
                                         followA.addAll(followB);
@@ -440,24 +440,24 @@ public class FirstAndFollow implements FirstAndFollowI
                                     //na prazdny neprepise
                                     else 
                                     {
-                                        Set<List<Symbol>> followA =  new HashSet<>();
+                                        Set<List<LLSymbol>> followA =  new HashSet<>();
                                         followA.addAll((actualMap.get(actNonTerm)).get(i));
-                                        Set<List<Symbol>> followB = new HashSet<>();
+                                        Set<List<LLSymbol>> followB = new HashSet<>();
                                         followB.addAll((actualMap.get(actCouple.getKey())).get(i - 1));
                                         
-                                        List<Symbol> helpArr = new ArrayList<>();
+                                        List<LLSymbol> helpArr = new ArrayList<>();
 
                                         helpArr.addAll(actRule.subList(j + 1, actRule.size()));
                                         //Set<List<Symbol>> firstBeta =first_k(helpArr, g, i);
-                                        Set<List<Symbol>> firstBeta = first(helpArr, g, i);
+                                        Set<List<LLSymbol>> firstBeta = first(helpArr, g, i);
                                         //odstranime z mnoziny pravidlo epsilon
                                         firstBeta.remove(arrEps);
 
                                         //Set<ArrayList<Symbol>> concat = concatenatingSets_k(firstBeta, followB, i);
 
-                                        Set<List<Symbol>> concat = concatenateSetsWithPrefix(firstBeta, followB, i);
+                                        Set<List<LLSymbol>> concat = concatenateSetsWithPrefix(firstBeta, followB, i);
                                         
-                                        Set<List<Symbol>> pomocnaMnozina = new HashSet<>();
+                                        Set<List<LLSymbol>> pomocnaMnozina = new HashSet<>();
                                         //naplnime jednu mnozinu
                                         pomocnaMnozina.addAll(followA);
                                         pomocnaMnozina.addAll(concat);
@@ -474,9 +474,9 @@ public class FirstAndFollow implements FirstAndFollowI
             }
         }
        
-        Map<Symbol,Set<List<Symbol>>> result = new HashMap<>();
+        Map<LLSymbol,Set<List<LLSymbol>>> result = new HashMap<>();
         
-        for(Symbol s : g.getNonTerminals())
+        for(LLSymbol s : g.getNonTerminals())
         {
             result.put(s, actualMap.get(s).get(k));
         }
@@ -492,8 +492,8 @@ public class FirstAndFollow implements FirstAndFollowI
      * @return mapu pravidel, ve kterych je obsazeny vstupni neterminal
      * @throws IllegalArgumentException pri spatnych vstupnich datech
      */
-    public Map<Symbol, Set<List<Symbol>>> findRulesForFollow(
-            Symbol symb, Map<Symbol, Set<List<Symbol>>> rules) {
+    public Map<LLSymbol, Set<List<LLSymbol>>> findRulesForFollow(
+            LLSymbol symb, Map<LLSymbol, Set<List<LLSymbol>>> rules) {
 
         //kontroly vstupnich dat
         if(symb == null){
@@ -509,18 +509,18 @@ public class FirstAndFollow implements FirstAndFollowI
                     + "Pravidla jsou null");
         }
 
-        Set<Symbol> nonTerminals = rules.keySet();
-        Map<Symbol, Set<List<Symbol>>> helpMap = new LinkedHashMap<>();
+        Set<LLSymbol> nonTerminals = rules.keySet();
+        Map<LLSymbol, Set<List<LLSymbol>>> helpMap = new LinkedHashMap<>();
 
         //postupne prochazime vsechny neterminaly
-        for (Symbol actNonTerm : nonTerminals) 
+        for (LLSymbol actNonTerm : nonTerminals) 
         {
-            Set<List<Symbol>> actualSet =new  HashSet<>();
+            Set<List<LLSymbol>> actualSet =new  HashSet<>();
             actualSet.addAll(rules.get(actNonTerm));
-            Set<List<Symbol>> helpSet =new HashSet<>();
+            Set<List<LLSymbol>> helpSet =new HashSet<>();
 
             //prochazime jednotliva pravidla a zjistujeme zda v nich je hledany symbol
-            for (List<Symbol> actRule : actualSet) 
+            for (List<LLSymbol> actRule : actualSet) 
             {
                 if (actRule.contains(symb)) 
                 {
@@ -529,7 +529,7 @@ public class FirstAndFollow implements FirstAndFollowI
             }
             if(helpMap.containsKey(actNonTerm))
             {
-                Set<List<Symbol>> previousSet = helpMap.get(symb);
+                Set<List<LLSymbol>> previousSet = helpMap.get(symb);
                 helpSet.addAll(previousSet);
             }
             if(!helpSet.isEmpty())
@@ -540,20 +540,20 @@ public class FirstAndFollow implements FirstAndFollowI
         return helpMap;
     }
     
-    public boolean nullable(int i, List<Symbol> rule, Grammar gramm) {
+    public boolean nullable(int i, List<LLSymbol> rule, LLGrammar gramm) {
         if (i >= (rule.size() - 1)) {
             return true;
         }
 
-        Symbol eps = new Epsilon();
-        List<Symbol> helpArrEps = new ArrayList<>();
+        LLSymbol eps = new LLEpsilon();
+        List<LLSymbol> helpArrEps = new ArrayList<>();
         helpArrEps.add(eps);
 
-        List<Symbol> helpArr = new ArrayList<>();
+        List<LLSymbol> helpArr = new ArrayList<>();
 
         helpArr.addAll(rule.subList(i + 1, rule.size()));
 
-        Set<List<Symbol>> first_1 = first(helpArr, gramm, 1);
+        Set<List<LLSymbol>> first_1 = first(helpArr, gramm, 1);
         
         if (first_1.contains(helpArrEps)) 
         {
@@ -563,16 +563,16 @@ public class FirstAndFollow implements FirstAndFollowI
     }
 
     @Override
-    public Set<List<Symbol>> firstAlpha(
-                                   List<Symbol> rule,
-                                   Map<Symbol,Set<List<Symbol>>> firstSet,
+    public Set<List<LLSymbol>> firstAlpha(
+                                   List<LLSymbol> rule,
+                                   Map<LLSymbol,Set<List<LLSymbol>>> firstSet,
                                    int k) {
-        Set<List<Symbol>> result = new HashSet<>();
+        Set<List<LLSymbol>> result = new HashSet<>();
         
         
         if(rule.size() == 1 && rule.get(0).isEpsilon())
         {
-            Symbol eps = new Epsilon();
+            LLSymbol eps = new LLEpsilon();
             result.add(Arrays.asList(eps));
             return result;
         }
@@ -588,11 +588,11 @@ public class FirstAndFollow implements FirstAndFollowI
         
         for(int i = 1; i < rule.size(); i++)
         {
-            Set<List<Symbol>> temp = new HashSet<>(result);
+            Set<List<LLSymbol>> temp = new HashSet<>(result);
             result.clear();
             if(rule.get(i).isTerminal())
             {
-                Set<List<Symbol>> ttemp = new HashSet<>();
+                Set<List<LLSymbol>> ttemp = new HashSet<>();
                 ttemp.add(Arrays.asList(rule.get(i)));
                 result.addAll(concatenateSetsWithPrefix(temp, ttemp, k));
             }

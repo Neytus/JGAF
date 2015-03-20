@@ -153,7 +153,13 @@ public class GrammarEditor extends Editor {
         }
     }
 
+    /*
+    JB - chyba s | pravidlami 
+    */
     public List<String> stringToList(String string){
+        
+        System.out.println("prechod metodou stringToList: ");
+        
         List<String> list = new ArrayList<String>();
         String[] newStrings = string.split("\\|");
         for(int i=0; i<newStrings.length; i++){
@@ -163,15 +169,24 @@ public class GrammarEditor extends Editor {
                 continue;
             }
             
-            else if(newOne.equals("eps") && (list.contains("eps") || list.contains(MathConstants.EPSILON))){
+            else if(newOne.equals(MathConstants.EPSILON) && (list.contains("eps") || list.contains(MathConstants.EPSILON))){
+                
+                System.out.println("ëpsilon sa nasiel a ignoruje sa");
                 
                 continue;
             }
                 
             else if(newOne.length()>0 && !list.contains(newOne)){
+                
+                System.out.println("GrammarEditor: pridava sa do listu " + newOne);
+                
                 list.add(newOne);
             }
         }
+        
+        System.out.println(list);
+        System.out.println("_______________________");
+        
         return list;
     }
 

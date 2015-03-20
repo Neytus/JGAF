@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 import jgaf.IA006.tools.Tools;
-import jgaf.IA006.grammar.Epsilon;
-import jgaf.IA006.grammar.Grammar;
-import jgaf.IA006.grammar.Symbol;
+import jgaf.IA006.grammar.LLEpsilon;
+import jgaf.IA006.grammar.LLGrammar;
+import jgaf.IA006.grammar.LLSymbol;
 
 /**
  * to iste co llpda
@@ -23,17 +23,17 @@ import jgaf.IA006.grammar.Symbol;
  */
 public class SLLPDA 
 {
-    private Stack<Symbol> stack = new Stack<>();
-    private List<Symbol> inputWord = new ArrayList<>();
+    private Stack<LLSymbol> stack = new Stack<>();
+    private List<LLSymbol> inputWord = new ArrayList<>();
     private SLLTable table;    
     private StringBuilder sb;
     private StackTableModel stm;
 
-    public Stack<Symbol> getStack() {
+    public Stack<LLSymbol> getStack() {
         return stack;
     }
 
-    public List<Symbol> getInputWord() {
+    public List<LLSymbol> getInputWord() {
         return inputWord;
     }
     
@@ -45,35 +45,35 @@ public class SLLPDA
         sb.append("<tr><td>(</td><td>q ,</td><td>&#949;</td><td>,</td><td>&#949;</td><td>)</td><td>&#09;ACCEPT</td></tr>");
     }
     
-    public SLLPDA(SLLTable table, Grammar g, StringBuilder sb, StackTableModel stm)
+    public SLLPDA(SLLTable table, LLGrammar g, StringBuilder sb, StackTableModel stm)
     {
         this.stm = stm;
         this.table = table;
         this.sb = sb;
-        Set<List<Symbol>> temp = new HashSet<>();
-        Symbol eps = new Epsilon();
+        Set<List<LLSymbol>> temp = new HashSet<>();
+        LLSymbol eps = new LLEpsilon();
         temp.add(Arrays.asList(eps));
-        Symbol s = g.getRootSymbol();
+        LLSymbol s = g.getRootSymbol();
         stack.push(s);
         stm.setup(stack);
         sb.append("<table>");
     }
     
-    public void setWord(List<Symbol> inputWord)
+    public void setWord(List<LLSymbol> inputWord)
     {
         this.inputWord = inputWord;
     }
     
     public void doStep()
     {        
-        Symbol top = null;
+        LLSymbol top = null;
         try
         {   // popnem symbol
             top = stack.pop();
         }
         catch(EmptyStackException ese)
         {
-            Symbol eps = new Epsilon();
+            LLSymbol eps = new LLEpsilon();
             if(inputWord.equals(Arrays.asList(eps)))
             {
                 inputWord = new ArrayList<>();
@@ -97,7 +97,7 @@ public class SLLPDA
             else if(top.isNonterminal())
             {   // je to neterminal takze si oznacim ci nastane match
                 boolean hasSwitched = false;
-                for(List<Symbol> prefix : table.colsAsList())
+                for(List<LLSymbol> prefix : table.colsAsList())
                 {   // beham cez stlpce ale len tie co vyhovuju dlzke
                     // pretoze ak by slovo bolo aa, a ja sa spytam na prefix bbc
                     // tak to crashne na indexExcpetion. ak sedi prefix tak cekujem ci su rovnake symboly
@@ -107,7 +107,7 @@ public class SLLPDA
                         {   // je to ok takze vezmem pravu stranu pravidla do pomocneho zasobnika
                             //TState ts = table.getValueAtPosition(top, prefix);
                             SLLState state = table.getValueAtPosition(top, prefix);
-                            List<Symbol> toStack = new ArrayList<>(state.getRule());
+                            List<LLSymbol> toStack = new ArrayList<>(state.getRule());
                             buildOutputRow(top, state.getRule(),false);
                             if(toStack.size() == 1 && toStack.get(0).isEpsilon())
                             {
@@ -154,7 +154,7 @@ public class SLLPDA
     }
     
     
-    private void buildOutputRow(Symbol top,List<Symbol> rule,boolean simple)
+    private void buildOutputRow(LLSymbol top,List<LLSymbol> rule,boolean simple)
     {
         sb.append("<tr><td>(</td><td>q ,</td><td>").append(Tools.buildWord(inputWord)).append("</td><td>,</td><td>")
                 .append(top).append(Tools.buildWordReversed(stack)).append("</td><td>)</td><td>");

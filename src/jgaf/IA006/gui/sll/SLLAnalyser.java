@@ -9,8 +9,8 @@ import jgaf.IA006.gui.ll.*;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
-import jgaf.IA006.grammar.Grammar;
-import jgaf.IA006.grammar.Symbol;
+import jgaf.IA006.grammar.LLGrammar;
+import jgaf.IA006.grammar.LLSymbol;
 import jgaf.IA006.tools.FirstAndFollow;
 import jgaf.IA006.tools.GrammarFactory;
 
@@ -20,10 +20,10 @@ import jgaf.IA006.tools.GrammarFactory;
  */
 public class SLLAnalyser extends javax.swing.JDialog 
 {
-    private List<Symbol> inputWord;
+    private List<LLSymbol> inputWord;
     private SLLPDA pda;
     private StringBuilder sb = new StringBuilder();
-    private Grammar g;
+    private LLGrammar g;
     private SLLTable table;
     
     
@@ -38,7 +38,7 @@ public class SLLAnalyser extends javax.swing.JDialog
     }
     
     
-    public void setup(SLLTable table, Grammar g)
+    public void setup(SLLTable table, LLGrammar g)
     {
         this.g = g;
         pda = new SLLPDA(table, g,sb,getSTM());

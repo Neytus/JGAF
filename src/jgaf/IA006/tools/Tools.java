@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
-import jgaf.IA006.grammar.Symbol;
+import jgaf.IA006.grammar.LLSymbol;
 import jgaf.IA006.gui.ll.TSymbol;
 
 /**
@@ -95,14 +95,14 @@ public class Tools
      * @return empty string is list is null or does not contains any symbol, otherwise 
      * it returns String representation of list.
      */
-    public static String buildWord(List<Symbol> list)
+    public static String buildWord(List<LLSymbol> list)
     {
         if(list == null)
         {
             return "";
         }
         StringBuilder sb = new StringBuilder("");
-        for(Symbol s : list)
+        for(LLSymbol s : list)
         {
             sb.append(s);
         }
@@ -116,14 +116,14 @@ public class Tools
      * @param list list of symbols from which we build output word
      * @return String representation of input word
      */
-    public static String buildHTMLWordT(List<Symbol> list)
+    public static String buildHTMLWordT(List<LLSymbol> list)
     {
         if(list == null)
         {
             return "";
         }
         StringBuilder sb = new StringBuilder("");
-        for(Symbol s: list)
+        for(LLSymbol s: list)
         {
             if(s instanceof TSymbol)
             {
@@ -144,12 +144,12 @@ public class Tools
      * we sort them by size. If two words have same size words are sorted by lexicographical order.
      * @return 
      */
-    public static Comparator<List<Symbol>> getColumnComparator()
+    public static Comparator<List<LLSymbol>> getColumnComparator()
     {
-        return new Comparator<List<Symbol>>() 
+        return new Comparator<List<LLSymbol>>() 
         {
             @Override
-            public int compare(List<Symbol> o1,List<Symbol> o2) 
+            public int compare(List<LLSymbol> o1,List<LLSymbol> o2) 
             {
                 int result = o2.size() - o1.size();
 
@@ -168,7 +168,7 @@ public class Tools
      * @param list
      * @return 
      */
-    public static String buildWord(Stack<Symbol> list)
+    public static String buildWord(Stack<LLSymbol> list)
     {
         return buildWord(new ArrayList<>(list));
     }
@@ -180,7 +180,7 @@ public class Tools
      * @param list stack
      * @return String representation of stack
      */
-    public static String buildWordReversed(Stack<Symbol> list)
+    public static String buildWordReversed(Stack<LLSymbol> list)
     {
         StringBuilder sb = new StringBuilder();
         
@@ -197,10 +197,10 @@ public class Tools
      * @param set set of words
      * @return string representation of given set.
      */
-    public static String buildWordsInSets(Set<List<Symbol>> set)
+    public static String buildWordsInSets(Set<List<LLSymbol>> set)
     {
         StringBuilder sb = new StringBuilder("{");
-        for(List<Symbol> word : set)
+        for(List<LLSymbol> word : set)
         {
             sb.append(buildWord(word));
             sb.append(",");

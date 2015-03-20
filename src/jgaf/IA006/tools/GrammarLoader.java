@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jgaf.IA006.grammar.Grammar;
+import jgaf.IA006.grammar.LLGrammar;
 
 /**
  *
@@ -23,7 +23,7 @@ import jgaf.IA006.grammar.Grammar;
 public class GrammarLoader 
 {
     private File f;
-    private Grammar g = new Grammar();
+    private LLGrammar g = new LLGrammar();
     
     public GrammarLoader(File f)
     {
@@ -31,7 +31,7 @@ public class GrammarLoader
     }
     
     
-    public Grammar processFile()
+    public LLGrammar processFile()
     {
         Path p = Paths.get(f.getAbsolutePath());
         List<String> lines = new ArrayList<>();

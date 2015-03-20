@@ -8,6 +8,7 @@ package jgaf.grammar;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import jgaf.Constants.MathConstants;
 
 /**
  *
@@ -87,7 +88,10 @@ public class ProductionRuleSide implements Cloneable, Comparable<ProductionRuleS
     
     public void addSymbolsFromString(String string, boolean right) {
         string = string.trim();
-        if(string.equals("eps")  && right){
+        if((string.equals("eps") || (string.equals(MathConstants.EPSILON)))  && right){
+            
+            System.out.println("ProductionRuleSide:addSymbolsFromString - pridany epsilon: " + string);
+            
             addEpsilon(string);
         }
         else{

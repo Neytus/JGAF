@@ -114,15 +114,24 @@ public class XMLExporter {
         for (Symbol symbol : grammar.getTerminals()) {
             if(symbol.isEpsilon()){
                 /*
+                    JB 
+                */
+                /*
                 Element elemState = elemTerminals.addElement("epsilon");
                 elemState.addText(symbol.getName());
-                        */
+                */
             }else{
                 Element elemState = elemTerminals.addElement("terminal");
                 elemState.addText(symbol.getName());
+                
+                /**
+                 *  JB 
+                 */
+                System.out.println("XMLExporter: added terminal symbol: " + symbol.toString());
+                         
             }            
         }
-
+        System.out.println("grammar terminals: " + grammar.getTerminals().toString());
 
         Element elemStart = grammarElem.addElement("startNonterminal");
         if(grammar.getStartNonterminal() != null) {

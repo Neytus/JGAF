@@ -114,7 +114,14 @@ public class Grammar implements Representation {
     public SortedSet<Symbol> getTerminals() {
         SortedSet<Symbol> symbols = new TreeSet<Symbol>();
         for (Symbol symbol: getSymbols()) {
+            /*
             if(symbol.isTerminal() || symbol.isEpsilon()) {
+                symbols.add(symbol);
+            }*/
+            /**
+             * JB 
+             */
+            if(symbol.isTerminal()) {
                 symbols.add(symbol);
             }
         }

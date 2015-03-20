@@ -69,7 +69,7 @@ public class MainFrame extends javax.swing.JFrame {
 
 
         /*
-        JB commentaried
+        JB 
         */
         //FSAutomatonEditor faEditor = (FSAutomatonEditor) Environment.getInstance().getEditorHandler().createEditor("FA");
     }

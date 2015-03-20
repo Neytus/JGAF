@@ -12,8 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import jgaf.IA006.tools.FirstAndFollow;
 import jgaf.IA006.tools.FirstAndFollowI;
-import jgaf.IA006.grammar.Grammar;
-import jgaf.IA006.grammar.Symbol;
+import jgaf.IA006.grammar.LLGrammar;
+import jgaf.IA006.grammar.LLSymbol;
 import jgaf.IA006.gui.ll.LLChecker;
 import jgaf.IA006.tools.GrammarLoader;
 
@@ -23,10 +23,10 @@ import jgaf.IA006.tools.GrammarLoader;
  */
 public class GrammarLoaderFrame extends javax.swing.JPanel {
 
-    private Grammar g;
+    private LLGrammar g;
     private int k;
-    private java.util.Map<Symbol, java.util.Set<List<Symbol>>> fiSet;
-    private java.util.Map<Symbol, java.util.Set<List<Symbol>>> foSet;
+    private java.util.Map<LLSymbol, java.util.Set<List<LLSymbol>>> fiSet;
+    private java.util.Map<LLSymbol, java.util.Set<List<LLSymbol>>> foSet;
     private GrammarLoader gl;
     private String llCheck = "Check grammar for LL({0})";
     private String sllCheck = "Check grammar for SLL({0})";

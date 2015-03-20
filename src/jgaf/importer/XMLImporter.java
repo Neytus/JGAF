@@ -419,6 +419,18 @@ public class XMLImporter {
                 ProcedureParameter parameter = new ProcedureParameter();
                 parameter.setDescription(description);
                 descriptor.addParameter(parameter);
+            
+                //PARAMETER WITH FORCED OPTIONS, added with lr extension
+                List optionNodes = element.selectNodes("poptions/poption");
+                if (!optionNodes.isEmpty()){
+                    ArrayList<String> forcedOptions = new ArrayList<String>();
+                    Iterator oiterator = optionNodes.iterator();
+                while(oiterator.hasNext()) {
+                    Node name =(Node) oiterator.next();
+                    forcedOptions.add(name.getText());
+                }
+                    parameter.setForcedOptions(forcedOptions);
+                }
             }
             //OUTPUT REPRESENTATION
             Node outputNode = procedureElem.selectSingleNode("output");

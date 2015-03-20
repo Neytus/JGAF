@@ -10,7 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import jgaf.IA006.tools.Tools;
-import jgaf.IA006.grammar.Symbol;
+import jgaf.IA006.grammar.LLSymbol;
 
 /**
  *
@@ -19,7 +19,7 @@ import jgaf.IA006.grammar.Symbol;
 public class LLTable 
 {    
     
-    List<List<Symbol>> cols = new ArrayList<>();
+    List<List<LLSymbol>> cols = new ArrayList<>();
     List<TSymbol> rows = new ArrayList<>();
     TState[][] table;
     
@@ -28,7 +28,7 @@ public class LLTable
         table = new TState[rows][cols];
     }
     
-    public void addValue(TState state,TSymbol row, List<Symbol> cols)
+    public void addValue(TState state,TSymbol row, List<LLSymbol> cols)
     {
         if(this.cols.indexOf(cols) == -1)
         {   //prvok tu este nie je
@@ -43,7 +43,7 @@ public class LLTable
         table[rows.indexOf(row)][this.cols.indexOf(cols)] = state;
     }
     
-    public TSymbol getSymbolFor(Symbol s, Set<List<Symbol>> lfollow)
+    public TSymbol getSymbolFor(LLSymbol s, Set<List<LLSymbol>> lfollow)
     {
         for(TSymbol ts : rows)
         {
@@ -60,9 +60,9 @@ public class LLTable
     public void sortColumns()
     {
         TState[][] temp = new TState[table.length][table[0].length];
-        List<List<Symbol>> sortedCols = new ArrayList<>(cols);
+        List<List<LLSymbol>> sortedCols = new ArrayList<>(cols);
         Collections.sort(sortedCols,comparator);
-        for(List<Symbol> column:sortedCols)
+        for(List<LLSymbol> column:sortedCols)
         {
             int oldPosition = cols.indexOf(column);
             int newPosition = sortedCols.indexOf(column);
@@ -87,7 +87,7 @@ public class LLTable
         return rows;
     }
     
-    public List<List<Symbol>> colsAsList()
+    public List<List<LLSymbol>> colsAsList()
     {
         return cols;
     }
@@ -106,7 +106,7 @@ public class LLTable
     }
 
 
-    public TState getValueAtPosition(Symbol s, List<Symbol> prefix)
+    public TState getValueAtPosition(LLSymbol s, List<LLSymbol> prefix)
     {
         return getValueAtPosition(cols.indexOf(prefix),rows.indexOf(s));
     }
@@ -207,10 +207,10 @@ public class LLTable
         return sb.toString();
     }
     
-    private Comparator<List<Symbol>> comparator = new Comparator<List<Symbol>>() 
+    private Comparator<List<LLSymbol>> comparator = new Comparator<List<LLSymbol>>() 
     {
         @Override
-        public int compare(List<Symbol> o1,List<Symbol> o2) 
+        public int compare(List<LLSymbol> o1,List<LLSymbol> o2) 
         {
             int result = o2.size() - o1.size();
             

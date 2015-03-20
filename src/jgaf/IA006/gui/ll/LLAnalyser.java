@@ -8,8 +8,8 @@ import java.util.EmptyStackException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
-import jgaf.IA006.grammar.Grammar;
-import jgaf.IA006.grammar.Symbol;
+import jgaf.IA006.grammar.LLGrammar;
+import jgaf.IA006.grammar.LLSymbol;
 import jgaf.IA006.tools.FirstAndFollow;
 import jgaf.IA006.tools.GrammarFactory;
 
@@ -19,10 +19,10 @@ import jgaf.IA006.tools.GrammarFactory;
  */
 public class LLAnalyser extends javax.swing.JDialog 
 {
-    private List<Symbol> inputWord;
+    private List<LLSymbol> inputWord;
     private LLPDA pda;
     private StringBuilder sb = new StringBuilder();
-    private Grammar g;
+    private LLGrammar g;
     private LLTable table;
     
     
@@ -42,7 +42,7 @@ public class LLAnalyser extends javax.swing.JDialog
      * @param table already computed ll table
      * @param g input grammar
      */
-    public void setup(LLTable table, Grammar g)
+    public void setup(LLTable table, LLGrammar g)
     {
         this.g = g;
         pda = new LLPDA(table, g,sb,getSTM());

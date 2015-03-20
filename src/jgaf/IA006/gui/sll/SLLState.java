@@ -5,30 +5,30 @@
 package jgaf.IA006.gui.sll;
 
 import java.util.List;
-import jgaf.IA006.grammar.Symbol;
+import jgaf.IA006.grammar.LLSymbol;
 
 /**
  *
  * @author Empt
  */
 public class SLLState {
-    Symbol tHead;
-    List<Symbol> rule;
+    LLSymbol tHead;
+    List<LLSymbol> rule;
 
-    public Symbol gettHead() {
+    public LLSymbol gettHead() {
         return tHead;
     }
 
-    public void settHead(Symbol tHead) {
+    public void settHead(LLSymbol tHead) {
         this.tHead = tHead;
     }
 
-    public List<Symbol> getRule() {
+    public List<LLSymbol> getRule() {
         return rule;
     }
 
     public void setRule(
-                        List<Symbol> rule) {
+                        List<LLSymbol> rule) {
         this.rule = rule;
     }
     
