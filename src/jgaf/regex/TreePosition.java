@@ -10,5 +10,5 @@ package jgaf.regex;
  * @author hanis
  */
 public enum TreePosition {
-    ROOT, LEFT_CHILD, RIGHT_CHILD, LEAF
+    ROOT, LEFT_CHILD, RIGHT_CHILD, LEAF, CHILD
 }

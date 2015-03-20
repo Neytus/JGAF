@@ -11,10 +11,8 @@ import jgaf.lrextension.guitools.ActionTableModel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,18 +21,12 @@ import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.table.JTableHeader;
 import jgaf.Constants.MathConstants;
-import jgaf.lrextension.guitools.CustomProcedureToolbar;
 
-import jgaf.grammar.Grammar;
 import jgaf.lrextension.guitools.ActionTable;
-import jgaf.lrextension.guitools.DynamicallyColorableTable;
 import jgaf.lrextension.guitools.PeachTableRenderer;
 import jgaf.lrextension.guitools.GUIPrep;
 import jgaf.lrextension.guitools.GotoTable;
-import jgaf.lrextension.guitools.MinSizedTable;
-import jgaf.lrextension.guitools.SteppedProcedure;
 import jgaf.lrextension.procedures.ParserTablesCalc;
-import jgaf.procedure.DefaultProcedureLogger;
 
 /**
  *

@@ -15,7 +15,7 @@ public class ProcedureParameter {
 
     private String description;
     private String text;
-    
+
     //added with lr extension
     private List<String> forcedOptions;
     private boolean hasForcedOptions;
@@ -39,7 +39,7 @@ public class ProcedureParameter {
         this.text = text;
     }
 
-
+    
     //added with lr extension
     public boolean hasForcedOptions(){
         return hasForcedOptions;

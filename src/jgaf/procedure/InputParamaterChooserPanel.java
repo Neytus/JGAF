@@ -25,7 +25,6 @@ public class InputParamaterChooserPanel extends javax.swing.JPanel implements Pa
     
     public InputParamaterChooserPanel(ProcedureParameter parameter) {
         this.parameter = parameter;
-        System.out.println("yeah");
         initComponents();
         initMyComponents();
         centerDialog();

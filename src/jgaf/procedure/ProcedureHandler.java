@@ -7,25 +7,18 @@ package jgaf.procedure;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
-import javax.swing.ProgressMonitor;
-import javax.swing.SwingWorker;
 import jgaf.Representation;
 import jgaf.environment.Environment;
 import jgaf.gui.FrameTool;
 import jgaf.gui.MainFrame;
 import jgaf.gui.ProcedureFrame;
-import jgaf.lrextension.ProgressWorker;
 import jgaf.register.ProcedureRegister;
 
 
@@ -41,7 +34,7 @@ public class ProcedureHandler {
     private ProcedureRegister procedureRegister;
 
     private Procedure currentProcedure;
-    
+
     public ProcedureHandler(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         procedures = new ArrayList<Procedure>();
@@ -53,6 +46,7 @@ public class ProcedureHandler {
     }
 
     public ProcedureRegister getProcedureRegister() {
+        //System.out.println("procedury "+procedureRegister.toString());
         return procedureRegister;
     }
 
@@ -163,6 +157,7 @@ public class ProcedureHandler {
 
     public Procedure createProcedure(ProcedureDescriptor descriptor) {
         Procedure procedure = null;
+        //System.out.println("descriptor je : "+descriptor.toString());
         try {
             try {
                 //editor = (Editor) Class.forName("jgaf.automaton.fa.FSAutomatonEditor").newInstance();
@@ -179,44 +174,10 @@ public class ProcedureHandler {
         return procedure;
     }
 
-    public void createAndShowNewProcedure( ProcedureDescriptor descriptor) throws WrongProcedureInputException{
-       
-//        class ProcedureComputation extends ProgressWorker<Procedure> {
-//            private Procedure procedure;
-//            public ProcedureComputation(Procedure procedure) {
-//                super(mainFrame.getDesktop());
-//                this.procedure=procedure;
-//            }
-//
-//            @Override
-//            protected Procedure doInBackground()   {
-//             setProg(1);
-//               
-//                    
-//                procedure.create(); 
-//             
-//            return procedure;
-//            }
-//        
-//            @Override
-//            public void done(){
-//                try {
-//                   
-//                    showProcedureWindow(get());
-//                    setProg(100);
-//                } catch (InterruptedException ex) {
-//                    
-//                } catch (ExecutionException ex) {
-//                    
-//                }
-//                  catch (CancellationException e ) {
-//                    
-//                }
-//            }
-//        }
-        
+    public void createAndShowNewProcedure(ProcedureDescriptor descriptor) throws WrongProcedureInputException {
         Procedure procedure = createProcedure(descriptor);
-                Representation[] inputRepresentations = descriptor.getInputRepresentationArray();
+
+        Representation[] inputRepresentations = descriptor.getInputRepresentationArray();
         String[] parameters = descriptor.getParametersArray();
         Representation outputRepresentation = null;
         if (procedure.hasOutput()) {
@@ -249,20 +210,11 @@ public class ProcedureHandler {
             } else {
                 throw new WrongProcedureInputException(representationCheck);
             }
-            
-            
-             
-              
         }
-        
-        
-        
-         procedure.create();  
-              showProcedureWindow(procedure);
-        
-//        
-//        ProcedureComputation pc=new ProcedureComputation(procedure);
-//        pc.startWithProgress();
+
+        procedure.create();
+
+        showProcedureWindow(procedure);
     }
 
     public void closingProcedure(Procedure procedure) {

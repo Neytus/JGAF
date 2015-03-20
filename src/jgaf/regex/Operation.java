@@ -94,4 +94,35 @@ public final class Operation {
         return op.equals("*") || op.equals(".") || op.equals("+");
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Operation other = (Operation) obj;
+        if (this.type != other.type) {
+            return false;
+        }
+        if (this.priority != other.priority) {
+            return false;
+        }
+        if (this.arity != other.arity) {
+            return false;
+        }
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+    
+    
 }

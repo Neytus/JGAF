@@ -4,15 +4,10 @@
  */
 package jgaf.lrextension.procedures;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
-import jgaf.grammar.ProductionRule;
+import jgaf.grammar.ProductionRules;
 
 /**
  *
@@ -115,7 +110,7 @@ public class SameActionItems {
         }
     }
     
-    public ProductionRule reduceBy(){
+    public ProductionRules reduceBy(){
     return items.get(0).getRule();
     
     }

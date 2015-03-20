@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/69/trunk/JGAF/src/jgaf/regex
+END
+RegularExpressionTextArea.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/80/trunk/JGAF/src/jgaf/regex/RegularExpressionTextArea.java
+END
+Operation.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/69/trunk/JGAF/src/jgaf/regex/Operation.java
+END
+RegularExpresionType.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/69/trunk/JGAF/src/jgaf/regex/RegularExpresionType.java
+END
+RegularExpressionFace.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/85/trunk/JGAF/src/jgaf/regex/RegularExpressionFace.java
+END
+RegularExpression.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/84/trunk/JGAF/src/jgaf/regex/RegularExpression.java
+END
+TreePosition.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/73/trunk/JGAF/src/jgaf/regex/TreePosition.java
+END
+CreationOutput.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/84/trunk/JGAF/src/jgaf/regex/CreationOutput.java
+END
+RegularExpressionEditor.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/92/trunk/JGAF/src/jgaf/regex/RegularExpressionEditor.java
+END
+WrongExpressionException.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/73/trunk/JGAF/src/jgaf/regex/WrongExpressionException.java
+END
+RegularExpressionEditorToolbar.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/84/trunk/JGAF/src/jgaf/regex/RegularExpressionEditorToolbar.java
+END

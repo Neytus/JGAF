@@ -4,8 +4,6 @@
  */
 package jgaf.lrextension.procedures;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author g

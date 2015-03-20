@@ -69,27 +69,30 @@ public class ParserTablesCalc {
         
     }
 
-    private void noLookaheadActionTable(){
-    WString epsilon=FiFoUtils.createEpsilonStr();  //new WString(); //
-    actionTColumns =new ArrayList<WString>() ;   
-    actionTColumns.add(epsilon);
-    actionRep = new HashMap<Integer, HashMap<WString, SameActionItems>>();
-    
-    for (LinkedHashSet<Item> State : iaRep.get()) {
-    HashMap<WString, SameActionItems> tableLine = new HashMap<WString, SameActionItems>();
-    actionRep.put(iaRep.get().indexOf(State), tableLine);
-    
-    for (Item item : State) {
+    private void noLookaheadActionTable() {
+        WString epsilon = FiFoUtils.createEpsilonStr();  //new WString(); //
+        actionTColumns = new ArrayList<WString>();
+        actionTColumns.add(epsilon);
+        actionRep = new HashMap<Integer, HashMap<WString, SameActionItems>>();
+
+        for (LinkedHashSet<Item> State : iaRep.get()) {
+            HashMap<WString, SameActionItems> tableLine = new HashMap<WString, SameActionItems>();
+            actionRep.put(iaRep.get().indexOf(State), tableLine);
+
+            for (Item item : State) {
                 if (!item.needsClosure()) {
-                    if (tableLine.containsKey(epsilon)){
-                           if (!tableLine.get(epsilon).add(item)){conflict=true;}
-                            
-                    }else{
-                            tableLine.put(epsilon, new SameActionItems(item));
-                            
-                        }}
+                    if (tableLine.containsKey(epsilon)) {
+                        if (!tableLine.get(epsilon).add(item)) {
+                            conflict = true;
+                        }
+
+                    } else {
+                        tableLine.put(epsilon, new SameActionItems(item));
+
+                    }
                 }
-    }
+            }
+        }
     }
     
     private void calcMoreKActionTable() {

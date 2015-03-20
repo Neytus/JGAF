@@ -8,16 +8,15 @@ import java.awt.Color;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import jgaf.lrextension.WString;
-import jgaf.grammar.Nonterminal;
-import jgaf.grammar.ProductionRule;
+import jgaf.grammar.ProductionRules;
 import jgaf.grammar.Symbol;
+import jgaf.lrextension.WString;
 /**
  *
  * @author g
  */
 public class Item {
-    private  ProductionRule rule;
+    private  ProductionRules rule;
     private  Set<WString> locFo;
     private  int position ;
     private  int toItemSet;
@@ -27,7 +26,7 @@ public class Item {
     public Item(){
     }
     
-    public Item(ProductionRule rule,int position,Set<WString> locFo){
+    public Item(ProductionRules rule,int position,Set<WString> locFo){
     this.rule=rule;  
     this.position=position;
     
@@ -37,7 +36,7 @@ public class Item {
     decolor();
     }
 
-    public Item(ProductionRule rule,int position){
+    public Item(ProductionRules rule,int position){
     this.rule=rule;  
     this.position=position;
     this.toItemSet=-1;
@@ -54,7 +53,8 @@ public class Item {
     }
     
     public boolean dotInRange(){
-    return rule.getRightHandSide().size()>position;
+        //return rule.getRightHandSide().size()>position;
+        return rule.getRightHandSide().getRules().get(0).size()>position;
     }
     
     public Symbol atDot(){
@@ -70,7 +70,8 @@ public class Item {
     public WString toRead(){
     
         if (isShiftable()){
-            List<Symbol> subList= rule.getRightHandSide().getSymbols().subList(position+1, rule.getRightHandSide().getSymbols().size());
+            //List<Symbol> subList= rule.getRightHandSide().getSymbols().subList(position+1, rule.getRightHandSide().getSymbols().size());
+            List<Symbol> subList= rule.getRightHandSide().getRules().get(0).getSymbols().subList(position+1, rule.getRightHandSide().getSymbols().size());
             WString r = new WString(subList);
             return r;}
         else return null;
@@ -79,14 +80,15 @@ public class Item {
     public WString allToRead(){
     
         if (isShiftable()){
-           List<Symbol> subList= rule.getRightHandSide().getSymbols().subList(position, rule.getRightHandSide().getSymbols().size());
+            //List<Symbol> subList= rule.getRightHandSide().getSymbols().subList(position, rule.getRightHandSide().getSymbols().size());
+           List<Symbol> subList= rule.getRightHandSide().getRules().get(0).getSymbols().subList(position, rule.getRightHandSide().getSymbols().size());
         WString r = new WString(subList);
         return r ;}
         else return null;
     }
     
     public boolean needsClosure(){
-    return dotInRange() && atDot().isNonterminal() ;
+        return dotInRange() && atDot().isNonterminal();
     }
  
     public Set<WString> getLocFo() {
@@ -105,11 +107,11 @@ public class Item {
         this.position = position;
     }
 
-    public ProductionRule getRule() {
+    public ProductionRules getRule() {
         return rule;
     }
 
-    public void setRule(ProductionRule rule) {
+    public void setRule(ProductionRules rule) {
         this.rule = rule;
     }
 
@@ -172,10 +174,18 @@ public class Item {
     }
     
     public String getRuleStr(){
+        
         String s=
         rule.getRightHandSide().toString().substring(0,position)
         + "."+rule.getRightHandSide().toString().substring(position);
         return (rule.getLeftHandSide()+"->"+s);
+        
+        /*
+        String s=
+        rule.getRightHandSide().getRules().get(0).toString().substring(0,position)
+        + "."+rule.getRightHandSide().getRules().get(0).toString().substring(position);
+        return (rule.getLeftHandSide()+"->"+s);
+        */
     }
     
     public String getLocFoStr(){

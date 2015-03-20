@@ -25,9 +25,6 @@ import jgaf.lrextension.guitools.GUIPrep;
 import jgaf.lrextension.guitools.GotoTable;
 import jgaf.lrextension.guitools.PeachTableRenderer;
 import jgaf.lrextension.guitools.SteppedProcedure;
-import com.google.common.collect.Lists;
-import java.util.Iterator;
-import jgaf.grammar.Symbol;
 import jgaf.lrextension.procedures.ParseStep;
 import jgaf.lrextension.guitools.ParseStepsTable;
 import jgaf.lrextension.guitools.ParseTableModel;
@@ -108,7 +105,7 @@ public class ParserPanel extends JPanel implements SteppedProcedure {
                     break;
                 case ACCEPT:
                     sb.append("\t\tnext action is ACCEPT because this is the first rule of augmented grammar \n");
-                    sb.append("\t\toutput sequence of trasformation rules: "+ Lists.reverse(currentLastStep.getRules()));
+                    //sb.append("\t\toutput sequence of trasformation rules: "+ Lists.reverse(currentLastStep.getRules()));
                     break;
                 case ERRORR:
                     sb.append("\t\tnext action is ERROR\n");

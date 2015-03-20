@@ -8,11 +8,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import jgaf.lrextension.WString;
 import jgaf.grammar.Grammar;
-import jgaf.grammar.ProductionRule;
-import jgaf.grammar.ProductionRuleSide;
+import jgaf.grammar.ProductionRules;
 import jgaf.grammar.Symbol;
+import jgaf.lrextension.WString;
 
 /**
  *
@@ -109,10 +108,10 @@ public class ParserSimCalc {
     }
 
     public ParseStep createReducedStep(ParseStep step,
-                                       ProductionRule rule) {
+                                       ProductionRules rule) {
         int ruleLenght = 0;
-        if (!rule.getRightHandSide().isEpsilon()) {
-            ruleLenght = rule.getRightHandSide().size();
+        if (!rule.getRightHandSide().getRules().get(0).isEpsilon()) {
+            ruleLenght = rule.getRightHandSide().getRules().get(0).size();
         }
 
         List<Integer> newAuto = (step.getAuto().subList(0, step.getAuto().size() - ruleLenght));
@@ -126,7 +125,7 @@ public class ParserSimCalc {
 
 
         newStack.add(topNewStack);
-        List<ProductionRule> newRules = step.getRules();
+        List<ProductionRules> newRules = step.getRules();
         newRules.add(rule);
         return new ParseStep(newAuto, newStack, newInput, newRules,k);
     }

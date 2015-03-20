@@ -7,9 +7,12 @@ package jgaf.grammar;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
+import jgaf.Constants.MathConstants;
 import jgaf.Representation;
 import jgaf.editor.Editor;
 import jgaf.automaton.fa.undo.UndoRedoHandler;
@@ -120,36 +123,93 @@ public class GrammarEditor extends Editor {
         this.grammarRepsresenter = grammarRepsresenter;
     }
 
+    //TO DO - pravdepodobne chyba
+    public void changeRuleSide(ProductionRulesSide ruleSide, String newRuleSideString) {
+        Grammar oldGrammar = (Grammar) grammar.clone();
+        ProductionRulesSide oldRuleSide = (ProductionRulesSide) ruleSide.clone();
+        
+        List<String> list = new ArrayList<String>();
+        list.addAll(stringToList(newRuleSideString));
 
+        ruleSide.setRulesFromString(list, true);
 
+        ProductionRulesSide newRuleSide = (ProductionRulesSide) ruleSide.clone();
+
+        if(!oldRuleSide.equals(newRuleSide)) {
+            undoHandler.addStep(new ChangeGrammar(oldGrammar, grammar, this));
+            repaint();
+        }
+    }
+    
     public void changeRuleSide(ProductionRuleSide ruleSide, String newRuleSideString) {
         Grammar oldGrammar = (Grammar) grammar.clone();
         ProductionRuleSide oldRuleSide = (ProductionRuleSide) ruleSide.clone();
-        ruleSide.setSymbolsFromString(newRuleSideString);
+        ruleSide.clear();
+        ruleSide.setSymbolsFromString(newRuleSideString, false);
         ProductionRuleSide newRuleSide = (ProductionRuleSide) ruleSide.clone();
         if(!oldRuleSide.equals(newRuleSide)) {
-            //undoHandler.addStep(new ChangeRuleSideStep(ruleSide, oldRuleSide, newRuleSide));
             undoHandler.addStep(new ChangeGrammar(oldGrammar, grammar, this));
             repaint();
         }
     }
 
+    /*
+    JB - chyba s | pravidlami 
+    */
+    public List<String> stringToList(String string){
+        
+        System.out.println("prechod metodou stringToList: ");
+        
+        List<String> list = new ArrayList<String>();
+        String[] newStrings = string.split("\\|");
+        for(int i=0; i<newStrings.length; i++){
+            String newOne = newStrings[i].trim();
+           
+            if(!newOne.matches("[a-zA-Z]*|[\u03b5]")){
+                continue;
+            }
+            
+            else if(newOne.equals(MathConstants.EPSILON) && (list.contains("eps") || list.contains(MathConstants.EPSILON))){
+                
+                System.out.println("ëpsilon sa nasiel a ignoruje sa");
+                
+                continue;
+            }
+                
+            else if(newOne.length()>0 && !list.contains(newOne)){
+                
+                System.out.println("GrammarEditor: pridava sa do listu " + newOne);
+                
+                list.add(newOne);
+            }
+        }
+        
+        System.out.println(list);
+        System.out.println("_______________________");
+        
+        return list;
+    }
 
-    public void setRightSideToEpsilon(ProductionRuleSide ruleSide) {
+    public void setRightSideToEpsilon(ProductionRulesSide ruleSide) {
         Grammar oldGrammar = (Grammar) grammar.clone();
-        if(!ruleSide.isEpsilon()) {
+        boolean control = false; 
+        for(ProductionRuleSide oneRule : ruleSide.getRules()){
+            if(oneRule.isEpsilon()) control = true;            
+        }
+        if(!control) {
             ruleSide.clear();
-            ruleSide.addSymbol(new Symbol());
-            //undoHandler.addStep(new ChangeRuleSideStep(ruleSide, oldRuleSide, newRuleSide));
+            ProductionRuleSide epsRule = new ProductionRuleSide();
+            epsRule.addSymbol(new Symbol());
+            ruleSide.addRule(epsRule);
             undoHandler.addStep(new ChangeGrammar(oldGrammar, grammar, this));
             repaint();
         }
     }
 
-
-
+    public void clearRuleSide(ProductionRulesSide ruleSide) {
+        changeRuleSide(ruleSide, "");
+    }
     
-
     public void clearRuleSide(ProductionRuleSide ruleSide) {
         changeRuleSide(ruleSide, "");
     }
@@ -159,17 +219,15 @@ public class GrammarEditor extends Editor {
     public void addEmptyProductionRule() {
         Grammar oldGrammar = (Grammar) grammar.clone();
         undoHandler.addStep(new ChangeGrammar(oldGrammar, grammar, this));
-        //undoHandler.addStep(new AddEmptyRuleStep(grammar));
-        grammar.addRule(new ProductionRule());
+        grammar.addRule(new ProductionRules());
         repaint();
     }
 
 
-    public void removeRule(ProductionRule rule) {
+    public void removeRule(ProductionRules rule) {
         Grammar oldGrammar = (Grammar) grammar.clone();
         int index = grammar.removeRule(rule);
         if (index != -1) {
-            //undoHandler.addStep(new RemoveRuleStep(grammar, rule, index));
             undoHandler.addStep(new ChangeGrammar(oldGrammar, grammar, this));
             repaint();
         }
@@ -180,7 +238,6 @@ public class GrammarEditor extends Editor {
         Grammar oldGrammar = (Grammar) grammar.clone();
         int number = grammar.removeEmptyRules();
         if(number > 0) {
-            //undoHandler.addStep(new RemoveEmptyRulesStep(grammar, number));
             undoHandler.addStep(new ChangeGrammar(oldGrammar, grammar, this));
             repaint();
         }        

@@ -4,10 +4,7 @@
  */
 package jgaf.lrextension.procedures;
 
-import jgaf.lrextension.procedurefaces.FiFoProcedureFace;
 import com.rits.cloning.Cloner;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,22 +14,17 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 import jgaf.Constants.MathConstants;
-import jgaf.lrextension.CFGUtils;
-import jgaf.lrextension.FiFoUtils;
-import jgaf.lrextension.WString;
 import jgaf.Representation;
 import jgaf.grammar.Grammar;
 import jgaf.grammar.ProductionRuleSide;
 import jgaf.grammar.Symbol;
+import jgaf.lrextension.CFGUtils;
+import jgaf.lrextension.FiFoUtils;
 import jgaf.lrextension.StringOutputUtils;
+import jgaf.lrextension.WString;
+import jgaf.lrextension.procedurefaces.FiFoProcedureFace;
 import jgaf.procedure.Procedure;
 
 /**
@@ -56,6 +48,14 @@ public class FiFoProcedure extends Procedure {
 
     @Override
     public String checkInputRepresentation() {
+        
+        
+        /*
+        JB
+        */
+        g.normalize();
+        
+        
         if (!g.hasStartNonterminal()) {
             return "Grammar has not selected starting nonterminal";
         }

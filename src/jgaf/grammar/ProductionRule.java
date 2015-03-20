@@ -187,14 +187,11 @@ public class ProductionRule implements Comparable<ProductionRule>, Cloneable {
         obj.setRightHandSide((ProductionRuleSide) getRightHandSide().clone());
         return obj;
     }
-
-
-
-
-/**
+   
+    /**
      * 
      * added with LRextension
-     */
+     */ 
     public boolean containsSymbol(Symbol symbol){
         return leftHandSide.containsSymbol(symbol) || rightHandSide.containsSymbol(symbol);
     }
@@ -202,11 +199,12 @@ public class ProductionRule implements Comparable<ProductionRule>, Cloneable {
     /**
      * 
      * added with LRextension
-     */
+     */   
     public  Set<Symbol> getNonterminals(){
-        Set<Symbol> nonTerminals = new HashSet<Symbol>();
+        Set<Symbol> nonTerminals = new HashSet<>();
         nonTerminals.addAll(leftHandSide.getNonterminals());
         nonTerminals.addAll(rightHandSide.getNonterminals());
         return nonTerminals;  
-    }
+    } 
+    
 }

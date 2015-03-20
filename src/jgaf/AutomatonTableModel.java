@@ -32,5 +32,5 @@ public class AutomatonTableModel extends AbstractTableModel {
     //    if()
         return automaton.getStates().get(rowIndex);
     }
-
+    
 }

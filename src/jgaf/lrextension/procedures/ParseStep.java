@@ -6,10 +6,10 @@ package jgaf.lrextension.procedures;
 
 import java.util.ArrayList;
 import java.util.List;
+import jgaf.grammar.ProductionRules;
+import jgaf.grammar.Symbol;
 import jgaf.lrextension.FiFoUtils;
 import jgaf.lrextension.WString;
-import jgaf.grammar.ProductionRule;
-import jgaf.grammar.Symbol;
 
 /**
  *
@@ -19,7 +19,7 @@ public class ParseStep {
     private List<Integer> auto;
     private List<Symbol> stack;
     private WString input;
-    private List<ProductionRule> rules;
+    private List<ProductionRules> rules;
     private PAction nextAction;
     private int k;
     public enum PAction {SHIFT, REDUCE, CONFLICT, ERRORR, ACCEPT ,SHIFTERR, MOREINPUTERR}
@@ -30,7 +30,7 @@ public class ParseStep {
     
     public ParseStep(List<Integer> auto,
                      List<Symbol> stack,
-                     WString input,List<ProductionRule> rules,int k) {
+                     WString input,List<ProductionRules> rules,int k) {
         this.auto = auto;
         this.stack = stack;
         this.input = input;
@@ -39,12 +39,12 @@ public class ParseStep {
     }
 
     public ParseStep(WString input,int k) {
-        auto = new ArrayList<Integer>();
+        auto = new ArrayList<>();
         auto.add(0);
-        stack = new ArrayList<Symbol>();
+        stack = new ArrayList<>();
         this.input = input;
         this.k=k;
-        rules = new ArrayList<ProductionRule>();
+        rules = new ArrayList<>();
     }
     
 //    public ParseStep createShiftedStep(int stateToShift){
@@ -120,8 +120,8 @@ public class ParseStep {
         return new WString(input);
     }
 
-    public List<ProductionRule> getRules() {
-        return new ArrayList<ProductionRule>(rules);
+    public List<ProductionRules> getRules() {
+        return new ArrayList<ProductionRules>(rules);
     }
 
     public PAction getNextAction() {

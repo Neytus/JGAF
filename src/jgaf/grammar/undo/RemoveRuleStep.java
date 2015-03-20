@@ -7,7 +7,7 @@ package jgaf.grammar.undo;
 
 import jgaf.automaton.fa.undo.UndoRedoStep;
 import jgaf.grammar.Grammar;
-import jgaf.grammar.ProductionRule;
+import jgaf.grammar.ProductionRules;
 
 /**
  *
@@ -16,10 +16,10 @@ import jgaf.grammar.ProductionRule;
 public class RemoveRuleStep implements UndoRedoStep {
 
     private int index;
-    private ProductionRule rule;
+    private ProductionRules rule;
     private Grammar grammar;
 
-    public RemoveRuleStep(Grammar grammar, ProductionRule rule, int index) {
+    public RemoveRuleStep(Grammar grammar, ProductionRules rule, int index) {
         this.index = index;
         this.rule = rule;
         this.grammar = grammar;

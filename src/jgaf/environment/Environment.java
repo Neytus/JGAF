@@ -90,27 +90,6 @@ public class Environment {
         return projectPath;
     }
 
-
-    
-//    private void setProjectPath() throws URISyntaxException {
-//    //    projectPath = getClass().getResource("config").toString();
-//    //    System.out.println(projectPath);
-//        //        projectPath = new File(PropertiesHandler.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent();
-////        System.out.println("--" + projectPath + "--");
-////        if(projectPath.endsWith("build")) {
-////            projectPath = projectPath.substring(0, projectPath.length() - 5);
-////        } else {
-////            projectPath = projectPath + File.separator;
-////        }
-//    }
-
-    
-    
-//    private  String getProjectPath() {
-//        return projectPath;
-//    }
-
-
     private String getProcedureRegisterPath() {
         //return getClass().getResource("/config/register/procedures.xml").getFile();
         //return "config/register/procedures.xml";
@@ -129,15 +108,6 @@ public class Environment {
         //return "config/config.properties";
         return getProjectPath() + PROPERTIES_FILE_PATH;
     }
-
-
-//    public String getPDAPropertiesPath() {
-//        //return getClass().getResource("/config/pda/applicationDesign.xml").getFile();
-//        return "config/pda/applicationDesign.xml";
-//    }
-
-
-
 
 
     private ProcedureRegister createProcedureRegister() throws DocumentException {
@@ -171,12 +141,6 @@ public class Environment {
     public ProcedureHandler getProcedureHandler() {
         return procedureHandler;
     }
-
-//    public EditorRegister getEditorRegister() {
-//        return editorRegister;
-//    }
-
-
 
 
 }

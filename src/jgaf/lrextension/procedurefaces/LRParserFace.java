@@ -8,13 +8,6 @@ import java.awt.BorderLayout;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.plaf.metal.MetalTabbedPaneUI;
-import javax.swing.table.TableModel;
-import jgaf.lrextension.WString;
-
-import jgaf.grammar.Grammar;
-import jgaf.grammar.ProductionRuleSide;
-import jgaf.procedure.DefaultProcedureLogger;
 
 
 /**

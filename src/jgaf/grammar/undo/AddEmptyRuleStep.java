@@ -7,7 +7,7 @@ package jgaf.grammar.undo;
 
 import jgaf.automaton.fa.undo.UndoRedoStep;
 import jgaf.grammar.Grammar;
-import jgaf.grammar.ProductionRule;
+import jgaf.grammar.ProductionRules;
 
 /**
  *
@@ -27,7 +27,7 @@ public class AddEmptyRuleStep implements UndoRedoStep {
     }
 
     public void redo() {
-        grammar.addRule(new ProductionRule());
+        grammar.addRule(new ProductionRules());
     }
 
     public String type() {

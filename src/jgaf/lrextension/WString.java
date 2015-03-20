@@ -4,11 +4,9 @@
  */
 package jgaf.lrextension;
 
-import java.awt.List;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import javax.xml.transform.Result;
 import jgaf.grammar.Symbol;
 
 /**

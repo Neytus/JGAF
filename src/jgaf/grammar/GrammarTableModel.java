@@ -4,6 +4,8 @@
  */
 package jgaf.grammar;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -21,7 +23,6 @@ public class GrammarTableModel extends AbstractTableModel {
 
     public GrammarTableModel(GrammarEditor editor) {
         this.editor = editor;
-        //System.out.println(grammar.toString());
     }
 
     public Grammar getGrammar() {
@@ -53,18 +54,22 @@ public class GrammarTableModel extends AbstractTableModel {
     public Object getValueAt(int row, int column) {
         switch (column) {
             case LEFT_SIDE_INDEX:
-                return getGrammar().getProductionRules().get(row).getLeftHandSide();
+                return getGrammar().getProductionRulesType2().get(row).getLeftHandSide();
             case RIGHT_SIDE_INDEX:
-                return getGrammar().getProductionRules().get(row).getRightHandSide();
+                return getGrammar().getProductionRulesType2().get(row).getRightHandSide();
             case ARROW_INDEX:
                 return ARROW;
             default:
                 return new Object();
         }
     }
-
-    public ProductionRule getProductionRule(int index) {
-        return getGrammar().getProductionRules().get(index);
+    
+    public ProductionRules getProductionRule(int index) {
+        return getGrammar().getProductionRulesType2().get(index);
+    }
+    
+    public ProductionRules getProductionRuleType2(int index) {
+        return getGrammar().getProductionRulesType2().get(index);
     }
 
     @Override
@@ -73,10 +78,31 @@ public class GrammarTableModel extends AbstractTableModel {
                            int column) {
         switch (column) {
             case LEFT_SIDE_INDEX:
+                {
+                String string = (String) value;
+
+                if (string.matches("[a-zA-Z]*")) {
+
+                    editor.changeRuleSide((ProductionRuleSide) getValueAt(row, column), string);
+                }
+                break;
+            }
             case RIGHT_SIDE_INDEX: {
                 String string = (String) value;
-                if (string.matches("[a-zA-Z]*")) {
-                    editor.changeRuleSide((ProductionRuleSide) getValueAt(row, column), string);
+
+                if (string.matches("[[a-zA-Z][\\s][\\|][\u03b5]]*")) {
+
+                    /*
+                    JB 
+                    */
+                    //ProductionRulesSide valuelol = (ProductionRulesSide) getValueAt(row, column);
+                    
+                    System.out.println("prechod changeRulesSide: ");
+                    System.out.println(((ProductionRulesSide) getValueAt(row, column)).toString());
+                    
+                    editor.changeRuleSide((ProductionRulesSide) getValueAt(row, column), string);
+                    
+                    System.out.println("________________________");
                 }
                 break;
             }
@@ -85,7 +111,7 @@ public class GrammarTableModel extends AbstractTableModel {
         }
         fireTableCellUpdated(row, column);
     }
-
+    
     @Override
     public boolean isCellEditable(int row, int column) {
         if (column == ARROW_INDEX) {
@@ -99,7 +125,6 @@ public class GrammarTableModel extends AbstractTableModel {
         switch (column) {
             case LEFT_SIDE_INDEX:
             case RIGHT_SIDE_INDEX:
-            //       return ProductionRuleSide.class;
             case ARROW_INDEX:
                 return String.class;
             default:
@@ -108,7 +133,7 @@ public class GrammarTableModel extends AbstractTableModel {
     }
 
     public void addEmptyRow() {
-        getGrammar().addRule(new ProductionRule());
+        getGrammar().addRule(new ProductionRules());
         fireTableRowsInserted(getRowCount(), getRowCount());
     }
 }

@@ -36,13 +36,14 @@ public class AutoState extends LinkedHashSet<Item>{
     
     
     public Item getSimilarItem(Item i){
-    for (Iterator it = this.iterator(); it.hasNext();) {
+        for (Iterator it = this.iterator(); it.hasNext();) {
             Item item =(Item) it.next();
             if (i.getRule().equals(item.getRule()) && item.getPosition()==i.getPosition()) {
                 return item;
             }
     
-    }return null;}
+        }return null;
+    }
     
     
     
@@ -50,14 +51,15 @@ public class AutoState extends LinkedHashSet<Item>{
         if (!containsItem(i)) {
             
             return add(i);
-        }else { return getSimilarItem(i).getLocFo().addAll(i.getLocFo());        
+        }else { 
+            return getSimilarItem(i).getLocFo().addAll(i.getLocFo());        
         }
     }
     
     public void unifySimilar(){
-          AutoState tempState= new AutoState(this);
-         this.clear();
-          for (Iterator<Item> it = tempState.iterator(); it.hasNext();) {
+        AutoState tempState= new AutoState(this);
+        this.clear();
+        for (Iterator<Item> it = tempState.iterator(); it.hasNext();) {
             Item item = it.next();
             this.addItem(item);
         }

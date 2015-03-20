@@ -5,10 +5,8 @@
 
 package jgaf.exporter;
 
-import java.awt.Font;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.List;
@@ -17,8 +15,8 @@ import jgaf.automaton.State;
 import jgaf.automaton.Transition;
 import jgaf.automaton.fa.CanvasLabel;
 import jgaf.grammar.Grammar;
-import jgaf.grammar.ProductionRule;
 import jgaf.grammar.ProductionRuleSide;
+import jgaf.grammar.ProductionRules;
 import jgaf.grammar.Symbol;
 import jgaf.regex.RegularExpression;
 import org.dom4j.Document;
@@ -114,10 +112,26 @@ public class XMLExporter {
 
         Element elemTerminals = grammarElem.addElement("terminals");
         for (Symbol symbol : grammar.getTerminals()) {
-            Element elemState = elemTerminals.addElement("terminal");
-            elemState.addText(symbol.getName());
+            if(symbol.isEpsilon()){
+                /*
+                    JB 
+                */
+                /*
+                Element elemState = elemTerminals.addElement("epsilon");
+                elemState.addText(symbol.getName());
+                */
+            }else{
+                Element elemState = elemTerminals.addElement("terminal");
+                elemState.addText(symbol.getName());
+                
+                /**
+                 *  JB 
+                 */
+                System.out.println("XMLExporter: added terminal symbol: " + symbol.toString());
+                         
+            }            
         }
-
+        System.out.println("grammar terminals: " + grammar.getTerminals().toString());
 
         Element elemStart = grammarElem.addElement("startNonterminal");
         if(grammar.getStartNonterminal() != null) {
@@ -125,16 +139,19 @@ public class XMLExporter {
         }
 
         Element elemProductions = grammarElem.addElement("productions");
-        for (ProductionRule rule : grammar.getProductionRules()) {
-            Element elemRule = elemProductions.addElement("rule");
-            Element elemLeft = elemRule.addElement("leftHandSide");
-            for (Symbol symbol : rule.getLeftHandSide().getSymbols()) {
-                Element elemSymbol = elemLeft.addElement("symbol").addText(symbol.getName());
-            }
-
-            Element elemRight = elemRule.addElement("rightHandSide");
-            for (Symbol symbol : rule.getRightHandSide().getSymbols()) {
-                Element elemSymbol = elemRight.addElement("symbol").addText(symbol.getName());
+        for (ProductionRules rule : grammar.getProductionRulesType2()) {
+            List<Symbol> leftHandSide = rule.getLeftHandSide().getSymbols();
+            List<ProductionRuleSide> rightHandSide = rule.getRightHandSide().getRules();
+            for(ProductionRuleSide oneRule : rightHandSide){
+                Element elemRule = elemProductions.addElement("rule");
+                Element elemLeft = elemRule.addElement("leftHandSide");
+                for (Symbol symbol : leftHandSide) {
+                    Element elemSymbol = elemLeft.addElement("symbol").addText(symbol.getName());
+                }
+                Element elemRight = elemRule.addElement("rightHandSide");
+                for (Symbol symbol : oneRule.getSymbols()) {
+                    Element elemSymbol = elemRight.addElement("symbol").addText(symbol.getName());
+                }
             }
         }
 
