@@ -8,9 +8,9 @@ package jgaf.IA006.grammar;
  * This class serves as representation of Epsilon symbol.
  * @author Empt
  */
-public class Epsilon extends Symbol
+public class LLEpsilon extends LLSymbol
 {
-    public Epsilon() 
+    public LLEpsilon() 
     {
         super(SymbolType.EPSILON);
     } 

@@ -13,9 +13,9 @@ import java.util.Set;
 import javax.swing.SwingWorker;
 import jgaf.IA006.tools.FirstAndFollow;
 import jgaf.IA006.tools.FirstAndFollowI;
-import jgaf.IA006.grammar.Grammar;
+import jgaf.IA006.grammar.LLGrammar;
 import jgaf.IA006.tools.Tools;
-import jgaf.IA006.grammar.Symbol;
+import jgaf.IA006.grammar.LLSymbol;
 
 /**
  *
@@ -23,13 +23,13 @@ import jgaf.IA006.grammar.Symbol;
  */
 public class SLLChecker extends javax.swing.JDialog {
 
-    private Map<Symbol,Set<List<Symbol>>> foSet;
-    private Map<Symbol,Set<List<Symbol>>> fiSet;
+    private Map<LLSymbol,Set<List<LLSymbol>>> foSet;
+    private Map<LLSymbol,Set<List<LLSymbol>>> fiSet;
     private FirstAndFollowI faf = new FirstAndFollow();
-    private Map<Symbol,List<SLLRow>> map = new HashMap<>();
+    private Map<LLSymbol,List<SLLRow>> map = new HashMap<>();
     private boolean hasConflict = false;
-    private Set<List<Symbol>> prefixes = new HashSet<>();
-    private Grammar g;
+    private Set<List<LLSymbol>> prefixes = new HashSet<>();
+    private LLGrammar g;
     private int k;
     private SLLTable table;
     
@@ -41,13 +41,13 @@ public class SLLChecker extends javax.swing.JDialog {
      */
     private void build()
     {      
-        for(Symbol s : g.getProductionRules().keySet())
+        for(LLSymbol s : g.getProductionRules().keySet())
         {
             List<SLLRow> roaws = new ArrayList<>();
             
-            for(List<Symbol> rSide : g.getProductionRules().get(s))
+            for(List<LLSymbol> rSide : g.getProductionRules().get(s))
             {
-                Set<List<Symbol>> temp1 = faf.concatenateSetsWithPrefix(faf.firstAlpha(rSide, fiSet, k), foSet.get(s), k);
+                Set<List<LLSymbol>> temp1 = faf.concatenateSetsWithPrefix(faf.firstAlpha(rSide, fiSet, k), foSet.get(s), k);
                 prefixes.addAll(temp1);
                 SLLRow sRow = new SLLRow();
                 sRow.setFifo(temp1);
@@ -72,9 +72,9 @@ public class SLLChecker extends javax.swing.JDialog {
         sb.append(k);
         sb.append("</sub>(&alpha;) &#8745 FO<sub>")
                 .append(k).append("</sub>(A)</td></tr>");
-        Set<List<Symbol>> fifos = new HashSet<>();
-        Set<List<Symbol>> is = new HashSet<>();
-        for(Symbol q : map.keySet())
+        Set<List<LLSymbol>> fifos = new HashSet<>();
+        Set<List<LLSymbol>> is = new HashSet<>();
+        for(LLSymbol q : map.keySet())
         {
             
             for(SLLRow raw : map.get(q))
@@ -88,7 +88,7 @@ public class SLLChecker extends javax.swing.JDialog {
                 sb.append("<td style=\"border-left-style: dotted; border-left-width: 1px\">").append(Tools.buildWordsInSets(raw.getFifo())).append("</td>");
                 sb.append("</tr>");
                 
-                for(List<Symbol> w : raw.getFifo())
+                for(List<LLSymbol> w : raw.getFifo())
                 {
                     SLLState state = new SLLState();
                     state.setRule(raw.getRule());
@@ -109,7 +109,7 @@ public class SLLChecker extends javax.swing.JDialog {
     }
     
     
-    public void setUp(Grammar g, int k,Map<Symbol,Set<List<Symbol>>> fiSet, Map<Symbol,Set<List<Symbol>>> foSet)
+    public void setUp(LLGrammar g, int k,Map<LLSymbol,Set<List<LLSymbol>>> fiSet, Map<LLSymbol,Set<List<LLSymbol>>> foSet)
     {
         this.g = g;
         this.k = k;

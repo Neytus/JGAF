@@ -8,9 +8,9 @@ package jgaf.IA006.grammar;
  * This class servers as representation of Terminal symbol.
  * @author Empt
  */
-public class Terminal extends Symbol
+public class LLTerminal extends LLSymbol
 {
-    public Terminal(String value)
+    public LLTerminal(String value)
     {
         super(value, SymbolType.TERMINAL);
     }

@@ -7,8 +7,8 @@ package jgaf.IA006.tools;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import jgaf.IA006.grammar.Grammar;
-import jgaf.IA006.grammar.Symbol;
+import jgaf.IA006.grammar.LLGrammar;
+import jgaf.IA006.grammar.LLSymbol;
 
 /**
  *
@@ -86,7 +86,7 @@ public interface FirstAndFollowI
      * @return first k symbols of input words if input is proper
      * @throws IllegalArgumentException if k &lt; 0, word contains at least one NonTerminal
      */
-    List<Symbol> kLengthPrefix(List<Symbol> word, int k) throws IllegalArgumentException;
+    List<LLSymbol> kLengthPrefix(List<LLSymbol> word, int k) throws IllegalArgumentException;
     
     
     /**
@@ -145,7 +145,7 @@ public interface FirstAndFollowI
      * @return concatenated first word with second one with length k
      * @throws IllegalArgumentException if k &l; , or input words are not made of terminals
      */
-    List<Symbol> concatenateWordWithPrefix(List<Symbol> word1, List<Symbol> word2, int k) throws IllegalArgumentException;
+    List<LLSymbol> concatenateWordWithPrefix(List<LLSymbol> word1, List<LLSymbol> word2, int k) throws IllegalArgumentException;
     
     
     
@@ -158,7 +158,7 @@ public interface FirstAndFollowI
      * @return Sets of words that are concatenated as defined by definition 17.
      * @throws IllegalArgumentException 
      */
-    Set<List<Symbol>> concatenateSetsWithPrefix(Set<List<Symbol>> set1, Set<List<Symbol>> set2, int k) throws IllegalArgumentException;
+    Set<List<LLSymbol>> concatenateSetsWithPrefix(Set<List<LLSymbol>> set1, Set<List<LLSymbol>> set2, int k) throws IllegalArgumentException;
     
     
     /**
@@ -168,7 +168,7 @@ public interface FirstAndFollowI
      * @return follow set
      * @throws IllegalArgumentException if grammar is null or k is less than 0
      */
-    Map<Symbol,Set<List<Symbol>>> first(Grammar g, int k) throws IllegalArgumentException;
+    Map<LLSymbol,Set<List<LLSymbol>>> first(LLGrammar g, int k) throws IllegalArgumentException;
     
     /**
      * Method generates first set for given input word and grammar.
@@ -178,7 +178,7 @@ public interface FirstAndFollowI
      * @return First set for given \alpha input
      * @throws IllegalArgumentException if input word is null, contains no symbols, grammar is null or k size is less than 0
      */
-    Set<List<Symbol>> first(List<Symbol> symbols,Grammar g,int k) throws IllegalArgumentException;
+    Set<List<LLSymbol>> first(List<LLSymbol> symbols,LLGrammar g,int k) throws IllegalArgumentException;
     
     /**
      * Method calculates First set out of given input word from already calculated first sets.
@@ -188,7 +188,7 @@ public interface FirstAndFollowI
      * @return FI_{k}(\alpha)
      * @throws IllegalArgumentException 
      */
-    Set<List<Symbol>> firstAlpha(List<Symbol> symbols,Map<Symbol,Set<List<Symbol>>> fiSet,int k) throws IllegalArgumentException;
+    Set<List<LLSymbol>> firstAlpha(List<LLSymbol> symbols,Map<LLSymbol,Set<List<LLSymbol>>> fiSet,int k) throws IllegalArgumentException;
     
     /**
      * Method calculates follow sets for given grammar. Method is taken and modified from [23]
@@ -197,5 +197,5 @@ public interface FirstAndFollowI
      * @return
      * @throws IllegalArgumentException if grammar is null or k is lower than 0
      */
-    Map<Symbol,Set<List<Symbol>>> follow(Grammar g, int k) throws IllegalArgumentException;
+    Map<LLSymbol,Set<List<LLSymbol>>> follow(LLGrammar g, int k) throws IllegalArgumentException;
 }

@@ -26,64 +26,6 @@ honza.rychtar
 
 e12635a1-9c81-897d-2110-d53ba9cb667f
 
-DeterministicProcedureToolbar.java
-file
-77
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-deleted
-
-InputParamaterChooserPanel.java
-file
-79
-
-
-
-2011-05-17T13:37:45.266787Z
-573b2ec11c7747ff56136dc82f5c817b
-2011-05-17T19:01:15.887458Z
-79
-honza.rychtar
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-3630
-
 AutomataComposition.java
 file
 92
@@ -118,9 +60,14 @@ honza.rychtar
 
 5134
 
-InputChooserPanel.java
+AutomatonMinimization.java
 file
-79
+
+
+
+add
+
+ea34306ecf779cb5eb181e649662509e
 
 
 
@@ -132,58 +79,18 @@ file
 
 
 
-
-
-
-
-
-
-
-
-deleted
+copied
+https://jgaf.googlecode.com/svn/trunk/JGAF/src/jgaf/procedure/FAMiminization.java
+89
 
-testIGrame.java
-file
-88
-
-
-
-2011-05-27T13:42:34.615532Z
-46d2946686f9b881edc268e547451fa7
-2011-05-28T01:33:16.802769Z
-88
-honza.rychtar
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-6088
-
-WrongProcedureInputException.java
+ChooserComboboxModel.java
 file
 76
 
 
 
-2011-05-15T20:07:31.874787Z
-88912e466bf38466f911067c14133b34
+2011-05-15T20:26:14.702787Z
+46f89144bc46e86dd89350292ea70cef
 2011-05-15T23:02:07.006088Z
 76
 honza.rychtar
@@ -208,41 +115,7 @@ honza.rychtar
 
 
 
-630
-
-ProcedureDialog.java
-file
-89
-
-
-
-2011-05-28T17:33:10.615532Z
-9b941ffb385a0bfadb7a69ef8a13fbef
-2011-05-28T20:13:16.057032Z
-89
-honza.rychtar
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-10255
+1382
 
 DFAEquality.java
 file
@@ -278,16 +151,16 @@ honza.rychtar
 
 4326
 
-StateCuple.java
+DefaultProcedure.java
 file
-88
+92
 
 
 
-2011-05-28T01:20:41.255532Z
-0c8245fb6ca84434821c1d661e5c5643
-2011-05-28T01:33:16.802769Z
-88
+2011-05-29T22:01:35.459532Z
+ce2547a42144b9b811bad9ec68bdb598
+2011-05-30T06:38:25.773359Z
+92
 honza.rychtar
 
 
@@ -310,18 +183,18 @@ honza.rychtar
 
 
 
-1298
+1922
 
-ProcedureRepresentation.java
+DefaultProcedureFace.java
 file
-77
+91
 
 
 
-2011-05-16T12:37:46.330787Z
-31716a2cce91d0e9b4387d5bf193ddce
-2011-05-16T18:14:50.727377Z
-77
+2011-05-29T17:01:18.823532Z
+01501eaa4a168fe36371f4f00c92ebb6
+2011-05-29T21:08:18.403704Z
+91
 honza.rychtar
 
 
@@ -344,14 +217,164 @@ honza.rychtar
 
 
 
-883
+10529
+
+DefaultProcedureLogger.java
+file
+80
+
+
+
+2011-05-21T12:57:38.942850Z
+e748be4e1e3a4be9c9c9a2aa2808b9d8
+2011-05-21T15:17:28.045761Z
+80
+honza.rychtar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2038
+
+DefaultProcedureToolbar.java
+file
+89
+
+
+
+2011-05-28T18:05:07.003532Z
+cac60d3fe0b5bf25e41926b743e939ff
+2011-05-28T20:13:16.057032Z
+89
+honza.rychtar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+7627
+
+DeterministicProcedureController.java
+file
+77
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+deleted
+
+DeterministicProcedureToolbar.java
+file
+77
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+deleted
+
+EpsilonStepsElimination.java
+file
+91
+
+
+
+2011-05-29T00:33:38.023532Z
+05c0fe9d9bc2da8edd6ec6af9481e821
+2011-05-29T21:08:18.403704Z
+91
+honza.rychtar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2802
 
 FAMiminization.java
 file
 89
 
 
-
+delete
 2011-05-28T15:07:51.583532Z
 ea34306ecf779cb5eb181e649662509e
 2011-05-28T20:13:16.057032Z
@@ -380,9 +403,135 @@ honza.rychtar
 
 187
 
-DeterministicProcedureController.java
+FAtoRegularGrammar.java
 file
-77
+91
+
+
+
+2011-05-29T17:34:12.683532Z
+ca4e5f9c2d3851081fb0c6ce613f20fc
+2011-05-29T21:08:18.403704Z
+91
+honza.rychtar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4267
+
+InaccessibleStatesElimination.java
+file
+89
+
+
+
+2011-05-28T18:42:02.723532Z
+f79b4643d0632108a6e0d604ae0d20ae
+2011-05-28T20:13:16.057032Z
+89
+honza.rychtar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2847
+
+InputChooser.java
+file
+68
+
+
+
+2011-04-25T22:10:26.955902Z
+d300fb955569a2207ca9094d2724f037
+2011-04-25T22:41:32.090809Z
+68
+honza.rychtar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+441
+
+InputChooserPanel.form
+file
+79
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+deleted
+
+InputChooserPanel.java
+file
+79
 
 
 
@@ -438,80 +587,17 @@ honza.rychtar
 
 2646
 
-EpsilonStepsElimination.java
-file
-91
-
-
-
-2011-05-29T00:33:38.023532Z
-05c0fe9d9bc2da8edd6ec6af9481e821
-2011-05-29T21:08:18.403704Z
-91
-honza.rychtar
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-2802
-
-FAtoRegularGrammar.java
-file
-91
-
-
-
-2011-05-29T17:34:12.683532Z
-ca4e5f9c2d3851081fb0c6ce613f20fc
-2011-05-29T21:08:18.403704Z
-91
-honza.rychtar
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-4267
-
-InputChooserPanel.form
+InputParamaterChooserPanel.java
 file
 79
 
 
 
+2011-05-17T13:37:45.266787Z
+573b2ec11c7747ff56136dc82f5c817b
+2011-05-17T19:01:15.887458Z
+79
+honza.rychtar
 
 
 
@@ -528,11 +614,24 @@ file
 
 
 
-deleted
+
+
+
+
+
+3630
 
-REtoEFA.java
+InputRepresentationChooserPanel.form
 file
-89
+79
+
+
+
+2011-05-17T13:43:07.270787Z
+0a1baaefc1397ccca47ad062fec36f0c
+2011-05-17T19:01:15.887458Z
+79
+honza.rychtar
 
 
 
@@ -552,7 +651,9 @@ file
 
 
 
-deleted
+
+
+6563
 
 InputRepresentationChooserPanel.java
 file
@@ -588,14 +689,48 @@ honza.rychtar
 
 11995
 
-testIGrame.form
+NFAtoDFA.java
+file
+91
+
+
+
+2011-05-29T17:07:36.615532Z
+82b0770b1ab575a8dca77a8ecbb6a39f
+2011-05-29T21:08:18.403704Z
+91
+honza.rychtar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+7165
+
+OutputProcedureToolbar.java
 file
 88
 
 
 
-2011-05-27T13:42:34.583532Z
-f797deee14c4b81c8f6e1979be52aa95
+2011-05-27T23:13:41.895532Z
+64e7b7014eb87837a3ca31585f36b697
 2011-05-28T01:33:16.802769Z
 88
 honza.rychtar
@@ -620,7 +755,201 @@ honza.rychtar
 
 
 
-3294
+1294
+
+Procedure.java
+file
+92
+
+
+
+2011-05-29T22:01:09.863532Z
+b8386ae76664141968928ad54fe9672d
+2011-05-30T06:38:25.773359Z
+92
+honza.rychtar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2448
+
+ProcedureController.java
+file
+76
+
+
+
+2011-05-15T21:54:46.378787Z
+48d83a9b0d94d34196dbe1093a7a5850
+2011-05-15T23:02:07.006088Z
+76
+honza.rychtar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+315
+
+ProcedureDescription.java
+file
+71
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+deleted
+
+ProcedureDescriptor.java
+file
+89
+
+
+
+2011-05-28T17:37:08.903532Z
+a052d87dd381bc7582421e5dd5f3a238
+2011-05-28T20:13:16.057032Z
+89
+honza.rychtar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3868
+
+ProcedureDialog.form
+file
+79
+
+
+
+2011-05-17T14:06:48.354787Z
+4bc437bb2085847f04a715516f6b197b
+2011-05-17T19:01:15.887458Z
+79
+honza.rychtar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+7554
+
+ProcedureDialog.java
+file
+89
+
+
+
+2011-05-28T17:33:10.615532Z
+9b941ffb385a0bfadb7a69ef8a13fbef
+2011-05-28T20:13:16.057032Z
+89
+honza.rychtar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+10255
 
 ProcedureHandler.java
 file
@@ -690,16 +1019,16 @@ honza.rychtar
 
 593
 
-ProcedureDialog.form
+ProcedureRepresentation.java
 file
-79
+77
 
 
 
-2011-05-17T14:06:48.354787Z
-4bc437bb2085847f04a715516f6b197b
-2011-05-17T19:01:15.887458Z
-79
+2011-05-16T12:37:46.330787Z
+31716a2cce91d0e9b4387d5bf193ddce
+2011-05-16T18:14:50.727377Z
+77
 honza.rychtar
 
 
@@ -722,45 +1051,11 @@ honza.rychtar
 
 
 
-7554
+883
 
-ProcedureController.java
+REtoEFA.java
 file
-76
-
-
-
-2011-05-15T21:54:46.378787Z
-48d83a9b0d94d34196dbe1093a7a5850
-2011-05-15T23:02:07.006088Z
-76
-honza.rychtar
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-315
-
-ProcedureDescription.java
-file
-71
+89
 
 
 
@@ -781,234 +1076,6 @@ file
 
 
 deleted
-
-DefaultProcedureLogger.java
-file
-80
-
-
-
-2011-05-21T12:57:38.942850Z
-e748be4e1e3a4be9c9c9a2aa2808b9d8
-2011-05-21T15:17:28.045761Z
-80
-honza.rychtar
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-2038
-
-RemovingEpsilonSteps.java
-file
-91
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-deleted
-
-InaccessibleStatesElimination.java
-file
-89
-
-
-
-2011-05-28T18:42:02.723532Z
-f79b4643d0632108a6e0d604ae0d20ae
-2011-05-28T20:13:16.057032Z
-89
-honza.rychtar
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-2847
-
-InputRepresentationChooserPanel.form
-file
-79
-
-
-
-2011-05-17T13:43:07.270787Z
-0a1baaefc1397ccca47ad062fec36f0c
-2011-05-17T19:01:15.887458Z
-79
-honza.rychtar
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-6563
-
-DefaultProcedureFace.java
-file
-91
-
-
-
-2011-05-29T17:01:18.823532Z
-01501eaa4a168fe36371f4f00c92ebb6
-2011-05-29T21:08:18.403704Z
-91
-honza.rychtar
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-10529
-
-ChooserComboboxModel.java
-file
-76
-
-
-
-2011-05-15T20:26:14.702787Z
-46f89144bc46e86dd89350292ea70cef
-2011-05-15T23:02:07.006088Z
-76
-honza.rychtar
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-1382
-
-DefaultProcedureToolbar.java
-file
-89
-
-
-
-2011-05-28T18:05:07.003532Z
-cac60d3fe0b5bf25e41926b743e939ff
-2011-05-28T20:13:16.057032Z
-89
-honza.rychtar
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-7627
 
 RegularGrammarToFA.java
 file
@@ -1044,51 +1111,12 @@ honza.rychtar
 
 4784
 
-InputChooser.java
-file
-68
-
-
-
-2011-04-25T22:10:26.955902Z
-d300fb955569a2207ca9094d2724f037
-2011-04-25T22:41:32.090809Z
-68
-honza.rychtar
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-441
-
-NFAtoDFA.java
+RemovingEpsilonSteps.java
 file
 91
 
 
 
-2011-05-29T17:07:36.615532Z
-82b0770b1ab575a8dca77a8ecbb6a39f
-2011-05-29T21:08:18.403704Z
-91
-honza.rychtar
 
 
 
@@ -1105,89 +1133,16 @@ honza.rychtar
 
 
 
-
-
-
-
-
-7165
+deleted
 
-ProcedureDescriptor.java
-file
-89
-
-
-
-2011-05-28T17:37:08.903532Z
-a052d87dd381bc7582421e5dd5f3a238
-2011-05-28T20:13:16.057032Z
-89
-honza.rychtar
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-3868
-
-Procedure.java
-file
-92
-
-
-
-2011-05-29T22:01:09.863532Z
-b8386ae76664141968928ad54fe9672d
-2011-05-30T06:38:25.773359Z
-92
-honza.rychtar
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-2448
-
-OutputProcedureToolbar.java
+StateCuple.java
 file
 88
 
 
 
-2011-05-27T23:13:41.895532Z
-64e7b7014eb87837a3ca31585f36b697
+2011-05-28T01:20:41.255532Z
+0c8245fb6ca84434821c1d661e5c5643
 2011-05-28T01:33:16.802769Z
 88
 honza.rychtar
@@ -1212,18 +1167,18 @@ honza.rychtar
 
 
 
-1294
+1298
 
-DefaultProcedure.java
+WrongProcedureInputException.java
 file
-92
+76
 
 
 
-2011-05-29T22:01:35.459532Z
-ce2547a42144b9b811bad9ec68bdb598
-2011-05-30T06:38:25.773359Z
-92
+2011-05-15T20:07:31.874787Z
+88912e466bf38466f911067c14133b34
+2011-05-15T23:02:07.006088Z
+76
 honza.rychtar
 
 
@@ -1246,5 +1201,73 @@ honza.rychtar
 
 
 
-1922
+630
+
+testIGrame.form
+file
+88
+
+
+
+2011-05-27T13:42:34.583532Z
+f797deee14c4b81c8f6e1979be52aa95
+2011-05-28T01:33:16.802769Z
+88
+honza.rychtar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3294
+
+testIGrame.java
+file
+88
+
+
+
+2011-05-27T13:42:34.615532Z
+46d2946686f9b881edc268e547451fa7
+2011-05-28T01:33:16.802769Z
+88
+honza.rychtar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6088
 

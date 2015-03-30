@@ -12,18 +12,18 @@ import jgaf.Constants.MathConstants;
  * NonTerminal, Epsilon or Special version of T Symbol for LL(k) grammar.
  * @author Empt
  */
-public class Symbol 
+public class LLSymbol 
 {
     private String value;
     private SymbolType type;
 
-    public Symbol(String value,
+    public LLSymbol(String value,
                   SymbolType type) {
         this.value = value;
         this.type = type;
     }
 
-    public Symbol(SymbolType type) 
+    public LLSymbol(SymbolType type) 
     {
         if(type == SymbolType.EPSILON)
         {
@@ -78,7 +78,7 @@ public class Symbol
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Symbol other = (Symbol) obj;
+        final LLSymbol other = (LLSymbol) obj;
         if (!Objects.equals(this.value, other.value)) {
             return false;
         }

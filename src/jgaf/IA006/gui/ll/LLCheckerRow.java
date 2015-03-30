@@ -6,7 +6,7 @@ package jgaf.IA006.gui.ll;
 
 import java.util.List;
 import java.util.Set;
-import jgaf.IA006.grammar.Symbol;
+import jgaf.IA006.grammar.LLSymbol;
 
 /**
  *
@@ -14,24 +14,24 @@ import jgaf.IA006.grammar.Symbol;
  */
 public class LLCheckerRow 
 {
-    private Symbol key;
-    private Set<List<Symbol>> L;
+    private LLSymbol key;
+    private Set<List<LLSymbol>> L;
     List<SubLLCheckerRow> subRows;
 
-    public Symbol getKey() {
+    public LLSymbol getKey() {
         return key;
     }
 
-    public void setKey(Symbol key) {
+    public void setKey(LLSymbol key) {
         this.key = key;
     }
 
-    public Set<List<Symbol>> getL() {
+    public Set<List<LLSymbol>> getL() {
         return L;
     }
 
     public void setL(
-                     Set<List<Symbol>> L) {
+                     Set<List<LLSymbol>> L) {
         this.L = L;
     }
 

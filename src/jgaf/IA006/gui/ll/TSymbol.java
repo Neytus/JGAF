@@ -6,22 +6,22 @@ package jgaf.IA006.gui.ll;
 
 import java.util.List;
 import java.util.Set;
-import jgaf.IA006.grammar.Symbol;
+import jgaf.IA006.grammar.LLSymbol;
 import jgaf.IA006.grammar.SymbolType;
 
 /**
  *
  * @author Empt
  */
-public class TSymbol extends Symbol
+public class TSymbol extends LLSymbol
 {
     private int stateID;
-    private Symbol nonTerminal;
-    private Set<List<Symbol>> follow;
+    private LLSymbol nonTerminal;
+    private Set<List<LLSymbol>> follow;
 
     public TSymbol(int stateID,
-                   Symbol nonTerminal,
-                   Set<List<Symbol>> follow) {
+                   LLSymbol nonTerminal,
+                   Set<List<LLSymbol>> follow) {
         super("T", SymbolType.NONTERMINAL);
         this.stateID = stateID;
         this.nonTerminal = nonTerminal;
@@ -32,11 +32,11 @@ public class TSymbol extends Symbol
         return stateID;
     }
 
-    public Symbol getNonTerminal() {
+    public LLSymbol getNonTerminal() {
         return nonTerminal;
     }
 
-    public Set<List<Symbol>> getFollow() {
+    public Set<List<LLSymbol>> getFollow() {
         return follow;
     }
 

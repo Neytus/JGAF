@@ -18,10 +18,12 @@ import jgaf.automaton.State;
 import jgaf.automaton.Transition;
 import jgaf.automaton.fa.CanvasLabel;
 import jgaf.editor.EditorDescriptor;
+import jgaf.grammar.Epsilon;
 import jgaf.grammar.Grammar;
 import jgaf.grammar.Nonterminal;
-import jgaf.grammar.ProductionRule;
 import jgaf.grammar.ProductionRuleSide;
+import jgaf.grammar.ProductionRules;
+import jgaf.grammar.ProductionRulesSide;
 import jgaf.grammar.Symbol;
 import jgaf.grammar.Terminal;
 import jgaf.procedure.ProcedureDescriptor;
@@ -307,7 +309,15 @@ public class XMLImporter {
             Element element=(Element)iterator.next();
             terminals.add(new Terminal(element.getText()));
         }
-
+/*
+        List epsilonList = grammarNode.selectNodes("terminals/epsilon");
+        iterator = epsilonList.iterator();
+        List<Symbol> epsilon = new ArrayList<Symbol>();
+        while (iterator.hasNext()) {
+            Element element=(Element)iterator.next();
+            epsilon.add(new Epsilon(element.getText()));
+        }
+*/
 
         List list = grammarNode.selectNodes("productions/rule");
         iterator = list.iterator();
@@ -324,14 +334,15 @@ public class XMLImporter {
                 Symbol symbol = new Symbol(symbolElem.getText(), Symbol.NONTERMINAL);
                 if (terminals.contains(symbol)) {
                     symbol.setType(Symbol.TERMINAL);
-                } else if (!nonterminals.contains(symbol)) {
+                }  else if (!nonterminals.contains(symbol)) {
                     System.out.println("ERR1");
                 }
                 leftRuleSide.addSymbol(symbol);
             }
 
 
-            ProductionRuleSide rightRuleSide = new ProductionRuleSide();
+            ProductionRulesSide rightRuleSide = new ProductionRulesSide();
+            ProductionRuleSide helpRule = new ProductionRuleSide();
             Node rightSideNode = element.selectSingleNode("rightHandSide");
             List rightSideSymbols = rightSideNode.selectNodes("symbol");
             iterator2 = rightSideSymbols.iterator();
@@ -340,13 +351,13 @@ public class XMLImporter {
                 Symbol symbol = new Symbol(symbolElem.getText(), Symbol.NONTERMINAL);
                 if (terminals.contains(symbol)) {
                     symbol.setType(Symbol.TERMINAL);
-                } else if (!nonterminals.contains(symbol)) {
-                    System.out.println("ERR1");
+                }else if (!nonterminals.contains(symbol)) {
+                    symbol.setType(Symbol.EPSILON);
                 }
-                rightRuleSide.addSymbol(symbol);
+                helpRule.addSymbol(symbol);
             }
-
-            grammar.addRule(new ProductionRule(leftRuleSide, rightRuleSide));
+            rightRuleSide.addRule(helpRule);
+            grammar.addRule(new ProductionRules(leftRuleSide, rightRuleSide));
 
         }
         return grammar;
@@ -406,6 +417,18 @@ public class XMLImporter {
                 ProcedureParameter parameter = new ProcedureParameter();
                 parameter.setDescription(description);
                 descriptor.addParameter(parameter);
+            
+                //PARAMETER WITH FORCED OPTIONS, added with lr extension
+                List optionNodes = element.selectNodes("poptions/poption");
+                if (!optionNodes.isEmpty()){
+                    ArrayList<String> forcedOptions = new ArrayList<String>();
+                    Iterator oiterator = optionNodes.iterator();
+                while(oiterator.hasNext()) {
+                    Node name =(Node) oiterator.next();
+                    forcedOptions.add(name.getText());
+                }
+                    parameter.setForcedOptions(forcedOptions);
+                }
             }
             //OUTPUT REPRESENTATION
             Node outputNode = procedureElem.selectSingleNode("output");

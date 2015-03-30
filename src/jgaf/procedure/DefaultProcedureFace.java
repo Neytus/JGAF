@@ -91,6 +91,11 @@ public final class DefaultProcedureFace extends JPanel {
         }
         if(procedure.hasOutput()) {
             outputEditor = editorHandler.createEditor(procedure.getDescriptor().getOutputRepresentation().getId());
+            
+            /**
+             * JB 
+             * setEditable - zmemene na false podla LR rozsirenia 
+             */
             outputEditor.setEditable(false);
         }
     }

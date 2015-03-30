@@ -8,7 +8,7 @@ package jgaf.IA006.grammar;
  * This class servers as representation of NonTerminalSymbol.
  * @author Empt
  */
-public class NonTerminal extends Symbol
+public class NonTerminal extends LLSymbol
 {
     public NonTerminal(String value)
     {

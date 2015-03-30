@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import jgaf.IA006.tools.FirstAndFollowI;
-import jgaf.IA006.grammar.Symbol;
+import jgaf.IA006.grammar.LLSymbol;
 
 /**
  *
@@ -18,51 +18,51 @@ import jgaf.IA006.grammar.Symbol;
  */
 public class SubLLCheckerRow 
 {
-    private Symbol A;
-    private List<Symbol> alpha;
-    private Set<List<Symbol>> fiLSet;
+    private LLSymbol A;
+    private List<LLSymbol> alpha;
+    private Set<List<LLSymbol>> fiLSet;
     
-    private Map<Integer,Map<Symbol,Set<List<Symbol>>>> follows = new HashMap<>();
+    private Map<Integer,Map<LLSymbol,Set<List<LLSymbol>>>> follows = new HashMap<>();
 
-    public Symbol getA() {
+    public LLSymbol getA() {
         return A;
     }
 
-    public void setA(Symbol A) {
+    public void setA(LLSymbol A) {
         this.A = A;
     }
 
-    public List<Symbol> getAlpha() {
+    public List<LLSymbol> getAlpha() {
         return alpha;
     }
 
     public void setAlpha(
-                         List<Symbol> alpha) {
+                         List<LLSymbol> alpha) {
         this.alpha = alpha;
     }
 
-    public Set<List<Symbol>> getFiLSet() {
+    public Set<List<LLSymbol>> getFiLSet() {
         return fiLSet;
     }
 
     public void setFiLSet(
-                          Set<List<Symbol>> fiLSet) {
+                          Set<List<LLSymbol>> fiLSet) {
         this.fiLSet = fiLSet;
     }
 
-    public Map<Integer, Map<Symbol, Set<List<Symbol>>>> getFollows() {
+    public Map<Integer, Map<LLSymbol, Set<List<LLSymbol>>>> getFollows() {
         return follows;
     }
 
     public void setFollows(
-                           Map<Integer, Map<Symbol, Set<List<Symbol>>>> follows) {
+                           Map<Integer, Map<LLSymbol, Set<List<LLSymbol>>>> follows) {
         this.follows = follows;
     }
 
     
     
-    public void calc(Map<Symbol,Set<List<Symbol>>> firstSet,
-                     FirstAndFollowI faf,int k,Set<List<Symbol>> L)
+    public void calc(Map<LLSymbol,Set<List<LLSymbol>>> firstSet,
+                     FirstAndFollowI faf,int k,Set<List<LLSymbol>> L)
     {
         for(int i = 0; i < alpha.size();i++)
         {
@@ -70,7 +70,7 @@ public class SubLLCheckerRow
             {
 //                Set<List<Symbol>> temp = new HashSet<>();
 //                temp.add(alpha.subList(i, alpha.size()));
-                Set<List<Symbol>> result = new HashSet<>();
+                Set<List<LLSymbol>> result = new HashSet<>();
                
                 if(i == alpha.size()-1)
                 {
@@ -78,12 +78,12 @@ public class SubLLCheckerRow
                 }
                 else
                 {
-                    List<Symbol> temp = alpha.subList(i+1, alpha.size());
+                    List<LLSymbol> temp = alpha.subList(i+1, alpha.size());
                     
                     result.addAll(faf.concatenateSetsWithPrefix(faf.firstAlpha(temp, firstSet, k), L, k));
                 }
                 
-                Map<Symbol,Set<List<Symbol>>> map = new HashMap<>();
+                Map<LLSymbol,Set<List<LLSymbol>>> map = new HashMap<>();
                 map.put(alpha.get(i), result);
                 
                 follows.put(follows.size()+1, map);

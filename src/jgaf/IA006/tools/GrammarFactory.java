@@ -5,7 +5,6 @@
 package jgaf.IA006.tools;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -16,11 +15,16 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jgaf.Constants.MathConstants;
-import jgaf.IA006.grammar.Epsilon;
-import jgaf.IA006.grammar.Grammar;
+import jgaf.IA006.grammar.LLEpsilon;
+import jgaf.IA006.grammar.LLGrammar;
+import jgaf.IA006.grammar.LLSymbol;
+import jgaf.IA006.grammar.LLTerminal;
 import jgaf.IA006.grammar.NonTerminal;
-import jgaf.IA006.grammar.Symbol;
-import jgaf.IA006.grammar.Terminal;
+import jgaf.IA006.grammar.SymbolType;
+import jgaf.grammar.Grammar;
+import jgaf.grammar.ProductionRuleSide;
+import jgaf.grammar.ProductionRules;
+import jgaf.grammar.Symbol;
 
 /**
  *
@@ -28,15 +32,76 @@ import jgaf.IA006.grammar.Terminal;
  */
 public class GrammarFactory 
 {
-
+    private static SymbolType getSymbolType(Symbol s ){
     
-    public static Grammar generateFromString(String s)
+    if (s.isTerminal()) {
+        return SymbolType.TERMINAL;
+    } else if (s.isNonterminal()) {
+        return SymbolType.NONTERMINAL;
+    } else {
+        return SymbolType.EPSILON;
+    }       
+    }
+
+    public static LLGrammar convertGrammar(Grammar grammar) {
+        String grammarName = grammar.getName();
+        LLSymbol rootSymbol = new LLSymbol(SymbolType.NONTERMINAL);
+        Set<LLSymbol> nonTerminals = new HashSet<>();
+        Set<LLSymbol> terminals = new HashSet<>();
+        Map<LLSymbol,Set<List<LLSymbol>>> productionRules = new HashMap<>();
+        
+        for (Symbol s : grammar.getNonterminals()) {
+            LLSymbol lls = new LLSymbol(s.getName(), getSymbolType(s));
+            nonTerminals.add(lls);
+            if (s.equals(grammar.getStartNonterminal())) {
+                rootSymbol = lls;
+            }
+        }
+        
+        for (Symbol s : grammar.getTerminals()) {
+            LLSymbol lls = new LLSymbol(s.getName(), getSymbolType(s));
+            terminals.add(lls);
+
+        }
+        
+        for (ProductionRules rule : grammar.getProductionRules()) {
+            
+            List<Symbol> leftHandSide = rule.getLeftHandSide().getSymbols();
+            List<ProductionRuleSide> rightHandSide = rule.getRightHandSide().getRules();
+            
+            Set<List<LLSymbol>> newRightSide = new HashSet();
+            LLSymbol newLeftSide = new LLSymbol(leftHandSide.get(0).getName(), getSymbolType(leftHandSide.get(0)));
+            
+            for (ProductionRuleSide oneRule : rightHandSide) {
+                List<LLSymbol> newRightSidePart = new ArrayList();
+                
+                for (Symbol symbol : oneRule.getSymbols()) {
+                    LLSymbol newSymbol = new LLSymbol(symbol.getName(), getSymbolType(symbol));
+                    newRightSidePart.add(newSymbol);
+                }
+                
+                newRightSide.add(newRightSidePart);
+            }
+            
+            if (productionRules.containsKey(newLeftSide)) {
+                newRightSide.addAll(productionRules.get(newLeftSide));
+            }
+            
+            productionRules.put(newLeftSide, newRightSide);
+        }
+        
+        
+        LLGrammar g = new LLGrammar(grammarName, terminals, nonTerminals, rootSymbol, productionRules);
+        return g;
+    }
+    
+    public static LLGrammar generateFromString(String s)
     {
         System.out.println(s);
-        Grammar g = new Grammar();
-        Set<Symbol> nonTerminals = new HashSet<>();
-        Set<Symbol> terminals = new HashSet<>();
-        Map<Symbol,Set<List<Symbol>>> productionRules = new HashMap<>();
+        LLGrammar g = new LLGrammar();
+        Set<LLSymbol> nonTerminals = new HashSet<>();
+        Set<LLSymbol> terminals = new HashSet<>();
+        Map<LLSymbol,Set<List<LLSymbol>>> productionRules = new HashMap<>();
         
         
         String pattern = "(?<=\\{)(.*?)(?=\\})"; // vrati cokolvek v { }
@@ -51,7 +116,7 @@ public class GrammarFactory
             switch(i)
             {   // prvy prechod root
                 case 0:
-                    Symbol root = new NonTerminal(extractFromApostrophe(m.group()));
+                    LLSymbol root = new NonTerminal(extractFromApostrophe(m.group()));
                     g.setRootSymbol(root);
                     i++;
                     break;
@@ -78,7 +143,7 @@ public class GrammarFactory
                     {
                         for(int j = 0; j < terminalsTemp.length ; j++)
                         {
-                            terminals.add(new Terminal(extractFromApostrophe(terminalsTemp[j])));
+                            terminals.add(new LLTerminal(extractFromApostrophe(terminalsTemp[j])));
                         }                        
                     }
                     
@@ -96,7 +161,7 @@ public class GrammarFactory
                         {
                             throw new IllegalArgumentException("ERROR: Given grammar has no rules choose another one");
                         }
-                        Symbol key = new NonTerminal(split[0]);
+                        LLSymbol key = new NonTerminal(split[0]);
                         if(!nonTerminals.contains(key))
                         {
                             throw new IllegalArgumentException("ERROR: left side of rule contains unknown NonTerminal symbol - ["+key+"]");
@@ -105,7 +170,7 @@ public class GrammarFactory
                         {   // uz sme nieco pridali pre danu lavu stranu pravidla
                             if(productionRules.containsKey(key))
                             {
-                                Set<List<Symbol>> temp = new HashSet<>();
+                                Set<List<LLSymbol>> temp = new HashSet<>();
                                 temp.addAll(productionRules.get(key));
                                 temp.add(tokenize(terminals, nonTerminals, split[1],true));
                                 // vlozime
@@ -114,7 +179,7 @@ public class GrammarFactory
                             else
                             {
                                 // este sme nepridali
-                                Set<List<Symbol>> temp = new HashSet<>();
+                                Set<List<LLSymbol>> temp = new HashSet<>();
                                 temp.add(tokenize(terminals, nonTerminals, split[1],true));
                                 // vlozime
                                 productionRules.put(key, temp);                                
@@ -161,10 +226,10 @@ public class GrammarFactory
      * @param sort sort terminals and nonterminals
      * @return right side of rule in form of symbol representation
      */
-    public static List<Symbol> tokenize(Set<Symbol> terminals, Set<Symbol> nonterminals, String rightSide,boolean sort)
+    public static List<LLSymbol> tokenize(Set<LLSymbol> terminals, Set<LLSymbol> nonterminals, String rightSide,boolean sort)
     {
         // zlucime terminaly a neterminaly aby netrebalo 2x for cyklus
-        List<Symbol> possibilities = new ArrayList<>();
+        List<LLSymbol> possibilities = new ArrayList<>();
         possibilities.addAll(terminals);
         possibilities.addAll(nonterminals);
         if(sort)
@@ -183,13 +248,13 @@ public class GrammarFactory
         
         
         //System.out.println(possibilities);
-        List<Symbol> rs = new ArrayList<>(); // result
+        List<LLSymbol> rs = new ArrayList<>(); // result
         String remainder = rightSide;
         boolean flag = false;
         boolean done = false;
         while(!done)
         {   // iterujeme od najldhsieho po najkratsi
-            for(Symbol s : possibilities)
+            for(LLSymbol s : possibilities)
             {   // retazec zacina T / NT.
                 // z definicie je zarucene ze je to bude T alebo NT, pretoze T \cap NT = \emptyset
                 if(remainder.isEmpty())
@@ -206,7 +271,7 @@ public class GrammarFactory
             // mohol to byt este epsilon
             if(!flag && rightSide.equals(MathConstants.EPSILON))
             {
-                Symbol e = new Epsilon();
+                LLSymbol e = new LLEpsilon();
                 rs.add(e);
                 flag = true;
                 // pretoze moze byt iba A-> \eps, pravidlo typu A-> a\eps nema zmysel !
@@ -233,10 +298,10 @@ public class GrammarFactory
     /**
      * Comparator for symbols by their length
      */
-    private static Comparator<Symbol> comparator = new Comparator<Symbol>() 
+    private static Comparator<LLSymbol> comparator = new Comparator<LLSymbol>() 
     {
         @Override
-        public int compare(Symbol o1,Symbol o2) 
+        public int compare(LLSymbol o1,LLSymbol o2) 
         {
             return o2.getValue().length()-o1.getValue().length();
         }
@@ -244,7 +309,7 @@ public class GrammarFactory
     
     
     
-    public static Grammar generateGrammarFromFileLines(List<String> list)
+    public static LLGrammar generateGrammarFromFileLines(List<String> list)
     {
         StringBuilder sb = new StringBuilder();
         for(String s : list)

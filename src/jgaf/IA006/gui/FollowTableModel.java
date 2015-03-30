@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.table.AbstractTableModel;
-import jgaf.IA006.grammar.Symbol;
+import jgaf.IA006.grammar.LLSymbol;
 
 /**
  * This class as Model for table, that shows calculated follow sets. 
@@ -18,9 +18,9 @@ import jgaf.IA006.grammar.Symbol;
  */
 public class FollowTableModel extends AbstractTableModel 
 {
-    private Map<Symbol,Set<List<Symbol>>> foSets = new HashMap<>();
+    private Map<LLSymbol,Set<List<LLSymbol>>> foSets = new HashMap<>();
     
-    public void setSets(Map<Symbol,Set<List<Symbol>>> sets)
+    public void setSets(Map<LLSymbol,Set<List<LLSymbol>>> sets)
     {
         this.foSets = sets;
         fireTableDataChanged();
@@ -39,7 +39,7 @@ public class FollowTableModel extends AbstractTableModel
     @Override
     public Object getValueAt(int rowIndex,
                              int columnIndex) {
-        List<Symbol> keys = new ArrayList<>(foSets.keySet());
+        List<LLSymbol> keys = new ArrayList<>(foSets.keySet());
         switch(columnIndex)
         {
             case 0:
@@ -64,13 +64,13 @@ public class FollowTableModel extends AbstractTableModel
     
     
     
-    private String buildWord(Set<List<Symbol>> list)
+    private String buildWord(Set<List<LLSymbol>> list)
     {
         StringBuilder sb = new StringBuilder("{");
         int i =0;
-        for(List<Symbol> l : list)
+        for(List<LLSymbol> l : list)
         {
-            for(Symbol s: l)
+            for(LLSymbol s: l)
             {
                 sb.append(s.getValue());
             }

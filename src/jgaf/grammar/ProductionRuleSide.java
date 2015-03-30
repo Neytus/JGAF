@@ -7,8 +7,8 @@ package jgaf.grammar;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import jgaf.Constants.MathConstants;
 
 /**
  *
@@ -21,7 +21,6 @@ public class ProductionRuleSide implements Cloneable, Comparable<ProductionRuleS
     private Color bgColor = Color.WHITE;
 
     private List<Symbol> symbols;
-   
 
     public ProductionRuleSide() {
         symbols = new ArrayList<Symbol>();
@@ -29,6 +28,10 @@ public class ProductionRuleSide implements Cloneable, Comparable<ProductionRuleS
 
     public ProductionRuleSide(List<Symbol> symbols) {
         this.symbols = symbols;
+    }
+    
+    public ProductionRuleSide(ProductionRuleSide rule) {
+        this.symbols = rule.getSymbols();
     }
 
     public List<Symbol> getSymbols() {
@@ -38,7 +41,11 @@ public class ProductionRuleSide implements Cloneable, Comparable<ProductionRuleS
     public void addSymbol(Symbol symbol) {
         symbols.add(symbol);
     }
-
+    
+    public void addEpsilon(String symbol) {
+        symbols.add(new Epsilon(symbol));
+    }
+    
     public void addTerminal(String symbol) {
         symbols.add(new Terminal(symbol));
     }
@@ -61,6 +68,14 @@ public class ProductionRuleSide implements Cloneable, Comparable<ProductionRuleS
 
     public void addSymbolsFromString(String string) {
         string = string.trim();
+        
+        //added with lr extension{
+        if (string.equalsIgnoreCase("eps.")){
+            addSymbol(new Symbol());
+            return;
+        }
+        //}
+        
         for (int i = 0; i < string.length(); i++) {
             String letter = String.valueOf(string.charAt(i));
             if(letter.equals(letter.toUpperCase())) {
@@ -70,19 +85,54 @@ public class ProductionRuleSide implements Cloneable, Comparable<ProductionRuleS
             }
         }
     }
+    
+    public void addSymbolsFromString(String string, boolean right) {
+        string = string.trim();
+        if((string.equals("eps") || (string.equals(MathConstants.EPSILON)))  && right){
+            
+            System.out.println("ProductionRuleSide:addSymbolsFromString - pridany epsilon: " + string);
+            
+            addEpsilon(string);
+        }
+        else{
+            for (int i = 0; i < string.length(); i++) {
+                String letter = String.valueOf(string.charAt(i));
+                if(letter.equals(letter.toUpperCase())) {
+                    addNonterminal(letter);
+                } else {
+                    addTerminal(letter);
+                }
+            }
+        }
+    }
+    
+    public void addSymbolsFromList(List<Symbol> list) {
+        for(Symbol symb : list){
+            symbols.add(symb);
+        }
+    }
 
+    public void setSymbolsFromString(String string, boolean right) {
+        clear();
+        addSymbolsFromString(string, right);
+    }
+    
     public void setSymbolsFromString(String string) {
         clear();
         System.out.println("---" + string + "----");
         addSymbolsFromString(string);
     }
+    
+    public void removeSymbolOnPosition(int position){
+        symbols.remove(position);
+    }
 
+    public void setSymbolsFromProductionRuleSide(ProductionRuleSide rule){
+        symbols.addAll(rule.getSymbols());
+    }
 
     @Override
     public String toString() {
-//        if(symbols.isEmpty()) {
-//            return "-";
-//        }
         StringBuilder sb = new StringBuilder();
         for (Symbol symbol : symbols) {
             sb.append(symbol.toString());
@@ -175,6 +225,43 @@ public class ProductionRuleSide implements Cloneable, Comparable<ProductionRuleS
     public void setBgColor(Color bgColor) {
         this.bgColor = bgColor;
     }
+    
+    /**
+     * added with LR extension
+     *
+     */
+    public Symbol getFirst() {
+        return symbols.get(0);
+    }
 
+    /**
+     * added with LR extension
+     *
+     */
+    
+    public Symbol getSymbolAt(int pos) {
+        return symbols.get(pos);
+    }
 
+    /**
+     * added with LR extension
+     *
+     */
+    public boolean containsSymbol(Symbol symbol) {
+        return symbols.contains(symbol);
+    }
+
+    /**
+     * added with LR extension
+     *
+     */
+    public List<Symbol> getNonterminals() {
+        ArrayList<Symbol> nonts = new ArrayList<Symbol>();
+        for (Symbol s : symbols) {
+            if (s.isNonterminal()) {
+                nonts.add(s);
+            }
+        }
+        return nonts;
+    }
 }

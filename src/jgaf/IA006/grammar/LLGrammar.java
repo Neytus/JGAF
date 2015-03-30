@@ -14,19 +14,19 @@ import java.util.Set;
  * This class servers as Grammar representation.
  * @author Empt
  */
-public class Grammar 
+public class LLGrammar 
 {
     private String grammarName; // defaultne sa gramatika vola G
-    private Set<Symbol> terminals;
-    private Set<Symbol> nonTerminals;
-    private Symbol rootSymbol;
-    private Map<Symbol, Set<List<Symbol>>> productionRules;
+    private Set<LLSymbol> terminals;
+    private Set<LLSymbol> nonTerminals;
+    private LLSymbol rootSymbol;
+    private Map<LLSymbol, Set<List<LLSymbol>>> productionRules;
 
-    public Grammar(String grammarName,
-                   Set<Symbol> terminals,
-                   Set<Symbol> nonTerminals,
-                   Symbol rootSymbol,
-                   Map<Symbol, Set<List<Symbol>>> productionRules) {
+    public LLGrammar(String grammarName,
+                   Set<LLSymbol> terminals,
+                   Set<LLSymbol> nonTerminals,
+                   LLSymbol rootSymbol,
+                   Map<LLSymbol, Set<List<LLSymbol>>> productionRules) {
         this.grammarName = grammarName;
         this.terminals = terminals;
         this.nonTerminals = nonTerminals;
@@ -34,7 +34,7 @@ public class Grammar
         this.productionRules = productionRules;
     }
     
-    public Grammar()
+    public LLGrammar()
     {
         this.grammarName = "G";
         this.terminals = new HashSet<>();
@@ -47,19 +47,19 @@ public class Grammar
         this.grammarName = grammarName;
     }
 
-    public void setTerminals(Set<Symbol> terminals) {
+    public void setTerminals(Set<LLSymbol> terminals) {
         this.terminals = terminals;
     }
 
-    public void setNonTerminals(Set<Symbol> nonTerminals) {
+    public void setNonTerminals(Set<LLSymbol> nonTerminals) {
         this.nonTerminals = nonTerminals;
     }
 
-    public void setRootSymbol(Symbol rootSymbol) {
+    public void setRootSymbol(LLSymbol rootSymbol) {
         this.rootSymbol = rootSymbol;
     }
 
-    public void setProductionRules(Map<Symbol, Set<List<Symbol>>> productionRules) {
+    public void setProductionRules(Map<LLSymbol, Set<List<LLSymbol>>> productionRules) {
         this.productionRules = productionRules;
     }
     
@@ -69,19 +69,19 @@ public class Grammar
         return grammarName;
     }
 
-    public Set<Symbol> getTerminals() {
+    public Set<LLSymbol> getTerminals() {
         return terminals;
     }
 
-    public Set<Symbol> getNonTerminals() {
+    public Set<LLSymbol> getNonTerminals() {
         return nonTerminals;
     }
 
-    public Symbol getRootSymbol() {
+    public LLSymbol getRootSymbol() {
         return rootSymbol;
     }
 
-    public Map<Symbol, Set<List<Symbol>>> getProductionRules() {
+    public Map<LLSymbol, Set<List<LLSymbol>>> getProductionRules() {
         return productionRules;
     }
     
@@ -95,7 +95,7 @@ public class Grammar
         sb.append(grammarName).append(" = (");
         sb.append("{");
         int i=0;
-        for(Symbol s : nonTerminals)
+        for(LLSymbol s : nonTerminals)
         {
              sb.append(s);       
              if(i < nonTerminals.size()-1)
@@ -107,7 +107,7 @@ public class Grammar
         sb.append("},");
         i=0;
         sb.append("{");
-        for(Symbol s : terminals)
+        for(LLSymbol s : terminals)
         {
              sb.append(s);       
              if(i < terminals.size()-1)
@@ -120,12 +120,12 @@ public class Grammar
         sb.append("},P,").append(rootSymbol).append(")\n");
         sb.append("P={\n");
         
-        for(Symbol s : productionRules.keySet())
+        for(LLSymbol s : productionRules.keySet())
         {
             sb.append("  ").append(s).append(" -> ");
-            for(List<Symbol> l : productionRules.get(s))
+            for(List<LLSymbol> l : productionRules.get(s))
             {
-                for(Symbol ss : l)
+                for(LLSymbol ss : l)
                 {
                     sb.append(ss);
                 }

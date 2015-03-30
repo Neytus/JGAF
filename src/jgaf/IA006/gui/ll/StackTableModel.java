@@ -6,7 +6,7 @@ package jgaf.IA006.gui.ll;
 
 import java.util.Stack;
 import javax.swing.table.AbstractTableModel;
-import jgaf.IA006.grammar.Symbol;
+import jgaf.IA006.grammar.LLSymbol;
 
 /**
  *
@@ -14,9 +14,9 @@ import jgaf.IA006.grammar.Symbol;
  */
 public class StackTableModel extends AbstractTableModel
 {
-    private Stack<Symbol> stack = new Stack<>();
+    private Stack<LLSymbol> stack = new Stack<>();
     
-    public void setup(Stack<Symbol> stack)
+    public void setup(Stack<LLSymbol> stack)
     {
         this.stack = stack;
         fireTableDataChanged();

@@ -44,9 +44,18 @@ public class GrammarTableRenderer extends DefaultTableCellRenderer {
         if(column == GrammarTableModel.ARROW_INDEX) {
             cell.setForeground(Color.BLACK);
             cell.setBackground(Color.WHITE);
-        } else {
+        } else if (column == GrammarTableModel.LEFT_SIDE_INDEX){
+
+            cell.setForeground(Color.BLACK);
+            cell.setBackground(Color.WHITE);
             cell.setForeground(((ProductionRuleSide)value).getFgColor());
             cell.setBackground(((ProductionRuleSide)value).getBgColor());
+        } else {
+
+            cell.setForeground(Color.BLACK);
+            cell.setBackground(Color.WHITE);
+            cell.setForeground(((ProductionRulesSide)value).getFgColor());
+            cell.setBackground(((ProductionRulesSide)value).getBgColor());
         }
         
 

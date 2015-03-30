@@ -10,10 +10,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import jgaf.IA006.grammar.Epsilon;
+import jgaf.IA006.grammar.LLEpsilon;
 import jgaf.IA006.grammar.NonTerminal;
-import jgaf.IA006.grammar.Symbol;
-import jgaf.IA006.grammar.Terminal;
+import jgaf.IA006.grammar.LLSymbol;
+import jgaf.IA006.grammar.LLTerminal;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -26,32 +26,32 @@ public class FirstAndFollowImplTest
 {
     
     private FirstAndFollowI faf;
-    private Symbol a = new Terminal("a");
-    private Symbol b = new Terminal("b");
-    private Symbol c = new Terminal("c");
-    private Symbol d = new Terminal("d");
-    private Symbol k = new Terminal("k");
-    private Symbol A = new NonTerminal("A");
-    private Symbol B = new NonTerminal("B");
-    private Symbol eps = new Epsilon();
-    private List<Symbol> wnok1 = Arrays.asList(A,B);
-    private List<Symbol> wnok2 = Arrays.asList(eps,A,B);
-    private List<Symbol> wnok3 = Arrays.asList(A,eps,eps,B);
-    private List<Symbol> wnok4 = Arrays.asList(a,B);
-    private List<Symbol> wnok5 = Arrays.asList(eps,a,B);
-    private List<Symbol> wok1 = Arrays.asList(eps,eps,eps);
-    private List<Symbol> wok2 = Arrays.asList(eps,eps,a);
-    private List<Symbol> wok3 = Arrays.asList(a,eps,b);
-    private List<Symbol> wok4 = Arrays.asList(a,eps,b,c);
-    private List<Symbol> wok5 = Arrays.asList(a,b,c);
-    private List<Symbol> wok6 = Arrays.asList(eps,eps,eps,a,eps,eps,eps,b,eps,eps,eps,c);
-    private List<Symbol> wok7 = Arrays.asList(k,a,b);
-    private List<Symbol> wok8 = Arrays.asList(d,k,a);
-    private List<Symbol> wok9 = Arrays.asList(eps);
-    private Set<List<Symbol>> nokset1 = new HashSet<>();
-    private Set<List<Symbol>> okset1 = new HashSet<>();
-    private Set<List<Symbol>> okseteps = new HashSet<>();
-    private Set<List<Symbol>> okset2 = new HashSet<>();
+    private LLSymbol a = new LLTerminal("a");
+    private LLSymbol b = new LLTerminal("b");
+    private LLSymbol c = new LLTerminal("c");
+    private LLSymbol d = new LLTerminal("d");
+    private LLSymbol k = new LLTerminal("k");
+    private LLSymbol A = new NonTerminal("A");
+    private LLSymbol B = new NonTerminal("B");
+    private LLSymbol eps = new LLEpsilon();
+    private List<LLSymbol> wnok1 = Arrays.asList(A,B);
+    private List<LLSymbol> wnok2 = Arrays.asList(eps,A,B);
+    private List<LLSymbol> wnok3 = Arrays.asList(A,eps,eps,B);
+    private List<LLSymbol> wnok4 = Arrays.asList(a,B);
+    private List<LLSymbol> wnok5 = Arrays.asList(eps,a,B);
+    private List<LLSymbol> wok1 = Arrays.asList(eps,eps,eps);
+    private List<LLSymbol> wok2 = Arrays.asList(eps,eps,a);
+    private List<LLSymbol> wok3 = Arrays.asList(a,eps,b);
+    private List<LLSymbol> wok4 = Arrays.asList(a,eps,b,c);
+    private List<LLSymbol> wok5 = Arrays.asList(a,b,c);
+    private List<LLSymbol> wok6 = Arrays.asList(eps,eps,eps,a,eps,eps,eps,b,eps,eps,eps,c);
+    private List<LLSymbol> wok7 = Arrays.asList(k,a,b);
+    private List<LLSymbol> wok8 = Arrays.asList(d,k,a);
+    private List<LLSymbol> wok9 = Arrays.asList(eps);
+    private Set<List<LLSymbol>> nokset1 = new HashSet<>();
+    private Set<List<LLSymbol>> okset1 = new HashSet<>();
+    private Set<List<LLSymbol>> okseteps = new HashSet<>();
+    private Set<List<LLSymbol>> okset2 = new HashSet<>();
     @Before
     public void setUp() 
     {
@@ -143,7 +143,7 @@ public class FirstAndFollowImplTest
         }
         catch(IllegalArgumentException iae){}
         
-        List<Symbol> result = null;
+        List<LLSymbol> result = null;
         
         try
         {
@@ -234,7 +234,7 @@ public class FirstAndFollowImplTest
         deepEquals(Arrays.asList(a,b,c), result);
     }
     
-    private void deepEquals(List<Symbol> expected, List<Symbol> actual)
+    private void deepEquals(List<LLSymbol> expected, List<LLSymbol> actual)
     {
         assertEquals("Size",expected.size(), actual.size());
         
@@ -292,7 +292,7 @@ public class FirstAndFollowImplTest
         }
         catch(IllegalArgumentException iae){}
         
-        List<Symbol> result = null;
+        List<LLSymbol> result = null;
         
         try
         {
@@ -382,13 +382,13 @@ public class FirstAndFollowImplTest
         }
         catch(IllegalArgumentException iae){}
         
-        Set<List<Symbol>> result = null;
+        Set<List<LLSymbol>> result = null;
         try
         {
             result = faf.concatenateSetsWithPrefix(okseteps, okseteps, 0);
             assertEquals("size",1,result.size());
             
-            for(List<Symbol> temp : result)
+            for(List<LLSymbol> temp : result)
             {
                 deepEquals(Arrays.asList(eps), temp);
             }
@@ -400,7 +400,7 @@ public class FirstAndFollowImplTest
             result = faf.concatenateSetsWithPrefix(okset1, okset2, 3);
             
             
-            Set<List<Symbol>> expected = new HashSet<>();
+            Set<List<LLSymbol>> expected = new HashSet<>();
             expected.add(Arrays.asList(k,a,b));
             expected.add(Arrays.asList(d,k,a));
             expected.add(Arrays.asList(a,k,a));
@@ -409,7 +409,7 @@ public class FirstAndFollowImplTest
             
             assertEquals("size",expected.size(),result.size());
             
-            for(List<Symbol> ex : expected)
+            for(List<LLSymbol> ex : expected)
             {
                 assertTrue("nie je tam",result.contains(ex));
             }

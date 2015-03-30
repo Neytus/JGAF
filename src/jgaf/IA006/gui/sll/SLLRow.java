@@ -6,7 +6,7 @@ package jgaf.IA006.gui.sll;
 
 import java.util.List;
 import java.util.Set;
-import jgaf.IA006.grammar.Symbol;
+import jgaf.IA006.grammar.LLSymbol;
 
 /**
  *
@@ -14,33 +14,33 @@ import jgaf.IA006.grammar.Symbol;
  */
 public class SLLRow 
 {
-    private Symbol s;
-    private List<Symbol> rule;
-    private Set<List<Symbol>> fifo;
+    private LLSymbol s;
+    private List<LLSymbol> rule;
+    private Set<List<LLSymbol>> fifo;
 
-    public Symbol getS() {
+    public LLSymbol getS() {
         return s;
     }
 
-    public void setS(Symbol s) {
+    public void setS(LLSymbol s) {
         this.s = s;
     }
 
-    public List<Symbol> getRule() {
+    public List<LLSymbol> getRule() {
         return rule;
     }
 
     public void setRule(
-                        List<Symbol> rule) {
+                        List<LLSymbol> rule) {
         this.rule = rule;
     }
 
-    public Set<List<Symbol>> getFifo() {
+    public Set<List<LLSymbol>> getFifo() {
         return fifo;
     }
 
     public void setFifo(
-                        Set<List<Symbol>> fifo) {
+                        Set<List<LLSymbol>> fifo) {
         this.fifo = fifo;
     }
     

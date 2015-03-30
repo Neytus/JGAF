@@ -20,6 +20,7 @@ public class DefaultProcedureLogger extends JTextPane{
 
     private static final Color COLOR_TEXT_NEW = Color.RED;
     private static final Color COLOR_TEXT_OLD = Color.BLACK;
+    
 
     public DefaultProcedureLogger(){
         super();
@@ -33,9 +34,6 @@ public class DefaultProcedureLogger extends JTextPane{
         StyleContext sc = StyleContext.getDefaultStyleContext();
         AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY,
                                             StyleConstants.Foreground, c);
-
-       // int len = getDocument().getLength();
-      //  setCaretPosition(len);
         setCharacterAttributes(aset, false);
         replaceSelection(s);
     }

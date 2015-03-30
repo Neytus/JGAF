@@ -6,7 +6,7 @@ package jgaf.IA006.gui.ll;
 
 import java.util.List;
 import java.util.Map;
-import jgaf.IA006.grammar.Symbol;
+import jgaf.IA006.grammar.LLSymbol;
 
 /**
  *
@@ -14,51 +14,51 @@ import jgaf.IA006.grammar.Symbol;
  */
 public class TState 
 {
-    Symbol tHead;
-    List<Symbol> rule;
-    List<Symbol> originalRule;
-    Symbol leftSide;
+    LLSymbol tHead;
+    List<LLSymbol> rule;
+    List<LLSymbol> originalRule;
+    LLSymbol leftSide;
 
-    public Symbol getLeftSide() {
+    public LLSymbol getLeftSide() {
         return leftSide;
     }
 
-    public void setLeftSide(Symbol leftSide) {
+    public void setLeftSide(LLSymbol leftSide) {
         this.leftSide = leftSide;
     }
 
-    public List<Symbol> getOriginalRule() {
+    public List<LLSymbol> getOriginalRule() {
         return originalRule;
     }
 
     public void setOriginalRule(
-                                List<Symbol> originalRule) {
+                                List<LLSymbol> originalRule) {
         this.originalRule = originalRule;
     }
     
     
 
-    public TState(Symbol tHead,
-                  List<Symbol> rule) {
+    public TState(LLSymbol tHead,
+                  List<LLSymbol> rule) {
         this.tHead = tHead;
         this.rule = rule;
     }
     
 
-    public Symbol gettHead() {
+    public LLSymbol gettHead() {
         return tHead;
     }
 
-    public void settHead(Symbol tHead) {
+    public void settHead(LLSymbol tHead) {
         this.tHead = tHead;
     }
 
-    public List<Symbol> getRule() {
+    public List<LLSymbol> getRule() {
         return rule;
     }
 
     public void setRule(
-                        List<Symbol> rule) {
+                        List<LLSymbol> rule) {
         this.rule = rule;
     }
     

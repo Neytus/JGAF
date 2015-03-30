@@ -15,9 +15,9 @@ import javax.swing.SwingWorker;
 import jgaf.IA006.tools.FirstAndFollow;
 import jgaf.IA006.tools.FirstAndFollowI;
 import jgaf.IA006.tools.Tools;
-import jgaf.IA006.grammar.Epsilon;
-import jgaf.IA006.grammar.Grammar;
-import jgaf.IA006.grammar.Symbol;
+import jgaf.IA006.grammar.LLEpsilon;
+import jgaf.IA006.grammar.LLGrammar;
+import jgaf.IA006.grammar.LLSymbol;
 
 /**
  *
@@ -25,32 +25,32 @@ import jgaf.IA006.grammar.Symbol;
  */
 public class LLChecker extends javax.swing.JDialog {
 
-    private Grammar g;
+    private LLGrammar g;
     private List<LLCheckerRow> rows = new ArrayList<>();
-    private Map<Symbol,Set<List<Symbol>>> fiSet;
+    private Map<LLSymbol,Set<List<LLSymbol>>> fiSet;
     private FirstAndFollowI faf = new FirstAndFollow();
-    private Map<Integer,Map<Symbol,Set<List<Symbol>>>> tStates = new HashMap<>();
+    private Map<Integer,Map<LLSymbol,Set<List<LLSymbol>>>> tStates = new HashMap<>();
     private int k;
     private StringBuilder sb = new StringBuilder();
     private boolean hasConflict = false;
     int max = 0;
     int rowsCount = 0;
     
-    private Set<List<Symbol>> columnPrefixes = new HashSet<>();
+    private Set<List<LLSymbol>> columnPrefixes = new HashSet<>();
     
     private class MyWorker extends SwingWorker<String, String>
     {
         @Override
         protected String doInBackground() throws Exception 
         {
-            Symbol eps = new Epsilon();
-            Set<List<Symbol>> start = new HashSet<>();
+            LLSymbol eps = new LLEpsilon();
+            Set<List<LLSymbol>> start = new HashSet<>();
             start.add(Arrays.asList(eps));
             sb.append("<table>");
             sb.append("<tr><td>A</td><td>&#8594;</td><td>&alpha;</td><td style=\"padding-right: 5px; border-right-style: dotted; border-right-width: 1px\">FI<sub>")
                     .append(k).append("</sub>(&alpha;) +<sub>")
                     .append(k).append("</sub> L</td>");
-            for(Symbol s : g.getNonTerminals())
+            for(LLSymbol s : g.getNonTerminals())
             {
                 sb.append("<td style=\"text-align: center\">").append(s).append("</td>");
             }
@@ -71,10 +71,10 @@ public class LLChecker extends javax.swing.JDialog {
         }
 
         
-        private void createTableRow(Symbol s,Set<List<Symbol>> LF, LLCheckerRow llRow)
+        private void createTableRow(LLSymbol s,Set<List<LLSymbol>> LF, LLCheckerRow llRow)
         {
-            Set<List<Symbol>> intersectionz = new HashSet<>();
-            Set<List<Symbol>> is = new HashSet<>();
+            Set<List<LLSymbol>> intersectionz = new HashSet<>();
+            Set<List<LLSymbol>> is = new HashSet<>();
             intersectionz.addAll(llRow.getSubRows().get(0).getFiLSet());
             sb.append("<tr style=\"border-bottom-style: solid; border-bottom-width: 1px\"><td colspan=\"3\">T<sub>")
                     .append(tStates.size()-1)
@@ -106,7 +106,7 @@ public class LLChecker extends javax.swing.JDialog {
                         .append(Tools.buildWordsInSets(srow.getFiLSet()))
                         .append("</td>");
                 columnPrefixes.addAll(srow.getFiLSet());
-                List<Symbol> nonTerminalz = new ArrayList<>(g.getNonTerminals());
+                List<LLSymbol> nonTerminalz = new ArrayList<>(g.getNonTerminals());
                 for(int i = 0; i < g.getNonTerminals().size();i++)
                 {
                     if(i == 0)
@@ -121,7 +121,7 @@ public class LLChecker extends javax.swing.JDialog {
                     boolean hasMore = false;
                     for(Integer ii : srow.getFollows().keySet())
                     {
-                        Map<Symbol,Set<List<Symbol>>> temp = srow.getFollows().get(ii);
+                        Map<LLSymbol,Set<List<LLSymbol>>> temp = srow.getFollows().get(ii);
                         
                         if(temp.containsKey(nonTerminalz.get(i)))
                         { 
@@ -155,11 +155,11 @@ public class LLChecker extends javax.swing.JDialog {
             sb.append("<td colspan=\"").append(g.getNonTerminals().size()).append("\"></td></tr>");
         }
     
-        private void createRow(Symbol s, Set<List<Symbol>> LF)
+        private void createRow(LLSymbol s, Set<List<LLSymbol>> LF)
         {   // prve volanie
             if(tStates.isEmpty())
             {
-                Map<Symbol,Set<List<Symbol>>> temp = new HashMap<>();
+                Map<LLSymbol,Set<List<LLSymbol>>> temp = new HashMap<>();
                 temp.put(s, LF);
                 tStates.put(tStates.size(), temp);
             }
@@ -169,7 +169,7 @@ public class LLChecker extends javax.swing.JDialog {
                 // v podstate je to DFS (prehladavanie do hlbky)
                 for(Integer i : tStates.keySet())
                 {
-                    Map<Symbol,Set<List<Symbol>>> temp = tStates.get(i);
+                    Map<LLSymbol,Set<List<LLSymbol>>> temp = tStates.get(i);
                     if(temp.containsKey(s))
                     {
                         if(temp.get(s).containsAll(LF) && temp.get(s).size() == LF.size())
@@ -180,7 +180,7 @@ public class LLChecker extends javax.swing.JDialog {
                 }
 
                 // ak prebehol for cyklus vyssie tak tento stav tam este nie je inac by metoda skoncila returnom
-                Map<Symbol,Set<List<Symbol>>> temp = new HashMap<>();
+                Map<LLSymbol,Set<List<LLSymbol>>> temp = new HashMap<>();
                 temp.put(s, LF);
                 tStates.put(tStates.size(), temp);            
             }
@@ -189,13 +189,13 @@ public class LLChecker extends javax.swing.JDialog {
             llRow.setKey(s);
             llRow.setL(LF);
             List<SubLLCheckerRow> subRows = new ArrayList<>();
-            for(List<Symbol> rule : g.getProductionRules().get(s))
+            for(List<LLSymbol> rule : g.getProductionRules().get(s))
             {
                 SubLLCheckerRow subllrow = new SubLLCheckerRow();
                 subllrow.setA(s);
                 subllrow.setAlpha(rule);
                 
-                Set<List<Symbol>> fiL = new HashSet<>();
+                Set<List<LLSymbol>> fiL = new HashSet<>();
                 fiL.addAll(faf.concatenateSetsWithPrefix(faf.firstAlpha(rule, fiSet, k), LF, k));
 
                 
@@ -212,8 +212,8 @@ public class LLChecker extends javax.swing.JDialog {
             {
                 for(Integer i : srow.getFollows().keySet())
                 {
-                    Map<Symbol,Set<List<Symbol>>> temp = srow.getFollows().get(i);
-                    for(Symbol skey : temp.keySet())
+                    Map<LLSymbol,Set<List<LLSymbol>>> temp = srow.getFollows().get(i);
+                    for(LLSymbol skey : temp.keySet())
                     {
                         createRow(skey,temp.get(skey));
                     }
@@ -230,7 +230,7 @@ public class LLChecker extends javax.swing.JDialog {
      * @param fiSet
      * @param k 
      */
-    public void setup(Grammar g, Map<Symbol,Set<List<Symbol>>> fiSet,int k)
+    public void setup(LLGrammar g, Map<LLSymbol,Set<List<LLSymbol>>> fiSet,int k)
     {
         this.g = g;
         this.fiSet = fiSet;
@@ -326,9 +326,10 @@ public class LLChecker extends javax.swing.JDialog {
         int stateID = 0;
         for(Integer i : tStates.keySet())
         {
-            Map<Symbol,Set<List<Symbol>>> tempMap = tStates.get(i);
             
-            for(Symbol symb : tempMap.keySet())
+            Map<LLSymbol,Set<List<LLSymbol>>> tempMap = tStates.get(i);
+            
+            for(LLSymbol symb : tempMap.keySet())
             {
                 TSymbol ts = new TSymbol(stateID, symb, tempMap.get(symb));
                 table.addToRows(ts);
@@ -341,11 +342,11 @@ public class LLChecker extends javax.swing.JDialog {
         {   // prebehnem podriadky            
             for(SubLLCheckerRow subRow : row.getSubRows())
             {   // prejdem mozne prefixy
-                for(List<Symbol> prefix : subRow.getFiLSet())
+                for(List<LLSymbol> prefix : subRow.getFiLSet())
                 {   // vytvorime nove pravidlo kde sa budu ukladat T symboly                   
-                    List<Symbol> newRule = new ArrayList<>();
+                    List<LLSymbol> newRule = new ArrayList<>();
                     int position = 0;
-                    for(Symbol s: subRow.getAlpha())
+                    for(LLSymbol s: subRow.getAlpha())
                     {   // pre dane prefixy ktore pravidlo
                         if(s.isEpsilon() || s.isTerminal())
                         {   // terminal ide priamo ~> terminal
@@ -358,14 +359,14 @@ public class LLChecker extends javax.swing.JDialog {
                             {   //este sme ziaden nepridali
                                 if(!added)
                                 {
-                                    Map<Symbol,Set<List<Symbol>>> temp = subRow.getFollows().get(ii);
+                                    Map<LLSymbol,Set<List<LLSymbol>>> temp = subRow.getFollows().get(ii);
                                     // prejdeme cez mozne lokalne follow                           
-                                    for(Symbol ss: temp.keySet())
+                                    for(LLSymbol ss: temp.keySet())
                                     {
                                         if(ss.equals(s))
                                         {
-                                            Set<List<Symbol>> set1 = new HashSet<>();
-                                            List<Symbol> tempp = subRow.getAlpha().subList(position+1, subRow.getAlpha().size());                                              
+                                            Set<List<LLSymbol>> set1 = new HashSet<>();
+                                            List<LLSymbol> tempp = subRow.getAlpha().subList(position+1, subRow.getAlpha().size());                                              
                                             if(tempp.isEmpty())
                                             {   // neterminal na konci s epsilonom
                                                 set1.addAll(row.getL());
