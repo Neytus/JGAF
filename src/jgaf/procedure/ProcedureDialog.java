@@ -27,11 +27,11 @@ import jgaf.environment.Environment;
 public class ProcedureDialog extends javax.swing.JDialog {
 
     private ProcedureDescriptor descriptor;
-    private List<InputParamaterChooserPanel> parameterPanels;
+    private List<ParameterPanInterface> parameterPanels;
 
     public ProcedureDialog(java.awt.Frame parent, ProcedureDescriptor descriptor, boolean fromProcedure) throws NoSuchEditorException {
         super(parent, true);
-        parameterPanels = new ArrayList<InputParamaterChooserPanel>();
+        parameterPanels = new ArrayList<>();
         this.descriptor = descriptor;
         initComponents();
         initMyComponents(fromProcedure);
@@ -60,10 +60,17 @@ public class ProcedureDialog extends javax.swing.JDialog {
 
 
         for (ProcedureParameter parameter : descriptor.getParameters()) {
+            if (parameter.hasForcedOptions()){
+            InputParamaterForcedOptionsPanel paramPanel= new InputParamaterForcedOptionsPanel(parameter);
+            parameterPanels.add(paramPanel);
+            inputParametersPanel.add(paramPanel);
+            }else{
+                
+            
             InputParamaterChooserPanel paramPanel = new InputParamaterChooserPanel(parameter);
             parameterPanels.add(paramPanel);
             inputParametersPanel.add(paramPanel);
-        }
+        }}
 
         if(descriptor.hasOutput()) {
             outputDescription.setText(descriptor.getOutputRepresentation().getDescription());
@@ -76,7 +83,7 @@ public class ProcedureDialog extends javax.swing.JDialog {
     }
 
     private void setAllParameters() {
-        for (InputParamaterChooserPanel panel : parameterPanels) {
+        for (ParameterPanInterface panel : parameterPanels) {
             panel.setParameter();
         }
     }

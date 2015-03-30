@@ -327,7 +327,8 @@ public class LLChecker extends javax.swing.JDialog {
         for(Integer i : tStates.keySet())
         {
             
-            {
+            Map<LLSymbol,Set<List<LLSymbol>>> tempMap = tStates.get(i);
+            
             for(LLSymbol symb : tempMap.keySet())
             {
                 TSymbol ts = new TSymbol(stateID, symb, tempMap.get(symb));

@@ -123,7 +123,6 @@ public class GrammarEditor extends Editor {
         this.grammarRepsresenter = grammarRepsresenter;
     }
 
-    //TO DO - pravdepodobne chyba
     public void changeRuleSide(ProductionRulesSide ruleSide, String newRuleSideString) {
         Grammar oldGrammar = (Grammar) grammar.clone();
         ProductionRulesSide oldRuleSide = (ProductionRulesSide) ruleSide.clone();
@@ -153,9 +152,6 @@ public class GrammarEditor extends Editor {
         }
     }
 
-    /*
-    JB - chyba s | pravidlami 
-    */
     public List<String> stringToList(String string){
         
         System.out.println("prechod metodou stringToList: ");
@@ -291,12 +287,5 @@ public class GrammarEditor extends Editor {
     public JPanel getRepresenter() {
         return grammarRepsresenter;
     }
-
-
-
-
-
-
-
 
 }

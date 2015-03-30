@@ -5,6 +5,8 @@
 
 package jgaf.procedure;
 
+import java.util.List;
+
 /**
  *
  * @author hanis

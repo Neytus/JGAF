@@ -43,9 +43,7 @@ public abstract class DefaultProcedure extends Procedure {
         }
         getInputSequence().add(newInputList);
         if(hasOutput()) {
-          //  System.out.println("output = "+getDescriptor().getOutputRepresentation().getRepresentation());
             getOutputSequence().add(getDescriptor().getOutputRepresentation().getRepresentation().clone());
-           // System.out.println("output +"+getOutputSequence().toString());
         }
         if(message == null) {
             message = "";

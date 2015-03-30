@@ -204,18 +204,21 @@ public class GrammarLoaderFrame extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
         JFileChooser jfc = new JFileChooser();
         jfc.showOpenDialog(this);
         if(jfc.getSelectedFile() != null)
         {
+            System.out.println("subor zvoleny");
+            
             k = changeK();
             setButtonLabels();
         
-            gl = new GrammarLoader(jfc.getSelectedFile());
+            gl = new GrammarLoader(jfc.getSelectedFile());           
 
             MyFIFWorker worker = new MyFIFWorker();
             worker.execute();            
-        }        
+        }                
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

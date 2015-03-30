@@ -5,7 +5,6 @@
 package jgaf.IA006.tools;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -18,9 +17,14 @@ import java.util.regex.Pattern;
 import jgaf.Constants.MathConstants;
 import jgaf.IA006.grammar.LLEpsilon;
 import jgaf.IA006.grammar.LLGrammar;
-import jgaf.IA006.grammar.NonTerminal;
 import jgaf.IA006.grammar.LLSymbol;
 import jgaf.IA006.grammar.LLTerminal;
+import jgaf.IA006.grammar.NonTerminal;
+import jgaf.IA006.grammar.SymbolType;
+import jgaf.grammar.Grammar;
+import jgaf.grammar.ProductionRuleSide;
+import jgaf.grammar.ProductionRules;
+import jgaf.grammar.Symbol;
 
 /**
  *
@@ -28,7 +32,68 @@ import jgaf.IA006.grammar.LLTerminal;
  */
 public class GrammarFactory 
 {
+    private static SymbolType getSymbolType(Symbol s ){
+    
+    if (s.isTerminal()) {
+        return SymbolType.TERMINAL;
+    } else if (s.isNonterminal()) {
+        return SymbolType.NONTERMINAL;
+    } else {
+        return SymbolType.EPSILON;
+    }       
+    }
 
+    public static LLGrammar convertGrammar(Grammar grammar) {
+        String grammarName = grammar.getName();
+        LLSymbol rootSymbol = new LLSymbol(SymbolType.NONTERMINAL);
+        Set<LLSymbol> nonTerminals = new HashSet<>();
+        Set<LLSymbol> terminals = new HashSet<>();
+        Map<LLSymbol,Set<List<LLSymbol>>> productionRules = new HashMap<>();
+        
+        for (Symbol s : grammar.getNonterminals()) {
+            LLSymbol lls = new LLSymbol(s.getName(), getSymbolType(s));
+            nonTerminals.add(lls);
+            if (s.equals(grammar.getStartNonterminal())) {
+                rootSymbol = lls;
+            }
+        }
+        
+        for (Symbol s : grammar.getTerminals()) {
+            LLSymbol lls = new LLSymbol(s.getName(), getSymbolType(s));
+            terminals.add(lls);
+
+        }
+        
+        for (ProductionRules rule : grammar.getProductionRules()) {
+            
+            List<Symbol> leftHandSide = rule.getLeftHandSide().getSymbols();
+            List<ProductionRuleSide> rightHandSide = rule.getRightHandSide().getRules();
+            
+            Set<List<LLSymbol>> newRightSide = new HashSet();
+            LLSymbol newLeftSide = new LLSymbol(leftHandSide.get(0).getName(), getSymbolType(leftHandSide.get(0)));
+            
+            for (ProductionRuleSide oneRule : rightHandSide) {
+                List<LLSymbol> newRightSidePart = new ArrayList();
+                
+                for (Symbol symbol : oneRule.getSymbols()) {
+                    LLSymbol newSymbol = new LLSymbol(symbol.getName(), getSymbolType(symbol));
+                    newRightSidePart.add(newSymbol);
+                }
+                
+                newRightSide.add(newRightSidePart);
+            }
+            
+            if (productionRules.containsKey(newLeftSide)) {
+                newRightSide.addAll(productionRules.get(newLeftSide));
+            }
+            
+            productionRules.put(newLeftSide, newRightSide);
+        }
+        
+        
+        LLGrammar g = new LLGrammar(grammarName, terminals, nonTerminals, rootSymbol, productionRules);
+        return g;
+    }
     
     public static LLGrammar generateFromString(String s)
     {

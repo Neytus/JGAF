@@ -309,7 +309,7 @@ public class XMLImporter {
             Element element=(Element)iterator.next();
             terminals.add(new Terminal(element.getText()));
         }
-
+/*
         List epsilonList = grammarNode.selectNodes("terminals/epsilon");
         iterator = epsilonList.iterator();
         List<Symbol> epsilon = new ArrayList<Symbol>();
@@ -317,7 +317,7 @@ public class XMLImporter {
             Element element=(Element)iterator.next();
             epsilon.add(new Epsilon(element.getText()));
         }
-
+*/
 
         List list = grammarNode.selectNodes("productions/rule");
         iterator = list.iterator();
@@ -351,10 +351,8 @@ public class XMLImporter {
                 Symbol symbol = new Symbol(symbolElem.getText(), Symbol.NONTERMINAL);
                 if (terminals.contains(symbol)) {
                     symbol.setType(Symbol.TERMINAL);
-                }else if (epsilon.contains(symbol)){
+                }else if (!nonterminals.contains(symbol)) {
                     symbol.setType(Symbol.EPSILON);
-                } else if (!nonterminals.contains(symbol)) {
-                    System.out.println("ERR1");
                 }
                 helpRule.addSymbol(symbol);
             }

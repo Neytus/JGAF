@@ -44,7 +44,7 @@ public class LRParserProcedure extends Procedure {
          * JB
          */
         g.normalize();       
-        
+        System.out.println(g.toString());
         
         if (!g.hasStartNonterminal()) {
             return "Grammar has not selected starting nonterminal";
