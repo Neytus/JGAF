@@ -123,6 +123,8 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
         automatonPainter = new AutomatonPainter(); //AutomatonPainter();
         automatonPainter.setEditor(this);
         this.editorState = EditorState.hand;
+        
+        editor.setChanged(false);
     }
 
     public StateDiagramEditor(FSAutomatonEditor editor) {
@@ -134,6 +136,8 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
         labels = new ArrayList<CanvasLabel>();
         setPopupMenus();
         initEditor();
+        
+        editor.setChanged(false);
     }
 
 
@@ -177,6 +181,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
 
 
     public void handleRightMouseClick(MouseEvent e) {
+        editor.setChanged(true);
         if (editorState == EditorState.hand) {
             removeAllSelectedFlags();
             currentTransSelected = null;
@@ -655,6 +660,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
 
 
     private void addNewTransition(State from, State to) {
+        editor.setChanged(true);
         boolean isNew = !getAutomaton().containsTransition(from, to);
         if(isNew) {
             String labelsString = getStringFromInputBox("");
@@ -769,6 +775,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
     }
 
     private void handleTransitionMovement(java.awt.event.MouseEvent evt) {
+        editor.setChanged(true);
         if (currentTransSelected != null) {
             if (currentTransSelected.isReflexive()) {
                 int x = (int) (currentTransSelected.getFromState().getVisualProperties().getXPos() * zoomfactor);
@@ -853,7 +860,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
      */
     private void handleAddState(java.awt.event.MouseEvent evt) {
       //  dummyState.getVisualProperties().setVisible(false);
-
+        editor.setChanged(true);
         removeAllSelections();
         State newState = new State(generateNewStateName());
         newState.getVisualProperties().setSelected(true);
@@ -1037,6 +1044,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
         removeAllMouseOverFlags();
         State stateHit = getStateAtMouse(evt.getX(), evt.getY());
         if (stateHit != null) {
+            editor.setChanged(true);
             if (transitionState == EditorTransitionStates.selectToState && transitionAddFrom != null) {
                 dummyTransition.setFromState(transitionAddFrom);
                 dummyTransition.setToState(stateHit);
@@ -1061,6 +1069,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
      */
     private void handleStateMovement(java.awt.event.MouseEvent evt) {
         if (!currentStatesSelected.isEmpty()) {
+            editor.setChanged(true);
             for (State state : currentStatesSelected) {
                 double actualX = (evt.getX() - state.getVisualProperties().getDragOffsetX() - offsetX);
                 double actualY = (evt.getY() - state.getVisualProperties().getDragOffsetY() - offsetY);
@@ -1114,6 +1123,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
      */
     private void handleLabelMovement(java.awt.event.MouseEvent evt) {
         if (currentLabelSelected != null) {
+            editor.setChanged(true);
             double actualX = (evt.getX() - currentLabelSelected.getDragOffsetX() - offsetX);
             double actualY = (evt.getY() - currentLabelSelected.getDragOffsetY() - offsetY);
             int newX = (int) (actualX / zoomfactor);
@@ -1128,6 +1138,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
 
     private void handleInitArrowMovement(java.awt.event.MouseEvent evt) {
         if (initArrow.isSelected()) {
+            editor.setChanged(true);
             int x = (int) (initArrow.getStateCenter().getX() * zoomfactor);
             int y = (int) (initArrow.getStateCenter().getY() * zoomfactor);
             double dx = evt.getX() - x;
@@ -1143,6 +1154,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
 
     private void handleTransitionEndDrag(java.awt.event.MouseEvent evt) {
         if (currentTransSelected != null) {
+            editor.setChanged(true);
             double curveFactor = currentTransSelected.getVisualProperties().getCurveFactor();
             if (Math.abs(curveFactor - oldTansitionCurveFactor) > 0.0001) {
                 undoHandler.addStep(new ChangeTransitionCurveFactorStep(currentTransSelected, oldTansitionCurveFactor, curveFactor));
@@ -1155,6 +1167,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
         int offX = evt.getX() - panStartX;
         int offY = evt.getY() - panStartY;
         if (offX != 0 || offY != 0) {
+            editor.setChanged(true);
             Set<State> states = new HashSet<State>(currentStatesSelected);
             undoHandler.addStep(new MoveStatesStep(states, (int) (offX/zoomfactor), (int) (offY/zoomfactor)));
         }
@@ -1165,12 +1178,14 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
         int offX = evt.getX() - panStartX;
         int offY = evt.getY() - panStartY;
         if (offX != 0 || offY != 0) {
+            editor.setChanged(true);
             undoHandler.addStep(new MoveLabelStep(currentLabelSelected, (int) (offX/zoomfactor), (int) (offY/zoomfactor)));
         }
     }
 
     private void handleInitArrowEndDrag(java.awt.event.MouseEvent evt) {
         if (initArrow.isSelected()) {
+            editor.setChanged(true);
             double newInitialArrowOrientation = initArrow.getOrientation();
             if (Math.abs(oldInitialArrowOrientation - newInitialArrowOrientation) > 0.00001) {
                 undoHandler.addStep(new ChangeInitialArrowOrientationStep(initArrow, oldInitialArrowOrientation, newInitialArrowOrientation));
@@ -1371,18 +1386,21 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
     }
 
     public void undo() {
+        editor.setChanged(true);
         undoHandler.undo();
         removeAllSelections();
         updateGraphicsAll();
     }
 
     public void redo() {
+        editor.setChanged(true);
         undoHandler.redo();
         removeAllSelections();
         updateGraphicsAll();
     }
 
     public void applyGEMLayout() {
+        editor.setChanged(true);
         gem = new GEM(getAutomaton());
         gem.arrangeAutomaton();
         centerAndScaleGraphics(true);
@@ -1392,6 +1410,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
 
     public void modifyLabel(CanvasLabel label, CanvasLabel newLabel) {
         if(!label.isEqualTo(newLabel)) {
+            editor.setChanged(true);
             CanvasLabel oldLable = (CanvasLabel) label.clone();
             label.modify(newLabel);
             undoHandler.addStep(new ModifyLabelStep(label, oldLable, newLabel));
@@ -1404,6 +1423,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
     public void modifyTransition(Transition transition, Transition newTransition) {
         if(!transition.getLabels().equals(newTransition.getLabels()) 
                 || !transition.getVisualProperties().equals(newTransition.getVisualProperties())) {
+            editor.setChanged(true);
             Transition oldTransition = new Transition(transition.getFromState(), transition.getToState());
             oldTransition.setVisualProperties((TransitionVisualProperties) transition.getVisualProperties().clone());
             oldTransition.setLabels(transition.getLabels());
@@ -1418,6 +1438,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
 
     public void modifyState(State state, State newState, boolean initial) {
         if(!state.equalsUpToInitial(newState) || state.isInitial() != initial) {
+            editor.setChanged(true);
             State oldState = (State) state.clone();
             State lastInitialState = getAutomaton().getInitialState();
             getAutomaton().modifyState(state, newState, initial);
@@ -1429,6 +1450,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
 
     public void modifyInitialArrow(InitialArrow newInitialArrow) {
         if(!initArrow.hasSameBasicProperties(newInitialArrow)) {
+            editor.setChanged(true);
             InitialArrow oldInitialArrow = (InitialArrow) initArrow.clone();
             initArrow.modify(newInitialArrow);
             undoHandler.addStep(new ModifyInitialArrowStep(initArrow, oldInitialArrow, newInitialArrow));
@@ -1449,6 +1471,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
 
 
     public void changeAcceptingStates(Set<State> states, boolean accepting) {
+        editor.setChanged(true);
         List<State> changedStates = new ArrayList<State>();
         for (State state : states) {
             if (state.isAccepting() != accepting) {
@@ -1469,6 +1492,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
 
     public void swapAcceptingStates(Set<State> states) {
         if (getAutomaton().swapAcceptingStates(states)) {
+            editor.setChanged(true);
             undoHandler.addStep(new SwapAcceptingStatesStep(getAutomaton(), new ArrayList<State>(states)));
             updateGraphicsAll();
         }
@@ -1489,6 +1513,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
                 }
             }
             if(anyChange) {
+                editor.setChanged(true);
                 undoHandler.addStep(new LineUpStatesStep(statesShiftMap, LineUpStatesStep.VERTICALLY));
                 repaint();
             }
@@ -1509,6 +1534,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
                 }
             }
             if(anyChange) {
+                editor.setChanged(true);
                 undoHandler.addStep(new LineUpStatesStep(statesShiftMap, LineUpStatesStep.HORIZONTALLY));
                 repaint();
             }
@@ -1520,8 +1546,9 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
 
 
 
-    public void changeInitialState(State state, boolean initial) {        
+    public void changeInitialState(State state, boolean initial) {
         if(initial != state.isInitial()) {
+            editor.setChanged(true);
             if(initial) {
                 getAutomaton().setInitialState(state);
             } else {
@@ -1536,6 +1563,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
     public void changeTransitionLabels(Transition transition, SortedSet<String> labels) {
         SortedSet<String> oldLabels = transition.getLabels();
         if(transition.setLabels(labels)) {
+            editor.setChanged(true);
             undoHandler.addStep(new ChangeTransitionLabelsStep(transition, oldLabels, labels));
             updateGraphicsAll();
         }
@@ -1543,6 +1571,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
 
     public void addTransitionLabel(Transition transition, String label) {
         if (transition.addLabel(label)) {
+            editor.setChanged(true);
             undoHandler.addStep(new AddTransitionLabelStep(transition, label));
             updateGraphicsAll();
         }
@@ -1550,6 +1579,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
 
 
     public void addEpsilonTransition(Transition transition) {
+        editor.setChanged(true);
         addTransitionLabel(transition, MathConstants.EPSILON);
     }
 
@@ -1557,6 +1587,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
 
     public void removeTransition(Transition transition) {
         if (getAutomaton().removeTransition(transition)) {
+            editor.setChanged(true);
             undoHandler.addStep(new RemoveTransitionStep(getAutomaton(), transition));
         }
         currentTransSelected = null;
@@ -1566,6 +1597,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
     public void changeTransitionCurveFactor(Transition transition, double factor) {
         double oldFactor = transition.getVisualProperties().getCurveFactor();
         if(oldFactor != factor) {
+            editor.setChanged(true);
             transition.getVisualProperties().setCurveFactor(factor);
             undoHandler.addStep(new ChangeTransitionCurveFactorStep(transition, oldFactor, factor));
             updateGraphicsAll();
@@ -1574,6 +1606,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
 
 
     public void removeStates(Set<State> states) {
+        editor.setChanged(true);
         undoHandler.addStep(new RemoveStatesStep(states, getAutomaton()));
         getAutomaton().removeStates(states);
         currentStatesSelected.clear();
@@ -1591,6 +1624,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
     public void renameState(State state, String newName) {
         String oldName = state.getName();
         if(getAutomaton().renameState(state, newName)) {
+            editor.setChanged(true);
             undoHandler.addStep(new RenameStateStep(getAutomaton(), state, oldName, newName));
         } else {
             if(!oldName.equals(newName)) {
@@ -1609,6 +1643,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
     public void changeInitialArrowOrientation(double angle) {
         double oldAngle = initArrow.getOrientation();
         if (Math.abs(oldAngle - angle) > 0.00001) {
+            editor.setChanged(true);
             undoHandler.addStep(new ChangeInitialArrowOrientationStep(initArrow, oldAngle, angle));
             initArrow.setOrientation(angle);
             repaint();
@@ -1634,6 +1669,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
     }
 
     public void removeLabel(CanvasLabel label) {
+        editor.setChanged(true);
         labels.remove(label);
     }
 
@@ -1641,6 +1677,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
     public void renameLabel(CanvasLabel label, String newCaption) {
         String oldCaption = label.getCaption();
         if(!newCaption.equals(oldCaption)) {
+            editor.setChanged(true);
             undoHandler.addStep(new ChangeLabelCaptionStep(label, oldCaption, newCaption));
             label.setCaption(newCaption);            
         }
@@ -1814,6 +1851,7 @@ public class StateDiagramEditor implements FSAutomatonSubEditor {
     }
 
     public void addLabel(CanvasLabel label) {
+        editor.setChanged(true);
         labels.add(label);
     }
 

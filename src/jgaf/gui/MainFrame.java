@@ -13,6 +13,8 @@ package jgaf.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +22,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import jgaf.automaton.fa.FSAutomatonEditor;
+import jgaf.editor.Editor;
 import jgaf.environment.Environment;
 import jgaf.environment.PropertiesHandler;
 import jgaf.l18n.Resource;
@@ -62,16 +64,29 @@ public class MainFrame extends javax.swing.JFrame {
             dispose();
         }
         properties = PropertiesHandler.getInstance();        
-        setJMenuBar(new MainFrameMenu(this));        
-
+        setJMenuBar(new MainFrameMenu(this));     
+        
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        
         setTitle(Resource.getValue("application.name"));
         pack();
 
 
-        /*
-        JB 
-        */
-        //FSAutomatonEditor faEditor = (FSAutomatonEditor) Environment.getInstance().getEditorHandler().createEditor("FA");
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                if (!environment.getEditorHandler().allSaved()) {                                        
+                    final WindowEvent e1 = e;
+                    String message = "Some editors still have unsaved content. Do you want to exit anyways?";
+                    int result = JOptionPane.showConfirmDialog(e1.getComponent(),
+                        message, "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (result==JOptionPane.YES_OPTION) {
+                        System.exit(0);     
+                    }
+                } else {
+                    System.exit(0);
+                }
+            }
+        });
     }
 
     public JDesktopPane getDesktop() {
@@ -148,10 +163,10 @@ public class MainFrame extends javax.swing.JFrame {
 
 
 
-    public void exit() {
+    public void exit() {       
         dispose();
     }
-
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is

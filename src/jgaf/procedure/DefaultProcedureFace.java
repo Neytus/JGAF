@@ -6,19 +6,16 @@
 package jgaf.procedure;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.Timer;
@@ -58,7 +55,7 @@ public final class DefaultProcedureFace extends JPanel {
 
     public DefaultProcedureFace(DefaultProcedure procedure) {
         super(new BorderLayout());
-        inputEditors = new ArrayList<Editor>();
+        inputEditors = new ArrayList<>();
         assignProcedure(procedure);
         setEditors();
         
@@ -94,9 +91,9 @@ public final class DefaultProcedureFace extends JPanel {
             
             /**
              * JB 
-             * setEditable - zmemene na false podla LR rozsirenia 
+             * setEditable - must be true 
              */
-            outputEditor.setEditable(false);
+            outputEditor.setEditable(true);
         }
     }
     
@@ -273,7 +270,7 @@ public final class DefaultProcedureFace extends JPanel {
 
 
     public ProcedureDescriptor[] getDescriptorArray() {
-        List<ProcedureDescriptor> list = new ArrayList<ProcedureDescriptor>();
+        List<ProcedureDescriptor> list = new ArrayList<>();
         for (ProcedureDescriptor procedureDescriptor : Environment.getInstance().getProcedureHandler().getProcedureRegister().getDescriptorList()) {
             if(procedureDescriptor.getParameters().isEmpty()
                     && procedureDescriptor.getInputRepresentationsCardinality() == 1
@@ -292,13 +289,20 @@ public final class DefaultProcedureFace extends JPanel {
     public void continueWithNewProcedure() {
         ProcedureDescriptor descriptor = (ProcedureDescriptor)JOptionPane.showInputDialog(
                     Environment.getInstance().getFrame(),
-                    "Choose antoher procedure.",
+                    "Choose another procedure.",
                     "Procedures",
                     JOptionPane.PLAIN_MESSAGE,
                     new ImageIcon(getClass().getResource("/jgaf/icons/toolbar/24x24/transformation/open.png")),
                     getDescriptorArray(), null);
 
-
+        /*
+        System.out.println("CONTINUE with new procedure info: " + JOptionPane.PLAIN_MESSAGE + ", ");
+        System.out.println("descriptor: " + getDescriptorArray());
+        System.out.println("output sequence:" + outputSequence.size());
+        System.out.println("output sequence:" + outputSequence.get(0));
+        System.out.println("output sequence:" + outputSequence.get(outputSequence.size() - 1));
+        */
+                
         if (descriptor != null) {
         descriptor.getInputRepresentations().get(0).setRepresentation(outputSequence.get(outputSequence.size() - 1));
             try {

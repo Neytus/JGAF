@@ -59,6 +59,7 @@ public class PushdownAutomatonEditor extends Editor {
     public void repaint() {
         this.representer.setAutomaton(automaton);
         getFace().repaint();
+        setChanged(true);
     }
 
     @Override

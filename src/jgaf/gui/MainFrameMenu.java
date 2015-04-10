@@ -448,6 +448,7 @@ public class MainFrameMenu extends JMenuBar {
 //
 //        //  file.addSeparator();
 
+        //////////////////  FILE -> EXIT  ///////////////////////////
         fileExit = new JMenuItem();
         fileExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
         fileExit.setIcon(new ImageIcon(getClass().getResource(ICON_FILE_EXIT_PATH)));
@@ -455,7 +456,17 @@ public class MainFrameMenu extends JMenuBar {
         fileExit.addActionListener(new java.awt.event.ActionListener() {
 
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mainFrame.exit();
+                if (editorHandler.allSaved()) {
+                    mainFrame.exit();
+                } else {
+                    String message = "Some editors still have unsaved content. Do you want to exit anyways?";
+                    int answer = JOptionPane.showConfirmDialog(mainFrame,
+                        message, "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (answer == JOptionPane.YES_OPTION) {
+                        System.out.println("EDITOR UZAVRENY KLIKNUTIM NA YES_OPTION");
+                        mainFrame.exit();
+                    }
+                }
             }
         });
         file.add(fileExit);
@@ -798,14 +809,23 @@ public class MainFrameMenu extends JMenuBar {
         }
     }
 
-
-
+    
+    
     private void generateWindowSubmenu() {
+        final EditorRegister register = editorHandler.getEditorRegister();
+        
         window.removeAll();        
-        for (final Editor editor : editorHandler.getEditors()) {
+        for (final Editor editor : editorHandler.getEditors()) {           
+            EditorDescriptor descriptor = null;
+            try {
+                descriptor = register.getDescriptorById(editor.getId());
+            } catch (NoSuchEditorException ex) {
+                showWarningDialog("Incorrect editor register", "error");
+            }
+            
             JCheckBoxMenuItem item = new JCheckBoxMenuItem();
             item.setSelected(false);
-            String name = editor.getName();
+            String name = descriptor.getName() + ": " + editor.getName();
             item.setText(name);
             if(editorHandler.isCurrentEditor(editor)) {
                 item.setSelected(true);

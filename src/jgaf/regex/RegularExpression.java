@@ -67,8 +67,8 @@ public class RegularExpression implements Representation {
     }
 
 
-    private void create(String ex) throws WrongExpressionException {
-        //System.out.println(ex);
+    private void create(String sample) throws WrongExpressionException {
+        String ex = sample.trim();
         
         alphabet = new TreeSet<String>();
         int encapsulation = checkEncapsulation(ex);
@@ -408,7 +408,7 @@ public class RegularExpression implements Representation {
 
     public static void main(String[] args) {
         String re1 = "(a+b+c)";
-        String re2 = "(a+b+c)";
+        String re2 = "(a+b+c) ";
         String re3 = "c*";
 //        List<List<RegularExpression>> test = new ArrayList<List<RegularExpression>>();
 //        //List<RegularExpression> inp = new ArrayList<RegularExpression>();

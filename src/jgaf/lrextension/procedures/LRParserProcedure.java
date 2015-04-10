@@ -41,10 +41,9 @@ public class LRParserProcedure extends Procedure {
     public String checkInputRepresentation() {
         
         /**
-         * JB
+         * JB 
          */
         g.normalize();       
-        System.out.println(g.toString());
         
         if (!g.hasStartNonterminal()) {
             return "Grammar has not selected starting nonterminal";

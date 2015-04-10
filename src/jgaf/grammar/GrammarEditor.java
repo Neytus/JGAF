@@ -124,6 +124,7 @@ public class GrammarEditor extends Editor {
     }
 
     public void changeRuleSide(ProductionRulesSide ruleSide, String newRuleSideString) {
+        setChanged(true);
         Grammar oldGrammar = (Grammar) grammar.clone();
         ProductionRulesSide oldRuleSide = (ProductionRulesSide) ruleSide.clone();
         
@@ -141,6 +142,7 @@ public class GrammarEditor extends Editor {
     }
     
     public void changeRuleSide(ProductionRuleSide ruleSide, String newRuleSideString) {
+        setChanged(true);
         Grammar oldGrammar = (Grammar) grammar.clone();
         ProductionRuleSide oldRuleSide = (ProductionRuleSide) ruleSide.clone();
         ruleSide.clear();
@@ -187,6 +189,7 @@ public class GrammarEditor extends Editor {
     }
 
     public void setRightSideToEpsilon(ProductionRulesSide ruleSide) {
+        setChanged(true);
         Grammar oldGrammar = (Grammar) grammar.clone();
         boolean control = false; 
         for(ProductionRuleSide oneRule : ruleSide.getRules()){
@@ -203,16 +206,19 @@ public class GrammarEditor extends Editor {
     }
 
     public void clearRuleSide(ProductionRulesSide ruleSide) {
+        setChanged(true);
         changeRuleSide(ruleSide, "");
     }
     
     public void clearRuleSide(ProductionRuleSide ruleSide) {
+        setChanged(true);
         changeRuleSide(ruleSide, "");
     }
 
 
 
     public void addEmptyProductionRule() {
+        setChanged(true);
         Grammar oldGrammar = (Grammar) grammar.clone();
         undoHandler.addStep(new ChangeGrammar(oldGrammar, grammar, this));
         grammar.addRule(new ProductionRules());
@@ -221,6 +227,7 @@ public class GrammarEditor extends Editor {
 
 
     public void removeRule(ProductionRules rule) {
+        setChanged(true);
         Grammar oldGrammar = (Grammar) grammar.clone();
         int index = grammar.removeRule(rule);
         if (index != -1) {
@@ -234,6 +241,7 @@ public class GrammarEditor extends Editor {
         Grammar oldGrammar = (Grammar) grammar.clone();
         int number = grammar.removeEmptyRules();
         if(number > 0) {
+            setChanged(true);
             undoHandler.addStep(new ChangeGrammar(oldGrammar, grammar, this));
             repaint();
         }        

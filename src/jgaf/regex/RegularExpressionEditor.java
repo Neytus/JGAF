@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import jgaf.Constants.MathConstants;
 import jgaf.Representation;
@@ -49,7 +48,8 @@ public class RegularExpressionEditor extends Editor {
         this.undoHandler = new UndoRedoHandler();
         this.regexString = "";
         setExpression(regularExpression);
-        repaint();       
+        repaint();         
+        setChanged(false);
     }
 
     @Override
@@ -129,6 +129,7 @@ public class RegularExpressionEditor extends Editor {
 
 
     public void setExpression(String re, boolean undo) {
+        setChanged(true);
         if(regexString.equals(re) && undo) {
             return;
         }
@@ -238,12 +239,5 @@ public class RegularExpressionEditor extends Editor {
         }
         return false;
     }
-
-
-
-
-
-
-
 
 }

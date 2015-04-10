@@ -153,8 +153,8 @@
 
   <procedure type="T">
     <classPath>jgaf.procedure.AutomataComposition</classPath>
-    <name>Parallel asynchronous composition</name>
-    <description>Parallel asynchronous composition of two deterministic finite-state automata.</description>
+    <name>Parallel synchronous composition</name>
+    <description>Parallel synchronous composition of two deterministic finite-state automata.</description>
     <inputs>
       <input>
 	<id>FA</id>
@@ -164,12 +164,74 @@
 	<id>FA</id>
 	<description>Second deterministic finite-state automaton</description>		
       </input>      
-    </inputs>		
+    </inputs>
+    <parameters> -
+         <parameter>
+             <description>Composition type:</description>
+             <poptions>
+                 <poption>UNION</poption>                             			 <poption>INTERSECTION</poption>
+                 <poption>DIFFERENCE</poption>
+             </poptions>
+         </parameter>
+    </parameters>  		
     <output>
       <id>FA</id>
       <description>First deterministic finite-state automaton</description>		
     </output>
   </procedure>
+
+    <procedure type="A"> 
+        <classPath>jgaf.lrextension.procedures.FiFoProcedure</classPath> 
+        <name>First &amp; Follow</name> 
+        <description>Calculation FIRST and FOLLOW for CFG (with possible epsilon steps)</description> -
+        <inputs> -
+            <input> 
+                <id>G</id> 
+                <description>Any context-free grammar.</description> 
+            </input> 
+        </inputs> -
+        <parameters> -
+            <parameter> 
+                <description>k=</description> 
+                <poptions>-
+                    <poption>1</poption>
+                    <poption>2</poption>
+                    <poption>3</poption>
+                </poptions>
+            </parameter> 
+        </parameters> 
+    </procedure> 
+    
+     <procedure type="A"> 
+        <classPath>jgaf.lrextension.procedures.LRParserProcedure</classPath> 
+        <name>LR Parsing</name> 
+        <description>Generation and simulation of LR(k), LALR(k)  or SLR(k) parser for CFG (with possible epsilon steps). </description> -
+        <inputs> -
+            <input> 
+                <id>G</id> 
+                <description>Any context-free grammar.</description> 
+            </input> 
+        </inputs> -
+        <parameters> -
+            <parameter> 
+                <description>Parser type:</description> 
+                <poptions>-
+                    <poption>LR</poption>
+                    <poption>SLR</poption>
+                    <poption>LALR</poption>
+                </poptions>
+            </parameter>
+            <parameter> 
+                <description>k=</description> 
+                <poptions>-
+                    <poption>0</poption>
+                    <poption>1</poption>
+                    <poption>2</poption>
+                    <poption>3</poption>               
+                </poptions>
+            </parameter> 
+        </parameters> 
+    </procedure>  
   
     <procedure type="T">
     <classPath>jgaf.procedure.EliminateUnreachableSymbols</classPath>
@@ -423,61 +485,7 @@
 	        <description>Running</description>
       </parameter>
     </parameters>
-  </procedure>
-
-<procedure type="A"> 
-        <classPath>jgaf.lrextension.procedures.FiFoProcedure</classPath> 
-        <name>First &amp; Follow</name> 
-        <description>Calculation FIRST and FOLLOW for CFG (with possible epsilon steps)</description> -
-        <inputs> -
-            <input> 
-                <id>G</id> 
-                <description>Any context-free grammar.</description> 
-            </input> 
-        </inputs> -
-        <parameters> -
-            <parameter> 
-                <description>k=</description> 
-                <poptions>-
-                    <poption>1</poption>
-                    <poption>2</poption>
-                    <poption>3</poption>
-                </poptions>
-            </parameter> 
-        </parameters> 
-    </procedure>
-
-<procedure type="A"> 
-        <classPath>jgaf.lrextension.procedures.LRParserProcedure</classPath> 
-        <name>LR Parsing</name> 
-        <description>Generation and simulation of LR(k), LALR(k)  or SLR(k) parser for CFG (with possible epsilon steps). </description> -
-        <inputs> -
-            <input> 
-                <id>G</id> 
-                <description>Any context-free grammar.</description> 
-            </input> 
-        </inputs> -
-        <parameters> -
-            <parameter> 
-                <description>Parser type:</description> 
-                <poptions>-
-                    <poption>LR</poption>
-                    <poption>SLR</poption>
-                    <poption>LALR</poption>
-                </poptions>
-            </parameter>
-            <parameter> 
-                <description>k=</description> 
-                <poptions>-
-                    <poption>0</poption>
-                    <poption>1</poption>
-                    <poption>2</poption>
-                    <poption>3</poption>               
-                </poptions>
-            </parameter> 
-        </parameters> 
-    </procedure>
- 
+  </procedure> 
 </procedures>
 
 

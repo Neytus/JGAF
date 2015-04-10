@@ -6,6 +6,7 @@
 package jgaf.gui;
 
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import jgaf.editor.Editor;
 import jgaf.environment.Environment;
 
@@ -20,12 +21,13 @@ public class EditorFrame extends JInternalFrame{
     public EditorFrame(Editor editor) {
         super(editor.getName(), true, true, true, true);
         this.editor = editor;
+        setDefaultCloseOperation(JInternalFrame.DO_NOTHING_ON_CLOSE);
         initiateListeners();
     }
 
 
     private void initiateListeners() {
-        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {                     
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameActivated(evt);
             }
@@ -53,7 +55,21 @@ public class EditorFrame extends JInternalFrame{
     }
 
     private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
-        closingEditor();
+        if (editor.isChanged()) {
+            String message = "This editor has unsaved content. Do you want to close it anyways?";
+                    int answer = JOptionPane.showConfirmDialog(this,
+                        message, "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (answer == JOptionPane.YES_OPTION) {
+                        closingEditor();
+                        dispose();
+                    }
+                    if (answer == JOptionPane.NO_OPTION) {
+                        return;
+                    }
+        } else {
+            closingEditor();
+            dispose();
+        }
     }
 
     private void formInternalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {

@@ -22,6 +22,13 @@ public class AutomataComposition extends DefaultProcedure {
     private Automaton automaton2;
 
     private Automaton output;
+    
+    private String typeString;
+    private int type;
+    
+    public static final int union = 0;
+    public static final int intersection = 1;
+    public static final int difference = 2;
 
 
     public AutomataComposition() {
@@ -88,17 +95,34 @@ public class AutomataComposition extends DefaultProcedure {
                 }
 
 
-                if(s1.isAccepting() || s2.isAccepting()) {
-                    s1.getVisualProperties().setFillColor(Color.GREEN);
-                    s2.getVisualProperties().setFillColor(Color.GREEN);
-                    newState.getVisualProperties().setFillColor(Color.GREEN);
-                    newState.setAccepting(true);
-                    logState("making state " + newState.getName() + " accepting");
-                    clearAutomatonHighlighting();
+                if (type == union) {
+                    if(s1.isAccepting() || s2.isAccepting()) {
+                        s1.getVisualProperties().setFillColor(Color.GREEN);
+                        s2.getVisualProperties().setFillColor(Color.GREEN);
+                        newState.getVisualProperties().setFillColor(Color.GREEN);
+                        newState.setAccepting(true);
+                        logState("making state " + newState.getName() + " accepting");
+                        clearAutomatonHighlighting();
+                    }
+                } else if (type == intersection) {
+                    if(s1.isAccepting() && s2.isAccepting()) {
+                        s1.getVisualProperties().setFillColor(Color.GREEN);
+                        s2.getVisualProperties().setFillColor(Color.GREEN);
+                        newState.getVisualProperties().setFillColor(Color.GREEN);
+                        newState.setAccepting(true);
+                        logState("making state " + newState.getName() + " accepting");
+                        clearAutomatonHighlighting();
+                    }
+                } else if (type == difference) {
+                    if(s1.isAccepting() && !s2.isAccepting()) {
+                        s1.getVisualProperties().setFillColor(Color.GREEN);
+                        s2.getVisualProperties().setFillColor(Color.GREEN);
+                        newState.getVisualProperties().setFillColor(Color.GREEN);
+                        newState.setAccepting(true);
+                        logState("making state " + newState.getName() + " accepting");
+                        clearAutomatonHighlighting();
+                    }
                 }
-
-
-
             }
 
         }
@@ -142,13 +166,28 @@ public class AutomataComposition extends DefaultProcedure {
 
 
     @Override
-    public String checkInputParameters() {
-        return CHECK_OK;
+    public String checkInputParameters() { 
+        if (typeString.equalsIgnoreCase("union")) {
+            type = union;
+            return CHECK_OK;
+        }
+
+        if (typeString.equalsIgnoreCase("intersection")) {
+            type = intersection;
+            return CHECK_OK;
+        }
+
+        if (typeString.equalsIgnoreCase("difference") || typeString.equalsIgnoreCase("slr(k)")) {
+            type = difference;
+            return CHECK_OK;
+        }
+
+        return "Wrong parameter: Type. \n Only UNION, INTERSECTION and DIFFERENCE are allowed.";
     }
 
     @Override
     public void assignInputParameters(String... inputParameters) {
-
+        typeString = inputParameters[0];
     }
 
 

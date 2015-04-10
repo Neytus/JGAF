@@ -978,7 +978,6 @@ public class Grammar implements Representation {
             return false;
         }
         if(rule.size() > 1){
-            System.out.println("Tohle nemůže být");
             return false;
         }
         if (leftHandSide.size() == 1

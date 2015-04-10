@@ -239,8 +239,8 @@ public class EditorsHandler {
     private File getChosenFile(String title, String extension) {
         JFileChooser fc = new JFileChooser();
         fc.setCurrentDirectory(new File(PropertiesHandler.getInstance().getFileLastPath()));
-        fc.setDialogType(JFileChooser.SAVE_DIALOG);
         fc.setDialogTitle(title);
+        fc.setApproveButtonText(title);
         int returnVal = fc.showOpenDialog(mainFrame);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
@@ -262,7 +262,7 @@ public class EditorsHandler {
 
     public boolean saveAs() {
         if (isEditorShown()) {
-            File file = getChosenFile("save", "jgaf");
+            File file = getChosenFile("Save", "jgaf");
             if (file != null) {
                 if (currentEditor.save(file)) {                   
                     currentEditor.setName(getFreeName(file.getName()));
@@ -470,5 +470,14 @@ public class EditorsHandler {
 
     public boolean isCurrentEditor(Editor editor) {
         return editor != null && isEditorShown() && editor.equals(currentEditor);
+    }
+    
+    public boolean allSaved() {
+        for (Editor editor : getEditors()) {
+            if (editor.isChanged()) {
+                return false;
+            }
+        }      
+        return true;
     }
 }

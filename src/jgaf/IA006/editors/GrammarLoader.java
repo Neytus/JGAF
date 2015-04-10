@@ -16,6 +16,11 @@ import jgaf.Representation;
 public class GrammarLoader extends jgaf.editor.Editor
 {
     private GrammarLoaderFrame glf = new GrammarLoaderFrame();
+    
+    public GrammarLoader() {
+        setSaved(true);
+        setChanged(false);
+    }
 
     @Override
     public void repaint() {
@@ -57,5 +62,5 @@ public class GrammarLoader extends jgaf.editor.Editor
     public boolean save(File file) {
         return true;
     }
-    
+  
 }

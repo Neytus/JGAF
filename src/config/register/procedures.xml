@@ -153,8 +153,8 @@
 
   <procedure type="T">
     <classPath>jgaf.procedure.AutomataComposition</classPath>
-    <name>Parallel asynchronous composition</name>
-    <description>Parallel asynchronous composition of two deterministic finite-state automata.</description>
+    <name>Parallel synchronous composition</name>
+    <description>Parallel synchronous composition of two total deterministic finite-state automata.</description>
     <inputs>
       <input>
 	<id>FA</id>
@@ -164,7 +164,16 @@
 	<id>FA</id>
 	<description>Second deterministic finite-state automaton</description>		
       </input>      
-    </inputs>		
+    </inputs>
+    <parameters> -
+         <parameter>
+             <description>Composition type:</description>
+             <poptions>
+                 <poption>UNION</poption>                             			 <poption>INTERSECTION</poption>
+                 <poption>DIFFERENCE</poption>
+             </poptions>
+         </parameter>
+    </parameters>  		
     <output>
       <id>FA</id>
       <description>First deterministic finite-state automaton</description>		
