@@ -205,7 +205,7 @@
      <procedure type="A"> 
         <classPath>jgaf.lrextension.procedures.LRParserProcedure</classPath> 
         <name>LR Parsing</name> 
-        <description>Generation and simulation of LR(k), LALR(k)  or SLR(k) parser for CFG (with possible epsilon steps). </description> -
+        <description>Generation and simulation of LR(k), LALR(k) or SLR(k) parser for CFG (with possible epsilon steps). </description> -
         <inputs> -
             <input> 
                 <id>G</id> 
@@ -485,7 +485,36 @@
 	        <description>Running</description>
       </parameter>
     </parameters>
-  </procedure> 
+  </procedure>  
+
+<procedure type="A">
+    <classPath>jgaf.IA006.editors.GrammarLoaderNew</classPath>
+    <name>LL and SLL Parser </name>
+    	<description>Generation and simulation of LL(k) and SLL(k) parser for CFG</description>		
+	<inputs> -
+            <input> 
+                <id>G</id> 
+                <description>Any context-free grammar.</description> 
+            </input> 
+        </inputs> -
+        <parameters> -
+		<parameter> 
+                <description>k=</description> 
+                <poptions>-
+                    <poption>0</poption>
+                    <poption>1</poption>
+                    <poption>2</poption>
+                    <poption>3</poption>               
+                </poptions>
+            </parameter> 
+        </parameters> 
+</procedure>
+
+
+
+
+
 </procedures>
+
 
 

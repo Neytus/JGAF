@@ -35,12 +35,12 @@ public class GrammarFactory
     private static SymbolType getSymbolType(Symbol s ){
     
     if (s.isTerminal()) {
-        return SymbolType.TERMINAL;
-    } else if (s.isNonterminal()) {
-        return SymbolType.NONTERMINAL;
-    } else {
-        return SymbolType.EPSILON;
-    }       
+            return SymbolType.TERMINAL;
+        } else if (s.isNonterminal()) {
+            return SymbolType.NONTERMINAL;
+        } else {
+            return SymbolType.EPSILON;
+        }       
     }
 
     public static LLGrammar convertGrammar(Grammar grammar) {

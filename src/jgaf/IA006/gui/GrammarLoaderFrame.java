@@ -5,17 +5,18 @@
 package jgaf.IA006.gui;
 
 import java.text.MessageFormat;
-import jgaf.IA006.gui.sll.SLLChecker;
 import java.util.List;
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
-import jgaf.IA006.tools.FirstAndFollow;
-import jgaf.IA006.tools.FirstAndFollowI;
 import jgaf.IA006.grammar.LLGrammar;
 import jgaf.IA006.grammar.LLSymbol;
 import jgaf.IA006.gui.ll.LLChecker;
+import jgaf.IA006.gui.sll.SLLChecker;
+import jgaf.IA006.tools.FirstAndFollow;
+import jgaf.IA006.tools.FirstAndFollowI;
+import jgaf.IA006.tools.GrammarFactory;
 import jgaf.IA006.tools.GrammarLoader;
+import jgaf.grammar.Grammar;
 
 /**
  *
@@ -36,17 +37,7 @@ public class GrammarLoaderFrame extends javax.swing.JPanel {
         @Override
         protected Void doInBackground() throws Exception 
         {
-            boolean error = false;
-            
-            try
-            {
-                g = gl.processFile();
-            }
-            catch(IllegalArgumentException iae)
-            {
-                error= true;
-                JOptionPane.showMessageDialog(null, iae.getMessage());
-            }
+            boolean error = false;            
             
             if(!error)
             {
@@ -70,7 +61,6 @@ public class GrammarLoaderFrame extends javax.swing.JPanel {
                     ftm.setSets(fiSet);
                     fotm.setSets(foSet);
 
-                    jButton1.setEnabled(true);
                     jButton3.setEnabled(true);
                     jButton5.setEnabled(true); 
                 }                               
@@ -86,9 +76,19 @@ public class GrammarLoaderFrame extends javax.swing.JPanel {
 
     /**
      * Creates new form GrammarLoaderFrame
+     * @param gram
+     * @param k
      */
-    public GrammarLoaderFrame() {
+    public GrammarLoaderFrame(Grammar gram, int k) {
         initComponents();
+        this.g = GrammarFactory.convertGrammar(gram);
+        this.k = k;
+        setButtonLabels();
+        
+        gl = new GrammarLoader(gram);           
+
+        MyFIFWorker worker = new MyFIFWorker();
+        worker.execute();
     }
 
     /**
@@ -100,8 +100,6 @@ public class GrammarLoaderFrame extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jButton3 = new javax.swing.JButton();
@@ -110,21 +108,6 @@ public class GrammarLoaderFrame extends javax.swing.JPanel {
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-
-        jButton1.setText("Change k");
-        jButton1.setEnabled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("Load grammar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -166,12 +149,8 @@ public class GrammarLoaderFrame extends javax.swing.JPanel {
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
                             .addComponent(jScrollPane2)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton5)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -181,8 +160,6 @@ public class GrammarLoaderFrame extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
                     .addComponent(jButton3)
                     .addComponent(jButton5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -195,38 +172,6 @@ public class GrammarLoaderFrame extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    /*
-     * public static void createErrorDialog(String errorMessage)
-     {
-     JOptionPane.showMessageDialog(null, errorMessage);
-     }
-     */
-    @SuppressWarnings("unchecked")
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
-        JFileChooser jfc = new JFileChooser();
-        jfc.showOpenDialog(this);
-        if(jfc.getSelectedFile() != null)
-        {
-            System.out.println("subor zvoleny");
-            
-            k = changeK();
-            setButtonLabels();
-        
-            gl = new GrammarLoader(jfc.getSelectedFile());           
-
-            MyFIFWorker worker = new MyFIFWorker();
-            worker.execute();            
-        }                
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        k = changeK();
-        setButtonLabels();
-        MyFIFWorker worker = new MyFIFWorker();
-        worker.execute();
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 
@@ -247,8 +192,6 @@ public class GrammarLoaderFrame extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JScrollPane jScrollPane1;
@@ -258,11 +201,6 @@ public class GrammarLoaderFrame extends javax.swing.JPanel {
     private javax.swing.JTable jTable2;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
-
-    private int changeK() 
-    {
-        return Integer.parseInt(JOptionPane.showInputDialog("Enter paramter k, that determines size of first, follow sets and look-ahead table"));
-    }
     
     private void setButtonLabels()
     {

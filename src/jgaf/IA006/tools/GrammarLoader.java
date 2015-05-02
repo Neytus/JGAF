@@ -41,29 +41,6 @@ public class GrammarLoader
         } catch (DocumentException ex) {
             Logger.getLogger(GrammarLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
-        /*
-        Path p = Paths.get(f.getAbsolutePath());
-        List<String> lines = new ArrayList<>();
-        try 
-        {
-            lines = Files.readAllLines(p, Charset.forName("UTF-8"));
-        } 
-        catch (IOException ex) 
-        {
-            Logger.getLogger(GrammarLoader.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        StringBuilder sb = new StringBuilder();
-        for(String s : lines)
-        {
-            if(!s.startsWith("//"))
-            {
-                sb.append(s); // nevkladat novy riadok lebo nepojdu RE                
-            }
-            
-        }
-        */
-        
-        //g = GrammarFactory.generateFromString(sb.toString());
         g = GrammarFactory.convertGrammar(grammar);
         
         return g;
