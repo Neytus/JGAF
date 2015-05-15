@@ -23,7 +23,6 @@ public class RuleSidePopupMenu extends JPopupMenu {
     private GrammarEditor editor;
     private ProductionRuleSide leftRuleSide;
     private ProductionRulesSide ruleSide;
-//    private JMenuItem changeButton;
     private JMenuItem deleteButton;
     private JMenuItem epsilonButton;
 
@@ -63,13 +62,6 @@ public class RuleSidePopupMenu extends JPopupMenu {
     }
 
     public void handleChangeAction(ActionEvent e) {
-      //  System.out.println("handling change action");
-//        String newName = (String) JOptionPane.showInputDialog(this,
-//                    "Input a new name for the state.", "Rename State",
-//                    JOptionPane.PLAIN_MESSAGE, null, null, state.getName());
-//        if(newName != null && !newName.equals("")) {
-//            editor.renameState(state, newName);
-//        }
     }
 
     public void handleDeleteStateAction(ActionEvent e) {

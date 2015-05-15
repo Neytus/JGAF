@@ -68,16 +68,10 @@ public class ItemAuto {
         boolean closureAdded = false;
         boolean changed = true;
         
-        System.out.println("state items: " + stateItems);
-        
         while (changed) {
             changeSet.addAll(stateItems);
             changed=false;
             for (Item item : changeSet) {
-                /*
-                System.out.println(item.to2String() + " /// " + item.atDot() + " /// " + item.getRule().getRightHandSide().toString());
-                System.out.println(item.toString() + ", potrebuje closure: " + item.needsClosure());
-                */
                 if (item.needsClosure()) {
                     closureAdded = true;
                     for (ProductionRules rule : CFGUtils.getNonterminalRules(grammar, item.atDot())) {
@@ -85,15 +79,7 @@ public class ItemAuto {
                         Item closingItem;
 
                         if (type == LRParserProcedure.SLR) {
-
                             closingItem = new Item(rule, 0, foMap.get(rule.getLeftHandSide().getFirst()));
-                            
-                            System.out.println("SLR Special - " + closingItem.toString());
-                            System.out.println("info o nasl. znaku: " + closingItem.getNextSymbolStr());
-                            //System.out.println("inak by sa pocitalo s " + 
-                            //        (new Item(rule, 0, inhrtdLocFo(item, false))).toString());
-                            System.out.println("***********");
-
                         } else {
                             closingItem = new Item(rule, 0, inhrtdLocFo(item, false));
                         }
@@ -131,17 +117,7 @@ public class ItemAuto {
             return new HashSet<WString>();
         }
 
-
         Set<WString> fiToRead = FiFoUtils.fiFast(item.toRead(), k, fiMap);
-        
-        /*
-        JB
-        */
-        if (verbose == true) {
-            System.out.println("pocita sa inhrtdLocFo s " + item.toString());
-            System.out.println(fiToRead.toString());
-            System.out.println("---");
-        }
 
         if (fiToRead.isEmpty()) {
             fiToRead = FiFoUtils.createEpsilonSet();
@@ -159,9 +135,7 @@ public class ItemAuto {
     }
 
     public void calcAuto() {
-        //Cloner c=new Cloner();
         iAwork.clear();
-        // sequence.add(c.deepClone(iA)); //////////////////
         lastInState = 0;
         logState();
         AutoState firstState = new AutoState();
@@ -215,7 +189,6 @@ public class ItemAuto {
 
 
         }
-        System.out.print("\n"+iAwork.size());
         if (type == LRParserProcedure.LALR) {
             lalrMerge();
         }

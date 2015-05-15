@@ -184,10 +184,12 @@ public class GrammarEditorToolbar extends JToolBar {
                 String answer = editor.getGrammar().getName() + " is ";
                 switch(type) {
                     case -1: answer += "not well-formed."; break;
-                    case 0: answer += "recursively enumerable grammar (type 0)."; break;
-                    case 1: answer += "context-sensitive grammar (type 1)."; break;
-                    case 2: answer += "context-free grammar (type 2)."; break;
-                    case 3: answer += "regular grammar (type 3)."; break;
+                    case 00: answer += "recursively enumerable grammar (type 0)."; break;
+                    case 10: answer += "context-sensitive grammar (type 1)."; break;
+                    case 20: answer += "context-free grammar (type 2)."; break;
+                    case 30: answer += "regular grammar (type 3)."; break;
+                    case 21: answer += "context-free grammar with epsilon rules (but type 0 by traditional definition)."; break;
+                    case 31: answer += "regular grammar with epsilon rules (but type 0 by traditional definition)."; break;
                 }
                 JOptionPane.showMessageDialog(editor.getFace(), answer, " Grammar type",
                         JOptionPane.PLAIN_MESSAGE);
@@ -209,41 +211,6 @@ public class GrammarEditorToolbar extends JToolBar {
             }
         });
         add(startCombo);
-
-
-
-
-
-
-
-//
-//
-//        JButton b = new JButton("info");
-//        b.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                System.out.println("------------------------------------");
-//                System.out.println(editor.getGrammar().getType());
-//                System.out.println(editor.getGrammar().writeGrammar());
-//            }
-//        });
-//        add(b);
-//
-//
-//        JButton c = new JButton("jpg");
-//        c.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                try {
-//                    JPEGExporter.saveComponentAsJPEG(editor.getRepresenter(), "/home/hanis/Desktop/aaaaa.jpg");
-//                    JPEGExporter.saveComponentAsPNG(editor.getRepresenter(), "/home/hanis/Desktop/bbbbb");
-//                } catch (FileNotFoundException ex) {
-//                    Logger.getLogger(GrammarEditorToolbar.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (IOException ex) {
-//                    Logger.getLogger(GrammarEditorToolbar.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        });
-//        add(c);
-
     }
 
 
@@ -255,7 +222,6 @@ public class GrammarEditorToolbar extends JToolBar {
         if(startNon != null) {
             startCombo.setSelectedItem(startNon);
         } else {
-            //startCombo.addItem("-");
             startCombo.setSelectedItem(null);
         }
 

@@ -40,14 +40,14 @@ public class ProductionRule implements Comparable<ProductionRule>, Cloneable {
     }
 
     public ProductionRule(Nonterminal leftNonterminal, List<Symbol> rightHandSide) {
-        List<Symbol> leftNonterminalList = new ArrayList<Symbol>();
+        List<Symbol> leftNonterminalList = new ArrayList<>();
         this.leftHandSide = new ProductionRuleSide(leftNonterminalList);
         this.rightHandSide = new ProductionRuleSide(rightHandSide);
     }
 
     public ProductionRule(Nonterminal leftNonterminal, Terminal rightTerminal, Nonterminal rightNonterminal) {
-        List<Symbol> rightList = new ArrayList<Symbol>();
-        List<Symbol> leftList = new ArrayList<Symbol>();
+        List<Symbol> rightList = new ArrayList<>();
+        List<Symbol> leftList = new ArrayList<>();
         leftList.add(leftNonterminal);
         rightList.add(rightTerminal);
         rightList.add(rightNonterminal);
@@ -57,8 +57,8 @@ public class ProductionRule implements Comparable<ProductionRule>, Cloneable {
 
 
     public ProductionRule(Nonterminal leftNonterminal, Terminal rightTerminal) {
-        List<Symbol> rightList = new ArrayList<Symbol>();
-        List<Symbol> leftList = new ArrayList<Symbol>();
+        List<Symbol> rightList = new ArrayList<>();
+        List<Symbol> leftList = new ArrayList<>();
         leftList.add(leftNonterminal);
         rightList.add(rightTerminal);
         this.leftHandSide = new ProductionRuleSide(leftList);
@@ -66,8 +66,8 @@ public class ProductionRule implements Comparable<ProductionRule>, Cloneable {
     }
 
     public ProductionRule(Nonterminal leftNonterminal) {
-        List<Symbol> rightList = new ArrayList<Symbol>();
-        List<Symbol> leftList = new ArrayList<Symbol>();
+        List<Symbol> rightList = new ArrayList<>();
+        List<Symbol> leftList = new ArrayList<>();
         leftList.add(leftNonterminal);
         rightList.add(new Symbol());
         this.leftHandSide = new ProductionRuleSide(leftList);

@@ -22,7 +22,6 @@ public class EliminateEpsilonProductions extends DefaultProcedure {
     private Grammar grammar1;
     private Grammar grammar2;
     private Symbol parameter1;
-//    private String parameter2;
 
     public EliminateEpsilonProductions() {
     }
@@ -43,15 +42,15 @@ public class EliminateEpsilonProductions extends DefaultProcedure {
         FAalgorithms helpAlgs = new FAalgorithms();
         
         Map<ProductionRuleSide, List<ProductionRuleSide>> rules =
-                new HashMap<ProductionRuleSide, List<ProductionRuleSide>>();
+                new HashMap<>();
         rules.putAll(grammar1.getSameLeftSideMap());
         Symbol start = grammar1.getStartNonterminal();
 
-        SortedSet<Symbol> set_previous = new TreeSet<Symbol>();
-        SortedSet<Symbol> set_actual = new TreeSet<Symbol>();
+        SortedSet<Symbol> set_previous = new TreeSet<>();
+        SortedSet<Symbol> set_actual = new TreeSet<>();
         
-        SortedSet<Symbol> terminals = new TreeSet<Symbol>();
-        SortedSet<Symbol> nonTerminals = new TreeSet<Symbol>();
+        SortedSet<Symbol> terminals = new TreeSet<>();
+        SortedSet<Symbol> nonTerminals = new TreeSet<>();
 
         terminals.addAll(grammar1.getTerminals());
         nonTerminals.addAll(grammar1.getNonterminals());
@@ -67,7 +66,7 @@ public class EliminateEpsilonProductions extends DefaultProcedure {
             }
             for (Symbol symb : nonTerminals){
                List<ProductionRuleSide> setOfRules =
-                        new ArrayList<ProductionRuleSide>();
+                        new ArrayList<>();
                
                //budeme potřebovat, abychom zkontrolovali jestli 
                //zřetězene pravidlo neni eps
@@ -147,19 +146,13 @@ public class EliminateEpsilonProductions extends DefaultProcedure {
 //        logState("Ukončuji cyklus pro vytvoření množiny N_"+MathConstants.EPSILON);
         //pravidla P' po vymazani eps kroků
         Map<ProductionRuleSide, List<ProductionRuleSide>> newRules =
-                new HashMap<ProductionRuleSide, List<ProductionRuleSide>>();
+                new HashMap<>();
         
         List<ProductionRules> allRules = grammar1.getProductionRulesType2();
-//        for(Map.Entry<ProductionRuleSide, 
-//                List<ProductionRuleSide>> rulesOfOneN : rules.entrySet()){
         
         logState("\nStart cycle to creating rules");
         for(ProductionRules oneLine : allRules){
             //musím řešit, že už klíč obsahuje, ať se nepřemažou předchozí pravidla
-//            List<ProductionRuleSide> newRulesOfOneN = 
-//                                        new ArrayList<ProductionRuleSide>();
-//            List<ProductionRuleSide> oldRules = 
-//                                        new ArrayList<ProductionRuleSide>();
             //procházíme všechna pravidla jednoho neterminálu vlevo, vytvarime 
             // nova pravidla pomoci eliminateEpsHelp a pak je spojujeme s 
             //jiz vzniklými pravidly tak aby nevznikaly duplicity
@@ -168,61 +161,24 @@ public class EliminateEpsilonProductions extends DefaultProcedure {
             oneLine.setFgColor(Color.RED);
             ProductionRuleSide left = oneLine.getLeftHandSide();
             ProductionRulesSide right = oneLine.getRightHandSide();
-            
-//            if(parameter2.equals("quick")){
-//                List<ProductionRuleSide> newRulesOfOneN = 
-//                                            new ArrayList<ProductionRuleSide>();
-//    //            List<ProductionRuleSide> oldRules = 
-//    //                                        new ArrayList<ProductionRuleSide>();
-//                //procházíme všechna pravidla jednoho neterminálu vlevo, vytvarime 
-//                // nova pravidla pomoci eliminateEpsHelp a pak je spojujeme s 
-//                //jiz vzniklými pravidly tak aby nevznikaly duplicity
-//                for(ProductionRuleSide rule : right.getRules()){
-//                    List<ProductionRuleSide> oldRules = 
-//                                            new ArrayList<ProductionRuleSide>();
-//                    oldRules.addAll(newRulesOfOneN);
-//                    newRulesOfOneN.clear();
-//                    //System.out.println("Old = "+oldRules.toString()+", new = "+newRulesOfOneN.toString());
-//                    newRulesOfOneN.addAll(helpAlgs.concateWithoutDuplicity(oldRules,
-//                                                    helpAlgs.eliminateEpsHelp(rule,set_actual)));
-//                }
-//                //System.out.println("Nová pravidla od "+rulesOfOneN.getKey().toString()
-//                  //      +" jsou: "+newRulesOfOneN);
-//                newRules.put(left, newRulesOfOneN);
-//            }
-//            
-//            
-//            
-//            else{
-    //            for(ProductionRuleSide rule : rulesOfOneN.getValue()){
-                for(ProductionRuleSide rule : right.getRules()){
-    //                List<ProductionRuleSide> oldRules = 
-    //                                        new ArrayList<ProductionRuleSide>();
-    //                oldRules.addAll(newRulesOfOneN);
-    //                newRulesOfOneN.clear();
-    //                System.out.println("Old = "+oldRules.toString()+", new = "+newRulesOfOneN.toString());
-    //                
-    //                
-    //                SortedSet<ProductionRuleSide> newRulesSet = new TreeSet<ProductionRuleSide>();
 
-                    SortedSet<Symbol> nonTermEps = new TreeSet<Symbol>();
+                for(ProductionRuleSide rule : right.getRules()){
+
+                    SortedSet<Symbol> nonTermEps = new TreeSet<>();
                     nonTermEps.addAll(set_actual);
                     List<ProductionRuleSide> setRulesPrevious = 
-                            new ArrayList<ProductionRuleSide>();
-                    List<ProductionRuleSide> setRulesActual = new ArrayList<ProductionRuleSide>();
-                            //new TreeSet<ProductionRuleSide>(new ProductionRuleSideAscendingComparator());
-                    List<ProductionRuleSide> newSetActual = new ArrayList<ProductionRuleSide>();
-                            //new TreeSet<ProductionRuleSide>(new ProductionRuleSideAscendingComparator());
+                            new ArrayList<>();
+                    List<ProductionRuleSide> setRulesActual = new ArrayList<>();
+                    List<ProductionRuleSide> newSetActual = new ArrayList<>();
 
                     SortedSet<ProductionRuleSide> testedRules = 
-                            new TreeSet<ProductionRuleSide>(new ProductionRuleSideAscendingComparator());
+                            new TreeSet<>(new ProductionRuleSideAscendingComparator());
                     SortedSet<ProductionRuleSide> testedRulesHelp =
-                            new TreeSet<ProductionRuleSide>(new ProductionRuleSideAscendingComparator());
+                            new TreeSet<>(new ProductionRuleSideAscendingComparator());
                     testedRulesHelp.add(rule);
                     int j =0;
                     do{
                         j++;
-                       // System.out.println("setPrevious = "+setRulesPrevious.toString()+"setAktual = "+setRulesActual.toString());
                         setRulesPrevious.clear();
                         setRulesPrevious.addAll(setRulesActual);
                         newSetActual.clear();
@@ -243,23 +199,15 @@ public class EliminateEpsilonProductions extends DefaultProcedure {
                             else{
                                 List<Symbol> oneRule = new ArrayList<Symbol>();
                                 oneRule.addAll(testedRule.getSymbols());
-                                //System.out.println("*************************");
-                                //System.out.println("Testuji pravidlo "+testedRule.toString());
-                                //System.out.println("*************************");
-                                //if(!setRulesActual.contains(testedRule)){
-    //                            boolean pridano = false;
                                   newSetActual.add(new ProductionRuleSide(testedRule));
-    //                            logState("tpridano :"+pridano);
-                                //}
                                 boolean check = false;
                                 for(int i=0; i<oneRule.size();i++){
-                    //                System.out.println("prochazim pravidlo "+oneRule.toString()+" jinak "+rule.toString());
+
 
                                     Symbol testedSymb = oneRule.get(i);
                                     logState("Testing rule "+left.toString()
                                             + " -> "+testedRule.toString()+" and symbol "
                                             +testedSymb.getName()+" at position "+i);
-                    //                System.out.println("kontroluji symbol "+testedSymb.getName());
                                     //symbol není v mnozine N_eps a pravidlo jeste nebylo pridano
                                     if(!nonTermEps.contains(testedSymb) && !check){
                                         logState("Symbol "+testedSymb.getName()+" isn't in N_"
@@ -276,26 +224,14 @@ public class EliminateEpsilonProductions extends DefaultProcedure {
                                             grammar2.addRule(newRule);
                                         }
 
-    //                                    logState("Přidáme pravidlo "+newRules.toString());
-
-    //                                    logState("SetAktual = "+setRulesActual.toString());
                                         check = true;
-                    //                    System.out.println("vlozeno "+rule.toString());
                                     }else if(nonTermEps.contains(testedSymb)){
                                         logState("Symbol "+testedSymb.getName()+" is in N_"
                                                 +MathConstants.EPSILON);
                                         if(check){
-                                            //logState("Pravidlo již bylo přidáno");
                                         }else{
                                             logState("Add rule "
                                                     +left.toString()+" -> "+testedRule.toString());
-                                            //logState("SetAktual před = "+setRulesActual.toString());
-                                            //logState("NewSetAktual před = "+newSetActual.toString());
-                                            //logState("tested rule je:"+testedRule.toString());
-
-    //                                        if(!setRulesActual.contains(testedRule)){
-    //                                            pridano = setRulesActual.add(testedRule);
-    //                                        }
                                             if(parameter1.getName().equals("def") || parameter1.equals(left.getSymbols().get(0))){
                                                 ProductionRuleSide newL = new ProductionRuleSide(left);
                                                 ProductionRules newRule = 
@@ -305,7 +241,6 @@ public class EliminateEpsilonProductions extends DefaultProcedure {
                                                 grammar2.addRule(newRule);
                                             }
                                         }
-    //                                    logState("SetAktual po= "+setRulesActual.toString());
                                         ProductionRuleSide shortedRuleSide = new ProductionRuleSide();
                                         List<Symbol> shortedRule = new ArrayList<Symbol>();
                                         shortedRule.addAll(oneRule);
@@ -314,46 +249,26 @@ public class EliminateEpsilonProductions extends DefaultProcedure {
                                         shortedRuleSide.setSymbols(shortedRule);
                                         logState("Cut short rule and add to next testing "
                                                 +left.toString()+" -> "+shortedRuleSide.toString());
-                    //                    System.out.println("zmenšené pravidlo "+shortedRule.toString()+" jinak "+shortedRuleSide.toString());
-
-                    //                    System.out.println("vlozeno "+shortedRuleSide.toString());
-    //                                    setRulesActual.addAll(setRulesPrevious);
                                         if(!testedRulesHelp.contains(shortedRuleSide)){
                                             testedRulesHelp.add(shortedRuleSide);
                                         }
-//                                        logState("testovací množina pravidel pro "
-//                                                +"další iteraci je :"+testedRulesHelp.toString());
                                         check = true;
 
                                     }else{
                                         //jedině nějaká chyba - ještě bude potřeba promyslet
                                     }
                                     setRulesActual = helpAlgs.concateWithoutDuplicity(setRulesActual, newSetActual);
-                                    //logState("SetAktual = "+setRulesActual.toString());
-                                    //logState("NewSetAktual = "+newSetActual.toString());
                                 }
                                 grammar2.clearHighlighting();
                             }
                             
                         }
-//                        logState("předchozí množina pravidel pro neterminál "+left.toString()
-//                                +" je = "+setRulesPrevious.toString()
-//                                + " aktuální množina pravidel pro neterminál "+left.toString()
-//                                +" je "+setRulesActual.toString());
                     }while(!setRulesPrevious.equals(setRulesActual));
 
                     logState("Cycle ended \n");
-                    //logState("předchozí množina je = "+setRulesPrevious.toString()+ " aktuální množina je "+setRulesActual.toString());
-
-    //                newRulesOfOneN.addAll(helpAlgs.concateWithoutDuplicity(oldRules,
-    //                                            helpAlgs.eliminateEpsHelp(rule,set_actual)));
 
                 }
-    //            System.out.println("Nová pravidla od "+rulesOfOneN.getKey().toString()
-    //                    +" jsou: "+newRulesOfOneN);
-    //            newRules.put(rulesOfOneN.getKey(), newRulesOfOneN); 
-                
-//            }
+
             grammar1.clearHighlighting();
             
         }
@@ -366,7 +281,7 @@ public class EliminateEpsilonProductions extends DefaultProcedure {
                 logState("Set N_"+MathConstants.EPSILON+" contain start nonterminal "+start.getName());
 
                 List<ProductionRuleSide> newStartRules = 
-                        new ArrayList<ProductionRuleSide>();
+                        new ArrayList<>();
                 ProductionRuleSide eps = new ProductionRuleSide();
                 ProductionRuleSide oldStart = new ProductionRuleSide();
                 eps.addEpsilon(MathConstants.EPSILON);
@@ -374,7 +289,6 @@ public class EliminateEpsilonProductions extends DefaultProcedure {
                 newStartRules.add(eps);
                 newStartRules.add(oldStart);
                 newStartN.addSymbol(newStart);
-    //            newRules.put(newStartN, newStartRules);
                 ProductionRules newRule = 
                                         new ProductionRules(newStartN, new ProductionRulesSide(newStartRules));
 
@@ -392,42 +306,11 @@ public class EliminateEpsilonProductions extends DefaultProcedure {
         //pokud se mapa pravidel liší od puvodni mapy, tak budeme vracet true
         //a vytvoříme novou gramatiku s novými pravidly
         //množina terminálů a neterminálů by měla být stejná
-        //System.out.println("Došel jsem až sem");
-        //System.out.println("pravidla jsou: " +rules.toString());
-        // System.out.println("nová pravidla jsou: " +newRules.toString());
         if(!newStartN.isEmpty()){
             grammar2.setStartNonterminal(newStart);
         }else{
             grammar2.setStartNonterminal(start);
         }
-//        boolean lol = grammar1.equals(grammar2);
-//        logState("lol = "+lol);
-//        if(parameter2.equals("quick")){
-//            //grammar2 = helpAlgs.addRuleToGrammFromMap(newRules);
-//            for (Map.Entry<ProductionRuleSide, 
-//                    List<ProductionRuleSide>> oneSet : newRules.entrySet()) {
-//                for(ProductionRuleSide oneNewRule : oneSet.getValue()) {
-//                    if(oneNewRule != null){
-//                        if(parameter1.getName().equals("def") || parameter1.equals(oneSet.getKey().getSymbols().get(0))){
-//                            ProductionRules newRule = 
-//                                        new ProductionRules(oneSet.getKey(), new ProductionRulesSide(oneNewRule));
-//                            newRule.setFgColor(Color.RED);
-//                            grammar2.addRule(newRule);
-//                            logState("Přidáme pravidlo "+newRule.toString());
-//                        }
-//                    }
-//                    grammar2.clearHighlighting();
-//                }
-//            }
-//           // System.out.println("gramatika  je: " +grammar2.toString());
-//        }
-//        }else{
-//            grammar2.addAllRules(grammar1);            
-//            grammar2.setStartNonterminal(start);
-//            logState("Gramatika je stejná jako předchozí");
-//        }
-//        end = System.currentTimeMillis();
-//        logState("čas běhu = "+(end-begin) + " ms.");
         logState("\ndone");
     }
  
@@ -444,35 +327,29 @@ public class EliminateEpsilonProductions extends DefaultProcedure {
 
 
     @Override
-    public String checkInputParameters() {
+    public String checkInputParameters() {   
+        if(parameter1.getName().equals("def")) return CHECK_OK;
+        
         Map<ProductionRuleSide, List<ProductionRuleSide>> map = 
                                                 grammar1.getSameLeftSideMap();
-        List<Symbol> list = new ArrayList<Symbol>();
-        if(parameter1.getName().equals("def")) return CHECK_OK;
+        List<Symbol> list = new ArrayList<>();
         list.add(parameter1);
         ProductionRuleSide leftHandSide = new ProductionRuleSide(list);
         if(map.keySet().contains(leftHandSide)){
             return CHECK_OK;
         } else {
-            return "Parameter 1 is not 'def' and or nonterminal is not on left side of any rule";
+            return "Nonterminal is not on the left side of any rule";
         }
-//        return CHECK_OK;
     }
 
     @Override
     public void assignInputParameters(String... inputParameters) {
-        if(inputParameters[0] != null){
+        if (inputParameters[0] == null || inputParameters[0].equals("")) {
+            parameter1 = new Symbol("def", 1);
+        } else {
             String param = inputParameters[0].trim();
             parameter1 = new Symbol(param, 1);
         }
-//        if(inputParameters[1] != null){
-//            String param = inputParameters[1].trim();
-//            if(param.equals("quick")){
-//                parameter2 = param;
-//            }else{
-//                parameter2 = "classic";
-//            }
-//        }
     }
 
     @Override

@@ -17,8 +17,6 @@ import javax.swing.JToolBar;
  */
 public class RegularExpressionEditorToolbar extends JToolBar {
 
-    //private JButton addRowButton;
-    //private JButton removeEmptyRows;
     private JButton redoButton;
     private JButton undoButton;
 

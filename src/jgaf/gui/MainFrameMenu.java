@@ -145,7 +145,7 @@ public class MainFrameMenu extends JMenuBar {
             }
             public void menuSelected(javax.swing.event.MenuEvent evt) {
                 boolean shown = editorHandler.isEditorShown();
-                boolean changed = true;// editorsHandler.getCurrentEditor().isChanged();
+                boolean changed = true;
                 fileExport.setEnabled(shown);
                 fileSave.setEnabled(shown && changed);
                 fileSaveAs.setEnabled(shown && changed);
@@ -155,7 +155,6 @@ public class MainFrameMenu extends JMenuBar {
 
         //////////////////  FILE -> NEW  ///////////////////////////
         fileNew = new JMenu(jgaf.l18n.Resource.getValue("menu.file.new"));
-//        fileNew.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
 
         fileNew.addMenuListener(new MenuListener() {
             public void menuCanceled(MenuEvent evt) {
@@ -463,7 +462,6 @@ public class MainFrameMenu extends JMenuBar {
                     int answer = JOptionPane.showConfirmDialog(mainFrame,
                         message, "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (answer == JOptionPane.YES_OPTION) {
-                        System.out.println("EDITOR UZAVRENY KLIKNUTIM NA YES_OPTION");
                         mainFrame.exit();
                     }
                 }

@@ -53,18 +53,13 @@ public class ProductionRulesSide implements Cloneable {
     }
 
     public void clear() {
-        rules = new ArrayList<ProductionRuleSide>();
+        rules = new ArrayList<>();
     }
 
-    
-    //TO DO - problem s epsilonom
     public void setRulesFromString(List<String> list, boolean right) {
         clear();
-        
-        //System.out.println("Tady2---" + list.get(0) + "----");
         for (String string : list){
             ProductionRuleSide ruleSide = new ProductionRuleSide();
-            System.out.println("---" + string + "----");
             ruleSide.addSymbolsFromString(string, right);
             addRule(ruleSide);
         }
@@ -200,19 +195,7 @@ public class ProductionRulesSide implements Cloneable {
      * added with LR extension
      * JB
      */   
-    public Symbol getSymbolAt(int pos) {
-        /*
-        List<Symbol> symbols = new ArrayList<Symbol>();
-        for(ProductionRuleSide oneRule : rules){
-            for(Symbol ruleSymbol : oneRule.getSymbols()) {
-                if (!symbols.contains(ruleSymbol)) {
-                    symbols.add(ruleSymbol);
-                }
-            }
-        }
-        return symbols.get(pos);
-        */
-        
+    public Symbol getSymbolAt(int pos) {       
         return rules.get(0).getSymbolAt(pos);
     }
 

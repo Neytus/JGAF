@@ -165,24 +165,27 @@ public class EliminateUnitRules extends DefaultProcedure {
 
     @Override
     public String checkInputParameters() {
+        if(nonterminal.getName().equals("def")) return CHECK_OK;
+        
         Map<ProductionRuleSide, List<ProductionRuleSide>> map = 
                                                 grammar1.getSameLeftSideMap();
-        List<Symbol> list = new ArrayList<Symbol>();
-        if(nonterminal.getName().equals("def")) return CHECK_OK;
+        List<Symbol> list = new ArrayList<>();
         list.add(nonterminal);
         ProductionRuleSide leftHandSide = new ProductionRuleSide(list);
         if(map.keySet().contains(leftHandSide)){
             return CHECK_OK;
         } else {
-            return "Parameter is not def and or nonterminal is not on left side of any rule";
+            return "Nonterminal is not on the left side of any rule";
         }
     }
 
     @Override
     public void assignInputParameters(String... inputParameters) {
-        if(inputParameters[0] != null){
-            String parameter = inputParameters[0].trim();
-            nonterminal = new Symbol(parameter, 1);
+        if (inputParameters[0] == null || inputParameters[0].equals("")) {
+            nonterminal = new Symbol("def", 1);
+        } else {
+            String param = inputParameters[0].trim();
+            nonterminal = new Symbol(param, 1);
         }
     }
     @Override

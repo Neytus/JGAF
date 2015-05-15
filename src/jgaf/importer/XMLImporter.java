@@ -115,7 +115,6 @@ public class XMLImporter {
 
 
             automaton.addState(state);
-           // System.out.println("state: " + state.getName() + ", p: " + state.getVisualProperties().getPoint());
         }
         String initialState = document.selectSingleNode("//initialState").getText();
         if(initialState != null && !initialState.equals("")) {
@@ -147,7 +146,6 @@ public class XMLImporter {
             if(fromState != null && toState != null && !labels.isEmpty()) {
                 transition = new Transition(fromState, toState, labels);
                 automaton.addTransition(transition);
-                //System.out.println(transition.getFromState().getVisualProperties().getPoint());
             String curveFactor = element.attributeValue("curve");
             if(curveFactor != null) {
                 try {
@@ -185,10 +183,6 @@ public class XMLImporter {
             State state = new State(element.getText());
             automaton.addAcceptingState(state);
         }
-
-
-        //System.out.println(automaton);
-
         return automaton;
 
     }
@@ -309,15 +303,6 @@ public class XMLImporter {
             Element element=(Element)iterator.next();
             terminals.add(new Terminal(element.getText()));
         }
-/*
-        List epsilonList = grammarNode.selectNodes("terminals/epsilon");
-        iterator = epsilonList.iterator();
-        List<Symbol> epsilon = new ArrayList<Symbol>();
-        while (iterator.hasNext()) {
-            Element element=(Element)iterator.next();
-            epsilon.add(new Epsilon(element.getText()));
-        }
-*/
 
         List list = grammarNode.selectNodes("productions/rule");
         iterator = list.iterator();

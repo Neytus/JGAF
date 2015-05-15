@@ -14,10 +14,6 @@ import jgaf.Representation;
  * @author hanis
  */
 public class ProcedureDescriptor {
-
-   // public static final String INPUT_REPRESENTATION = "representation";
-   // public static final String INPUT_PARAMETER = "parameter";
-
     public static final String ANALYSIS = "A";
     public static final String TRANSFORMATION = "T";
     public static final String SIMULATION = "S";
@@ -28,14 +24,12 @@ public class ProcedureDescriptor {
     private String classPath;
     private List<ProcedureParameter> parameters;
     private List<ProcedureRepresentation> inputRepresentations;
-    //private List<ProcedureRepresentation> outputRepresentations;
     private ProcedureRepresentation outputRepresentation;
     private String type;
 
     public ProcedureDescriptor() {
         parameters = new ArrayList<ProcedureParameter>();
         inputRepresentations = new ArrayList<ProcedureRepresentation>();
-        //outputRepresentation = new ArrayList<ProcedureRepresentation>();
     }
 
 
@@ -91,10 +85,6 @@ public class ProcedureDescriptor {
     public void setOutputRepresentation(ProcedureRepresentation outputRepresentation) {
         this.outputRepresentation = outputRepresentation;
     }
-
-//    public void addOutputRepresentation(ProcedureRepresentation representation) {
-//        outputRepresentations.add(representation);
-//    }
 
     public String getClassPath() {
         return classPath;

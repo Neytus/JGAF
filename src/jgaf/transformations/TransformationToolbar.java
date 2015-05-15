@@ -6,19 +6,12 @@
 package jgaf.transformations;
 
 import java.awt.Dimension;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
-import jgaf.automaton.fa.AutomatonTableEditor;
-import jgaf.automaton.fa.EditorState;
-import jgaf.automaton.fa.FSAutomatonEditor;
-import jgaf.automaton.fa.StateDiagramEditor;
 import jgaf.gui.TransformationPanel;
 
 /**
@@ -150,7 +143,6 @@ public class TransformationToolbar extends JToolBar {
         add(new JLabel("delay: "));
         delayText = new JTextField(String.valueOf(DEFAULT_DELAY));
         delayText.setToolTipText("delay");
-      //  delayText.setFocusable(false);
         add(delayText);
         add(new JLabel("ms"));
 

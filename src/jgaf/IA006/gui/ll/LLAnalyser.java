@@ -32,7 +32,6 @@ public class LLAnalyser extends javax.swing.JDialog
         protected Void doInBackground() throws Exception 
         {
             jEditorPane1.setText(table.htmlPrint());
-           // System.out.println(jEditorPane1.getText());
             return null;
         }        
     }

@@ -209,7 +209,7 @@
         <inputs> -
             <input> 
                 <id>G</id> 
-                <description>Any context-free grammar.</description> 
+                <description>Any context-free grammar (with possible epsilon steps).</description> 
             </input> 
         </inputs> -
         <parameters> -

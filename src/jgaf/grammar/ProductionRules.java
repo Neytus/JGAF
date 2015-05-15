@@ -36,7 +36,6 @@ public class ProductionRules implements Comparable<ProductionRules>, Cloneable {
 
     public ProductionRules(List<Symbol> leftHandSide, List<ProductionRuleSide> rightHandSide) {
         this.leftHandSide = new ProductionRuleSide(leftHandSide);
-//        this.rightHandSide = new ProductionRulesSide(rightHandSide);
     }
 
 
@@ -76,11 +75,11 @@ public class ProductionRules implements Comparable<ProductionRules>, Cloneable {
     }
 
     public ProductionRules(Nonterminal leftNonterminal) {
-        List<Symbol> rightList = new ArrayList<Symbol>();
-        List<Symbol> leftList = new ArrayList<Symbol>();
+        List<Symbol> rightList = new ArrayList<>();
+        List<Symbol> leftList = new ArrayList<>();
         leftList.add(leftNonterminal);
         rightList.add(new Symbol());
-        List<ProductionRuleSide> rightRule = new ArrayList<ProductionRuleSide>();
+        List<ProductionRuleSide> rightRule = new ArrayList<>();
         rightRule.add(new ProductionRuleSide(rightList));
         this.leftHandSide = new ProductionRuleSide(leftList);
         this.rightHandSide = new ProductionRulesSide(rightRule);
@@ -89,17 +88,6 @@ public class ProductionRules implements Comparable<ProductionRules>, Cloneable {
 
     @Override
     public String toString() {
-        /*
-        String string = "";
-        int i = 0;
-        for(ProductionRuleSide rule : rightHandSide.getRules()){
-            string += "   "+writeLeftHandSide() + " -> " + rule.toString()+"\n";
-            i++;
-        }
-        return string.substring(0, string.length()-1);
-        */
-        
-        
         String string = "";
         int i = 0;
         for(ProductionRuleSide rule : rightHandSide.getRules()){

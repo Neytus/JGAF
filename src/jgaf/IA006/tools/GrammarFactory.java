@@ -93,7 +93,7 @@ public class GrammarFactory
         
         LLGrammar g = new LLGrammar(grammarName, terminals, nonTerminals, rootSymbol, productionRules);
         return g;
-    }
+    }   
     
     public static LLGrammar generateFromString(String s)
     {
@@ -126,7 +126,7 @@ public class GrammarFactory
                     for(int j = 0; j < nonTerminalsTemp.length; j++)
                     {
                         nonTerminals.add(new NonTerminal(extractFromApostrophe(nonTerminalsTemp[j])));
-                    }
+}
                     g.setNonTerminals(nonTerminals);
                     i++;
                     break;

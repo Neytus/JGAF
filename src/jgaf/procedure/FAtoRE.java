@@ -19,7 +19,6 @@ public class FAtoRE extends DefaultProcedure {
     private RegularExpression expresion;
     private Automaton automaton;
     private List<State> input;
-//    private SubIndexHash a = new ModuloSubIndexHash("e",3);
 
     public FAtoRE() {
     }
@@ -170,8 +169,6 @@ public class FAtoRE extends DefaultProcedure {
                newReg = new RegularExpression(finalString);
                expresion = (RegularExpression) newReg.clone();
                logState("upraven expression "+expresion.toString());
-               //expresion.set
-               //System.out.println("výpis ? "+expresion.toString());
             }  catch (WrongExpressionException ex) {
                System.out.println("err" + ex.getMessage());
             }
@@ -229,20 +226,26 @@ public class FAtoRE extends DefaultProcedure {
 
     @Override
     public void assignInputParameters(String... inputParameters) {
-        input = new ArrayList<State>();
-        
-        if(inputParameters[0] != null){
-            String param = inputParameters[0].trim();
-            if(param.equals("def")){
-                input = null;
-            }else{
-                String[] posib = param.split(",");
-                for(String onePart : posib){
-                    String name = onePart.trim();
-                    State newState = new State(name);
-                    input.add(newState);
+        input = new ArrayList<>();
+
+        if (inputParameters[0] == null || inputParameters[0].equals("")) {
+            input = null;
+        } else {
+
+            if (inputParameters[0] != null) {
+                String param = inputParameters[0].trim();
+                if (param.equals("def")) {
+                    input = null;
+                } else {
+                    String[] posib = param.split(",");
+                    for (String onePart : posib) {
+                        String name = onePart.trim();
+                        State newState = new State(name);
+                        input.add(newState);
+                    }
                 }
             }
+
         }
     }
 

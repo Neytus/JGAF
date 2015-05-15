@@ -37,24 +37,22 @@ public class AutomatonMinimization extends DefaultProcedure {
     }
     public void startProcedure() {
         clearHighlighting();
-        //automaton1.addState(automaton1.makeTransitionFunctionTotal());
         logState("start");
         //komplet celá tabulka vnitřni pole je vždy jeden blok
-        List<List<State>> tableActual = new ArrayList<List<State>>();
-        List<List<State>> tablePrevious = new ArrayList<List<State>>();
+        List<List<State>> tableActual = new ArrayList<>();
+        List<List<State>> tablePrevious = new ArrayList<>();
         //příznaky odkud kam, mnitřní pole bude mít vždy jen 2 prvky
-        List<List<Integer>> marks = new ArrayList<List<Integer>>();
-       // List<List<Integer>> resultMarks = new ArrayList<List<Integer>>();
+        List<List<Integer>> marks = new ArrayList<>();
         
         
-        List<State> states = new ArrayList<State>();
-        List<State> statesForTable = new ArrayList<State>();
+        List<State> states = new ArrayList<>();
+        List<State> statesForTable = new ArrayList<>();
         states.addAll(automaton1.getStates());
         statesForTable.addAll(states);
         
         logState("Initializing");
-        List<State> acceptStates = new ArrayList<State>();
-        List<State> otherStates = new ArrayList<State>();
+        List<State> acceptStates = new ArrayList<>();
+        List<State> otherStates = new ArrayList<>();
         for(State state : states){
             if(state.isAccepting()){
                 acceptStates.add(state);
@@ -93,7 +91,7 @@ public class AutomatonMinimization extends DefaultProcedure {
                         int index = marks.indexOf(test)+blockCount;
                         tableActual.get(index).add(state);
                     }else{
-                        List<State> newBlock = new ArrayList<State>();
+                        List<State> newBlock = new ArrayList<>();
                         newBlock.add(state);
                         tableActual.add(newBlock);
                         marks.add(test);
@@ -293,7 +291,6 @@ public class AutomatonMinimization extends DefaultProcedure {
     @Override
     public String checkInputRepresentation() {
         if(!automaton1.hasTotalTransitionFunction()){
-           // System.out.println(automaton1.getTransitionTo(totalState).toString());
             return "Automaton does not have total transition function";
         }
         switch(automaton1.getType()) {

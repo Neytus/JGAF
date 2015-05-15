@@ -25,7 +25,6 @@ public class DefaultProcedureLogger extends JTextPane{
     public DefaultProcedureLogger(){
         super();
         setEditable(false);
-        //setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 50));
     }
 
 

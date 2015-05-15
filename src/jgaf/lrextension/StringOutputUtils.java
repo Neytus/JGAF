@@ -128,7 +128,7 @@ public class StringOutputUtils {
         if (map.containsKey(nonT)) {
             map.get(nonT).add(string);
         } else {
-            Set<String> newSet = new HashSet<String>();
+            Set<String> newSet = new HashSet<>();
             newSet.add(string);
             map.put(nonT, newSet);
         }
@@ -137,7 +137,7 @@ public class StringOutputUtils {
     public static Map<Symbol, Set<String>> foEquationsStringMap(Grammar gram,
                                                                 int k) {
         Map<Symbol, Set<WString>> gramMap = CFGUtils.getGrammarMap(gram);
-        Map<Symbol, Set<String>> foStringMap = new HashMap<Symbol, Set<String>>();
+        Map<Symbol, Set<String>> foStringMap = new HashMap<>();
         for (Entry<Symbol, Set<WString>> entry : gramMap.entrySet()) {
             Symbol nonT = entry.getKey();
             Set<WString> ruleSet = entry.getValue();
@@ -158,7 +158,7 @@ public class StringOutputUtils {
             }
         }
         putOrAdd(foStringMap, gram.getStartNonterminal(), "{"+MathConstants.EPSILON+"}");
-        Map<Symbol, Set<String>> oFoStringMap = new LinkedHashMap<Symbol, Set<String>>();
+        Map<Symbol, Set<String>> oFoStringMap = new LinkedHashMap<>();
         for (Entry<Symbol, Set<WString>> entry : gramMap.entrySet()) {
             Symbol symbol = entry.getKey();
             oFoStringMap.put(symbol, foStringMap.get(symbol));

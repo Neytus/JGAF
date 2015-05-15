@@ -86,12 +86,12 @@
   
   <procedure type="T">
     <classPath>jgaf.procedure.AutomatonMinimization</classPath>
-    <name>Minimalize automaton </name>
-    <description>Minimalize finite automat</description>
+    <name>Minimize automaton </name>
+    <description>Minimize finite automat</description>
     <inputs>
       <input>
       	<id>FA</id>
-      	<description>DFA without unreachable with total transition function</description>		
+      	<description>DFA without unreachable symbols with total transition function</description>		
       </input>
     </inputs>		
     <output>
@@ -169,8 +169,8 @@
          <parameter>
              <description>Composition type:</description>
              <poptions>
-                 <poption>UNION</poption>                             			 <poption>INTERSECTION</poption>
-                 <poption>DIFFERENCE</poption>
+                 <poption>union</poption>                             			 <poption>intersection</poption>
+                 <poption>difference</poption>
              </poptions>
          </parameter>
     </parameters>  		
@@ -249,7 +249,7 @@
     </output>
     <parameters>
       <parameter>
-	        <description>Set nonterminal</description>
+	        <description>Set nonterminal, for default setting leave empty</description>
       </parameter>
     </parameters> 
   </procedure> 
@@ -270,7 +270,7 @@
     </output>
     <parameters>
       <parameter>
-	        <description>Set nonterminal</description>
+	        <description>Set nonterminal, for default setting leave empty</description>
       </parameter>
     </parameters> 
   </procedure> 
@@ -291,7 +291,12 @@
     </output>
     <parameters>
       <parameter>
-	        <description>Order (classic/unusual)</description>
+	        <description>Order</description>
+                <poptions>-
+                    <poption>classic</poption>
+                    <poption>unusual</poption>             
+                </poptions>
+
       </parameter>
     </parameters> 
   </procedure>  
@@ -312,7 +317,7 @@
     </output>
     <parameters>
       <parameter>
-	        <description>Set nonterminal</description>
+	        <description>Set nonterminal, for default setting leave empty</description>
       </parameter>
     </parameters> 
   </procedure> 
@@ -333,7 +338,7 @@
     </output>
     <parameters>
       <parameter>
-	        <description>Set nonterminal</description>
+	        <description>Set nonterminal, for default setting leave empty</description>
       </parameter>
     </parameters> 
   </procedure> 
@@ -354,7 +359,7 @@
     </output>
     <parameters>
       <parameter>
-	        <description>Set nonterminal or def</description>
+	        <description>Set nonterminal, for default setting leave both parameters empty</description>
       </parameter>
       <parameter>
 	        <description>Type</description>
@@ -378,7 +383,7 @@
     </output>
     <parameters>
       <parameter>
-	        <description>Set nonterminal or def</description>
+	        <description>Set nonterminal, for default setting leave all parameters empty</description>
       </parameter>
       <parameter>
 	        <description>Type</description>
@@ -396,7 +401,7 @@
     <inputs>
       <input>
       	<id>G</id>
-      	<description>Context free grammar without unit rules, without epsion rules and without unuseable rules</description>		
+      	<description>Context free grammar without unit rules, without epsilon rules and without unusable rules</description>		
       </input>
     </inputs>		
     <output>
@@ -405,7 +410,7 @@
     </output>
     <parameters>
       <parameter>
-	        <description>Set nonterminal</description>
+	        <description>Set nonterminal, for default setting leave all parameters empty</description>
       </parameter>
       <parameter>
 	        <description>Rules symbols</description>
@@ -432,7 +437,7 @@
     </output>
     <parameters>
       <parameter>
-	        <description>Set nonterminal</description>
+	        <description>Set nonterminal, for default setting leave all parameters empty</description>
       </parameter>
       <parameter>
 	        <description>Rules symbols</description>
@@ -461,7 +466,7 @@
     </output>
     <parameters>
       <parameter>
-	        <description>Running</description>
+	        <description>Running, for default setting leave empty</description>
       </parameter>
     </parameters>
   </procedure>  
@@ -482,7 +487,7 @@
     </output>
     <parameters>
       <parameter>
-	        <description>Running</description>
+	        <description>Running, for default setting leave empty</description>
       </parameter>
     </parameters>
   </procedure>  
@@ -490,7 +495,7 @@
 <procedure type="A">
     <classPath>jgaf.IA006.editors.GrammarLoaderNew</classPath>
     <name>LL and SLL Parser </name>
-    	<description>Generation and simulation of LL(k) and SLL(k) parser for CFG</description>		
+    	<description>Generation and simulation of LL(k) and SLL(k) parser for CFG (with possible epsilon steps). </description>		
 	<inputs> -
             <input> 
                 <id>G</id> 
@@ -501,7 +506,6 @@
 		<parameter> 
                 <description>k=</description> 
                 <poptions>-
-                    <poption>0</poption>
                     <poption>1</poption>
                     <poption>2</poption>
                     <poption>3</poption>               

@@ -40,9 +40,8 @@ public class EditorsHandler {
     private EditorRegister editorRegister;
 
     public EditorsHandler(MainFrame mainFrame) {
-        this.editors = new ArrayList<Editor>();
+        this.editors = new ArrayList<>();
         this.mainFrame = mainFrame;
-       // this.window = new EditorWindow();
     }
 
     
@@ -84,12 +83,10 @@ public class EditorsHandler {
 
     public void showEditorWindow(Editor editor) {
         setCurrentEditor(editor);
-        //JInternalFrame frame = new JInternalFrame(editor.getName(), true, true, true, true);
         EditorFrame frame = new EditorFrame(editor);
         editor.setEditorFrame(frame);
         JDesktopPane desktop = mainFrame.getDesktop();
         frame.setBounds(0, 0, desktop.getWidth(), desktop.getHeight());
-        //frame.setBounds(0, 0, (int) editor.getFace().getPreferredSize().getWidth(), (int) editor.getFace().getPreferredSize().getHeight());
         desktop.add(frame, 2);
         desktop.setBackground(Color.DARK_GRAY);
         frame.setVisible(true);
@@ -105,7 +102,7 @@ public class EditorsHandler {
     }
 
     public List<JInternalFrame> getEditorFrames(List<Editor> editorList) {
-        List<JInternalFrame> frameList = new ArrayList<JInternalFrame>();
+        List<JInternalFrame> frameList = new ArrayList<>();
         for (Editor editor : editorList) {
             frameList.add(editor.getEditorFrame());
         }
@@ -140,7 +137,6 @@ public class EditorsHandler {
         try {
             descriptor = getEditorRegister().getDescriptorById(id);            
         } catch (NoSuchEditorException ex) {
-            //TODO
             System.out.println("no such editor");
         }
         return createEditor(descriptor);        
@@ -151,7 +147,6 @@ public class EditorsHandler {
         Editor editor = null;
         try {
             try {
-                //editor = (Editor) Class.forName("jgaf.automaton.fa.FSAutomatonEditor").newInstance();
                 editor = (Editor) Class.forName(descriptor.getClassPath()).newInstance();
             } catch (InstantiationException ex) {
                 System.out.println("1");
@@ -186,7 +181,7 @@ public class EditorsHandler {
 
 
     public List<Editor> getEditorsWithId(String id) {
-        List<Editor> suitableEditors = new ArrayList<Editor>();
+        List<Editor> suitableEditors = new ArrayList<>();
         for (Editor editor : editors) {
             if(editor.getId().equals(id)) {
                 suitableEditors.add(editor);
@@ -200,26 +195,9 @@ public class EditorsHandler {
         return !editors.isEmpty() && currentEditor != null;
     }
 
-
-
     public Editor getCurrentEditor() {
         return currentEditor;
     }
-
-//    @Override
-//    public void saveFile() {
-//        JFileChooser fc = new JFileChooser();
-//        fc.setCurrentDirectory(new File(PropertiesHandler.getInstance().getFileLastPath()));
-//        fc.setDialogType(JFileChooser.SAVE_DIALOG);
-//        fc.setDialogTitle("Save Automaton");
-//        int returnVal = fc.showOpenDialog(getMainFrame());
-//        if(returnVal == JFileChooser.APPROVE_OPTION) {
-//            PropertiesHandler.getInstance().setFileLastPath(fc.getSelectedFile().getAbsolutePath());
-//            PropertiesHandler.getInstance().addRecentFile(fc.getSelectedFile());
-//            FileImporter.persistAutomaton(fc.getSelectedFile(), getAutomaton());
-//        }
-//    }
-
 
     public boolean save() {
         if (isEditorShown()) {
@@ -234,7 +212,6 @@ public class EditorsHandler {
         }
         return false;
     }
-
 
     private File getChosenFile(String title, String extension) {
         JFileChooser fc = new JFileChooser();
@@ -259,7 +236,6 @@ public class EditorsHandler {
         return null;
     }
 
-
     public boolean saveAs() {
         if (isEditorShown()) {
             File file = getChosenFile("Save", "jgaf");
@@ -277,20 +253,6 @@ public class EditorsHandler {
         }
         return false;
     }
-
-
-//    public boolean exportXML() {
-//        if (isEditorShown()) {
-//            File file = getChosenFile("XML Export", "xml");
-//            if (file != null) {
-//                if (currentEditor.exportXML(file)) {
-//                    currentEditor.setName(file.getName());
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
 
     public boolean exportSVG() {
         if (isEditorShown()) {
@@ -366,17 +328,6 @@ public class EditorsHandler {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     public void openEditor(Editor editor) {
         addEditor(editor);
         showEditorWindow(editor);        
@@ -406,7 +357,6 @@ public class EditorsHandler {
 
     public boolean open(File file) throws DocumentException, JgafFileException, NoSuchEditorException {
         String id = XMLImporter.getRepresentationId(file);
-        //String editorClassName = getEditorRegister().getEditorClassPath(id);
         EditorDescriptor descriptor = getEditorRegister().getDescriptorById(id);
         Editor editor = createEditor(descriptor);
         if (editor.open(file)) {
@@ -437,31 +387,6 @@ public class EditorsHandler {
         }
         return name + suffix;
     }
-
-
-
-//    public boolean importXML() throws DocumentException, JgafFileException, NoSuchEditorException {
-//        JFileChooser fc = new JFileChooser();
-//        fc.setCurrentDirectory(new File(PropertiesHandler.getInstance().getFileLastPath()));
-//        fc.setDialogTitle("XML Import");
-//        int returnVal = fc.showOpenDialog(mainFrame);
-//        if (returnVal == JFileChooser.APPROVE_OPTION) {
-//                File file = fc.getSelectedFile();
-//                String id = XMLImporter.getRepresentationId(file);
-//                EditorDescriptor descriptor = getEditorRegister().getDescriptorById(id);
-//                Editor editor = createEditor(descriptor);
-//                if (editor.importXML(file)) {
-//                    PropertiesHandler.getInstance().setFileLastPath(file.getAbsolutePath());
-//                    editor.setName(file.getName());
-//                    editor.setSaved(false);
-//                    editor.setChanged(false);
-//                    openEditor(editor);
-//                    return true;
-//                }
-//        }
-//        return false;
-//    }
-
 
     private int getNextUntitledNumber() {
         return untitledNumber++;

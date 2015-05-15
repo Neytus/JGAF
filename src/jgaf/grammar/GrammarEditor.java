@@ -40,7 +40,6 @@ public class GrammarEditor extends Editor {
     public void create() {
         this.undoHandler = new UndoRedoHandler();
 
-        //this.grammar = createExample();//new Grammar();
         this.grammar = new Grammar();
         grammar.setStartNonterminal(new Nonterminal("S"));
         this.grammarRepsresenter = new GrammarRepresenter(this);
@@ -128,7 +127,7 @@ public class GrammarEditor extends Editor {
         Grammar oldGrammar = (Grammar) grammar.clone();
         ProductionRulesSide oldRuleSide = (ProductionRulesSide) ruleSide.clone();
         
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         list.addAll(stringToList(newRuleSideString));
 
         ruleSide.setRulesFromString(list, true);
@@ -154,11 +153,9 @@ public class GrammarEditor extends Editor {
         }
     }
 
-    public List<String> stringToList(String string){
+    public List<String> stringToList(String string){       
         
-        System.out.println("prechod metodou stringToList: ");
-        
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         String[] newStrings = string.split("\\|");
         for(int i=0; i<newStrings.length; i++){
             String newOne = newStrings[i].trim();
@@ -168,23 +165,15 @@ public class GrammarEditor extends Editor {
             }
             
             else if(newOne.equals(MathConstants.EPSILON) && (list.contains("eps") || list.contains(MathConstants.EPSILON))){
-                
-                System.out.println("ëpsilon sa nasiel a ignoruje sa");
-                
+
                 continue;
             }
                 
             else if(newOne.length()>0 && !list.contains(newOne)){
-                
-                System.out.println("GrammarEditor: pridava sa do listu " + newOne);
-                
                 list.add(newOne);
             }
         }
-        
-        System.out.println(list);
-        System.out.println("_______________________");
-        
+
         return list;
     }
 

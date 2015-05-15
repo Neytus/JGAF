@@ -13,7 +13,7 @@ import jgaf.grammar.Grammar;
  *
  * @author Empt
  */
-public class GrammarLoaderNew extends jgaf.procedure.DefaultProcedure
+public class GrammarLoaderNew extends jgaf.procedure.Procedure
 {
     private GrammarLoaderFrame glf;
     private Grammar g;
@@ -32,11 +32,6 @@ public class GrammarLoaderNew extends jgaf.procedure.DefaultProcedure
     @Override
     public JPanel getFace() {
         return glf;
-    }
-
-    @Override
-    public void startProcedure() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

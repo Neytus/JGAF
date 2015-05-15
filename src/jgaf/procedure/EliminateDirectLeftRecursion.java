@@ -37,7 +37,7 @@ public class EliminateDirectLeftRecursion extends DefaultProcedure {
         logState("start");
 
         Map<ProductionRuleSide, List<ProductionRuleSide>> rules =
-                new HashMap<ProductionRuleSide, List<ProductionRuleSide>>();
+                new HashMap<>();
         rules = grammar1.getSameLeftSideMap();
         
         if(!nonterminal.getName().equals("def")){
@@ -47,9 +47,9 @@ public class EliminateDirectLeftRecursion extends DefaultProcedure {
         for(Map.Entry<ProductionRuleSide, List<ProductionRuleSide>> mapEntry : rules.entrySet()){
             ProductionRuleSide leftSideNonterm = new ProductionRuleSide();
             SortedSet<ProductionRuleSide> recursiveRules = 
-                new TreeSet<ProductionRuleSide>();
+                new TreeSet<>();
             SortedSet<ProductionRuleSide> anotherRules = 
-                new TreeSet<ProductionRuleSide>();
+                new TreeSet<>();
             if(!nonterminal.getName().equals("def")){
                 leftSideNonterm.addSymbol(nonterminal);
             }else{
@@ -66,7 +66,7 @@ public class EliminateDirectLeftRecursion extends DefaultProcedure {
              List<ProductionRuleSide> testedRules = rules.get(leftSideNonterm);
 
             for(ProductionRuleSide oneRule : testedRules){
-                List<Symbol> listRule = new ArrayList<Symbol>();
+                List<Symbol> listRule = new ArrayList<>();
                 listRule.addAll(oneRule.getSymbols());
                 
                 for(ProductionRules ruleToColor : colored){
@@ -116,7 +116,7 @@ public class EliminateDirectLeftRecursion extends DefaultProcedure {
                         logState("Deleting left recursion for rule "
                                 +leftSideNonterm.toString()+" -> "+leftSideNonterm.toString()+oneRule.toString());
                         List<ProductionRuleSide> newRulesListRecursiveRules = 
-                            new ArrayList<ProductionRuleSide>();
+                            new ArrayList<>();
                         newRulesListRecursiveRules.add(oneRule);
                         newRuleS = new ProductionRuleSide();
                         newRuleS.setSymbolsFromProductionRuleSide(oneRule);
@@ -141,7 +141,7 @@ public class EliminateDirectLeftRecursion extends DefaultProcedure {
                             +" adding new rules (viz Lemma 5.1 (**))");
                     for(ProductionRuleSide oneRule : anotherRules){
                         List<ProductionRuleSide> newRulesListAnotherRules = 
-                            new ArrayList<ProductionRuleSide>();
+                            new ArrayList<>();
                         newRulesListAnotherRules.add(oneRule);
                         newRuleS = new ProductionRuleSide();
                         newRuleS.setSymbolsFromProductionRuleSide(oneRule);
@@ -171,7 +171,7 @@ public class EliminateDirectLeftRecursion extends DefaultProcedure {
                         logState("Deleting left recursion for rule "
                                 +leftSideNonterm.toString()+" -> "+leftSideNonterm.toString()+oneRule.toString());
                         List<ProductionRuleSide> newRulesListRecursiveRules = 
-                            new ArrayList<ProductionRuleSide>();
+                            new ArrayList<>();
                         newRuleS = new ProductionRuleSide();
                         newRuleS.setSymbolsFromProductionRuleSide(oneRule);
                         newRuleS.addSymbol(newLeftSideSymb);
@@ -189,7 +189,6 @@ public class EliminateDirectLeftRecursion extends DefaultProcedure {
                     //musíme přidat eps pravidlo
                     ProductionRuleSide eps = new ProductionRuleSide();
                     eps.addEpsilon("eps");
-//                    newRulesListRecursiveRules.add(eps);
                     //přidáme pravidla do nové mapy
                     ProductionRuleSide newL = new ProductionRuleSide(newLeftNonterm);
                     ProductionRules newRule = 
@@ -203,7 +202,7 @@ public class EliminateDirectLeftRecursion extends DefaultProcedure {
                             +" adding new rules (viz Lemma 5.1 (***))");
                     for(ProductionRuleSide oneRule : anotherRules){
                         List<ProductionRuleSide> newRulesListAnotherRules = 
-                            new ArrayList<ProductionRuleSide>();
+                            new ArrayList<>();
                         newRuleS = new ProductionRuleSide();
                         newRuleS.setSymbolsFromProductionRuleSide(oneRule);
                         //epsilon pravidlo může byt jen v teto mnozine
@@ -238,7 +237,6 @@ public class EliminateDirectLeftRecursion extends DefaultProcedure {
                         ProductionRules newRule = 
                                 new ProductionRules(newL, 
                                         new ProductionRulesSide(oneRule));
-                        //newRule.setFgColor(Color.RED);
                         
                         grammar2.addRule(newRule);
                         grammar2.setFgColorToProd(Color.RED, newRule);
@@ -303,9 +301,15 @@ public class EliminateDirectLeftRecursion extends DefaultProcedure {
 
     @Override
     public String checkInputParameters() {
+        if(nonterminal.getName().equals("def") && 
+                parameter2.equals("def")) {
+            typeI = 1;
+            return CHECK_OK;
+        }
+        
         Map<ProductionRuleSide, List<ProductionRuleSide>> map = 
                                                 grammar1.getSameLeftSideMap();
-        List<Symbol> list = new ArrayList<Symbol>();
+        List<Symbol> list = new ArrayList<>();
         boolean check = true;
         try{
             typeI = Integer.parseInt(parameter2);
@@ -315,24 +319,28 @@ public class EliminateDirectLeftRecursion extends DefaultProcedure {
         if(typeI != 1){
             typeI = 2;
         }
-        if(nonterminal.getName().equals("def") ) return CHECK_OK;
         list.add(nonterminal);
         ProductionRuleSide leftHandSide = new ProductionRuleSide(list);
         if(!map.keySet().contains(leftHandSide)){
-            return "Parameter 1 is not def and or nonterminal is "
-                    +"not on left side of any rule";
+            return "Nonterminal is not on the left side of any rule";
         }
         return CHECK_OK;
     }
 
     @Override
     public void assignInputParameters(String... inputParameters) {
-        if(inputParameters[0] != null){
-            String parameter = inputParameters[0].trim();
-            nonterminal = new Symbol(parameter, 1);
-        }
-        if(inputParameters[1] != null){
-            parameter2 = inputParameters[1].trim();
+        if ((inputParameters[0] == null || inputParameters[0].equals("")) &&
+            (inputParameters[1] == null || inputParameters[1].equals(""))) {
+            nonterminal = new Symbol("def", 1);
+            parameter2 = "def";
+        } else {
+            if(inputParameters[0] != null){
+                String parameter = inputParameters[0].trim();
+                nonterminal = new Symbol(parameter, 1);
+            }
+            if(inputParameters[1] != null){
+                parameter2 = inputParameters[1].trim();
+            }
         }
     }
     @Override

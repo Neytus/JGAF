@@ -12,9 +12,6 @@ package jgaf.regex;
 public class CreationOutput {
 
     public static final int OK = 0;
-//    public static final int PARENTHESES_INBALANCED = 1;
-//    public static final int NONATOMIC_SYMBOL = 2;
-//    public static final int WRONG_NUMBR_OF_OPERANDS = 3;
 
     public static final String PARENTHESES_INBALANCED = "Parentheses inbalanced";
     public static final String NONATOMIC_SYMBOL = "Nonatomic symbol";

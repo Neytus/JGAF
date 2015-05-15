@@ -22,7 +22,6 @@ import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import jgaf.editor.Editor;
 import jgaf.environment.Environment;
 import jgaf.environment.PropertiesHandler;
 import jgaf.l18n.Resource;
@@ -218,38 +217,6 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
     }
-
-
-//    private void createAutomatonFrame(Automaton automaton) {
-////        if(automatonCanvas == null) {
-////            automatonCanvas = new AutomatonCanvas(this);
-////            mainPanel.add(automatonCanvas, BorderLayout.CENTER);
-////        }
-//
-//        //editor = new StateDiagramEditor(automaton);
-//        editor = new FSAutomatonEditor(automaton);
-//        //editor = new AutomatonTableEditor(automaton);
-//        AutomatonCanvas canvas = new AutomatonCanvas(this);
-//        editor.setCanvas(canvas);
-//        canvas.setEditor(editor);
-//
-//        ((FSAutomatonEditor) editor).getEditor(FSAutomatonEditor.STATE_DIAGRAM).setCanvas(canvas);
-//        ((FSAutomatonEditor) editor).getEditor(FSAutomatonEditor.STATE_TRANSITION_TABLE).setCanvas(canvas);
-//        setToolBar(editor.getToolBar());
-////        toolbarPanel.removeAll();
-////        toolbarPanel.add(editor.getToolBar(), BorderLayout.CENTER);
-//        mainPanel.removeAll();
-//        mainPanel.add(canvas, BorderLayout.CENTER);
-//        pack();
-//    }
-
-
-
-
-
-//    public EditorsHandler getEditorHandler() {
-//        return editorHandler;
-//    }
 
 
 

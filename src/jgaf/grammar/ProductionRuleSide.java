@@ -23,7 +23,7 @@ public class ProductionRuleSide implements Cloneable, Comparable<ProductionRuleS
     private List<Symbol> symbols;
 
     public ProductionRuleSide() {
-        symbols = new ArrayList<Symbol>();
+        symbols = new ArrayList<>();
     }
 
     public ProductionRuleSide(List<Symbol> symbols) {
@@ -89,9 +89,6 @@ public class ProductionRuleSide implements Cloneable, Comparable<ProductionRuleS
     public void addSymbolsFromString(String string, boolean right) {
         string = string.trim();
         if((string.equals("eps") || (string.equals(MathConstants.EPSILON)))  && right){
-            
-            System.out.println("ProductionRuleSide:addSymbolsFromString - pridany epsilon: " + string);
-            
             addEpsilon(string);
         }
         else{
@@ -119,7 +116,6 @@ public class ProductionRuleSide implements Cloneable, Comparable<ProductionRuleS
     
     public void setSymbolsFromString(String string) {
         clear();
-        System.out.println("---" + string + "----");
         addSymbolsFromString(string);
     }
     

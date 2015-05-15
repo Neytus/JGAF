@@ -7,8 +7,6 @@ package jgaf.regex;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import javax.swing.JTextPane;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.SimpleAttributeSet;
@@ -34,8 +32,6 @@ public class RegularExpressionTextArea extends JTextPane{
         AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY,
                                             StyleConstants.Foreground, c);
 
-       // int len = getDocument().getLength();
-      //  setCaretPosition(len);
         setCharacterAttributes(aset, false);
         replaceSelection(s);
     }

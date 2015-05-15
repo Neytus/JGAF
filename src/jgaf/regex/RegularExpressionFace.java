@@ -62,14 +62,6 @@ public class RegularExpressionFace extends JPanel {
 
     }
 
-    // public void writeInfo(String text) {
-    //info.setText(text);
-//        if(editor.hasWellFormedRegex()) {
-//            info.setText(editor.getRegex().writeAlphabet());
-//        } else {
-//
-//        }
-    //  }
     public void writeInfo(String writeAlphabet) {
         info.setText(writeAlphabet);
         info.setForeground(Color.WHITE);

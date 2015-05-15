@@ -38,11 +38,11 @@ public class EliminateLeftRecursion extends DefaultProcedure {
         
 
         Map<ProductionRuleSide, List<ProductionRuleSide>> rules =
-                new HashMap<ProductionRuleSide, List<ProductionRuleSide>>();
+                new HashMap<>();
 
         rules.putAll(grammar1.getSameLeftSideMap());
 
-        List<ProductionRuleSide> listOfNonterms = new ArrayList<ProductionRuleSide>();
+        List<ProductionRuleSide> listOfNonterms = new ArrayList<>();
         
         //potřebujeme libovolne usporadani - pouzijeme dané, jen musíme prenést 
         //pravidla z mapy do pole, ve kterém můžeme prohledávat jednotlivé bunky
@@ -455,9 +455,15 @@ public class EliminateLeftRecursion extends DefaultProcedure {
 
     @Override
     public String checkInputParameters() {
+        if(nonterminal.getName().equals("def") && parameter2.equals("def") &&
+          (ordering.size()==1 && ordering.get(0).getSymbols().get(0).getName().equals("def"))) {
+            typeI = 1;
+            return CHECK_OK;
+        }
+        
         Map<ProductionRuleSide, List<ProductionRuleSide>> map = 
                                                 grammar1.getSameLeftSideMap();
-        List<Symbol> list = new ArrayList<Symbol>();
+        List<Symbol> list = new ArrayList<>();
         
         try{
             typeI = Integer.parseInt(parameter2);
@@ -472,26 +478,38 @@ public class EliminateLeftRecursion extends DefaultProcedure {
             for(ProductionRuleSide oneSymbol : ordering) {
                 if(!map.keySet().contains(oneSymbol)){
                     return "Nonterminal "+oneSymbol.toString()+
-                            " in parameter 2 is not at the left side of any rule";
+                            " in parameter 3 is not at the left side of any rule";
                 }
             }
         
             if(ordering.size() != map.keySet().size()){
-                return "Not well count of symbols in parameter 2";
+                return "Not well count of symbols in parameter 3";
             }
         }
         if(nonterminal.getName().equals("def") ) return CHECK_OK;
         list.add(nonterminal);
         ProductionRuleSide leftHandSide = new ProductionRuleSide(list);
         if(!map.keySet().contains(leftHandSide)){
-            return "Parameter is not def and or nonterminal is not on left side of any rule";
+            return "Nonterminal is not on the left side of any rule";
         }
         return CHECK_OK;
     }
 
     @Override
     public void assignInputParameters(String... inputParameters) {
-        ordering = new ArrayList<ProductionRuleSide>();
+        if ((inputParameters[0] == null || inputParameters[0].equals("")) &&
+            (inputParameters[1] == null || inputParameters[1].equals("")) &&
+            (inputParameters[2] == null || inputParameters[2].equals(""))) {
+            nonterminal = new Symbol("def", 1);
+            parameter2 = "def";
+            
+            ordering = new ArrayList<>();
+            ProductionRuleSide newNonterminal = new ProductionRuleSide();
+            newNonterminal.addNonterminal("def");
+            ordering.add(newNonterminal);
+        } else {
+        
+        ordering = new ArrayList<>();
         if(inputParameters[0] != null){
             String parameter = inputParameters[0].trim();
             nonterminal = new Symbol(parameter, 1);
@@ -508,6 +526,8 @@ public class EliminateLeftRecursion extends DefaultProcedure {
                 newNonterminal.addNonterminal(symb);
                 ordering.add(newNonterminal);
             }
+        }
+        
         }
     }
     @Override

@@ -6,14 +6,11 @@
 package jgaf.procedure;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import jgaf.Representation;
 import jgaf.automaton.Automaton;
 import jgaf.automaton.State;
-import jgaf.automaton.Transition;
 
 /**
  *
@@ -60,7 +57,7 @@ public class DFAEquality  extends DefaultProcedure {
 
         int i = 0;
 
-        Set<StateCuple> cupleSet = new HashSet<StateCuple>();
+        Set<StateCuple> cupleSet = new HashSet<>();
         StateCuple cuple = new StateCuple(dfa1.getInitialState(), dfa2.getInitialState());
         cupleSet.add(cuple);
         logState("adding " + cuple.toString());
@@ -70,7 +67,7 @@ public class DFAEquality  extends DefaultProcedure {
             if(k > 9) {
                 break;
             }
-            Set<StateCuple> newCupleSet = new HashSet<StateCuple>();
+            Set<StateCuple> newCupleSet = new HashSet<>();
             boolean someNew = false;
             for (StateCuple stateCuple : cupleSet) {
                 for (String string : dfa1.getAlphabet()) {

@@ -25,6 +25,7 @@ public class TransformToCNF extends DefaultProcedure {
     private String leftTermSymbol;
     private String rightTermSymbol;
     private ProductionRuleSide nonterminal;
+    private boolean def = false;
 
     public TransformToCNF() {
     }
@@ -37,7 +38,6 @@ public class TransformToCNF extends DefaultProcedure {
 
         
         List<ProductionRules> rules = new ArrayList<ProductionRules>();
-//        Set<ProductionRules> newRules = new HashSet<ProductionRules>();
         Set<Symbol> newNfromTerm = new HashSet<Symbol>();
         ProductionRules newRule = new ProductionRules();
         ProductionRuleSide newRuleHelp = new ProductionRuleSide();
@@ -54,7 +54,6 @@ public class TransformToCNF extends DefaultProcedure {
             rightHandSide = oneRule.getRightHandSide();
             ProductionRuleSide leftHandSide = new ProductionRuleSide();
             leftHandSide = (ProductionRuleSide) oneRule.getLeftHandSide().clone();
-//            System.out.println("testované pravidlo " +rightHandSide);
             List<ProductionRuleSide> rightHandSideList = new ArrayList<ProductionRuleSide>();
             rightHandSideList.addAll(rightHandSide.getRules());
             List<ProductionRules> colored = 
@@ -72,17 +71,13 @@ public class TransformToCNF extends DefaultProcedure {
                     }
                 }
                 
-    //            System.out.println("testovaná delka  = "+testedRule.size() );
-
                 if(grammar1.isStartToEpsRule(leftHandSide, rightHandSideOneRule)){
-    //                System.out.println("přidali jsme pravidlo "+ oneRule.toString());
                     logState("Rule has form "+leftHandSide.toString()+" -> "+rightHandSideOneRule.toString());
                     
                     ProductionRuleSide newL = new ProductionRuleSide(leftHandSide);
                     newRule = new ProductionRules(newL, new ProductionRulesSide(rightHandSideOneRule));
                     grammar2.addRule(newRule);
                     newRule.setFgColor(Color.RED);
-//                    newRules.add(newRule);
                     logState("Add rule "+newRule.toString());
                     continue;
                 }
@@ -94,38 +89,30 @@ public class TransformToCNF extends DefaultProcedure {
                     
                     grammar2.addRule(newRule);
                     newRule.setFgColor(Color.RED);
-//                    newRules.add(newRule);
                     logState("Add rule "+newRule.toString());
                     continue;
                 }
                 if(testedRule.size() == 2){
                     if(testedRule.get(0).isNonterminal() && 
                             testedRule.get(1).isNonterminal()){
-    //                    System.out.println("přidali jsme pravidlo "+ oneRule.toString());
                         logState("Rule has form "+leftHandSide.toString()+" -> "+rightHandSideOneRule.toString());
                         ProductionRuleSide newL = new ProductionRuleSide(leftHandSide);
                         newRule = new ProductionRules(newL, new ProductionRulesSide(rightHandSideOneRule));
                         grammar2.addRule(newRule);
                         newRule.setFgColor(Color.RED);
                         logState("Add rule "+newRule.toString());
-//                        newRules.add(newRule);
                     }else {
                         Symbol x1 = testedRule.get(0);
                         Symbol x2 = testedRule.get(1);
-
-    //                    System.out.println("x1= "+ x1.toString());
-    //                    System.out.println("x2= "+ x2.toString());
 
                         Symbol y1 = new Symbol();
                         Symbol y2 = new Symbol();
                         if(x1.isTerminal()){
                             //způsob vytvareni mame dany, takze i kdyz pravidlo nepridame
                             //rovnou, tak i pozdeji budou dana pravidla stejna
-                            //System.out.println("přidávám terminál x1 = "+ x1.toString());
                             newNfromTerm.add(x1);
                             y1.setName(leftTermSymbol+x1+rightTermSymbol);
                             y1.setType(1);
-                            //System.out.println("y1 =  "+ y1.toString());
                         }else{
                             y1 = x1;
                         } 
@@ -133,7 +120,6 @@ public class TransformToCNF extends DefaultProcedure {
                             newNfromTerm.add(x2);
                             y2.setName(leftTermSymbol+x2+rightTermSymbol);
                             y2.setType(1);
-                            //System.out.println("y2 =  "+ y2.toString());
                         }else{
                             y2 = x2;
                         }
@@ -148,7 +134,6 @@ public class TransformToCNF extends DefaultProcedure {
                         newRule.setFgColor(Color.RED);
                         logState("Add rule "+newRule.toString());
                         
-//                        newRules.add(newRule);
                     }
                     continue;
                 }
@@ -196,7 +181,6 @@ public class TransformToCNF extends DefaultProcedure {
                             newRule.setFgColor(Color.RED);
                             logState("Add rule"+newRule.toString());
                             grammar2.clearHighlighting();
-//                            newRules.add(newRule);
                             break;
                         }
                         //vezmeme jen část od druheho symbolu do konce a s ni budeme
@@ -215,7 +199,6 @@ public class TransformToCNF extends DefaultProcedure {
                         newRule.setFgColor(Color.RED);
                         logState("Add rule "+newRule.toString());
                         grammar2.clearHighlighting();
-//                        newRules.add(newRule);
 
                         //změníme symbol pro levou stranu
                         leftSideSymb = new ProductionRuleSide();
@@ -238,23 +221,9 @@ public class TransformToCNF extends DefaultProcedure {
             newRule.setFgColor(Color.RED);
             logState("Add rule "+newRule.toString());
             grammar2.clearHighlighting();
-//            newRules.add(newRule);
         }
         
-//        List<ProductionRules> newRulesList = new ArrayList<ProductionRules>();
-//        newRulesList.addAll(helpAlgs.setToList(newRules));
         grammar2.setStartNonterminal(start);
-//        if(!rules.equals(newRules)){
-//            for(ProductionRules rule : newRules){
-//                grammar2.addRule(rule);
-//            }
-//            
-//        }else{
-//            //gramatika je stejná )newGramm = gramm);
-//             logState("Gramatika již byla v CNF. Vytvořená gramatika je stejná jako předchozí");
-//             grammar2.addAllRules(grammar1);
-//        }
-        
         logState("done");
     }
  
@@ -279,7 +248,6 @@ public class TransformToCNF extends DefaultProcedure {
         if(grammar1.hasUnitProduction()){
             return "Grammar has unit productions.";
         }
-        System.out.println("Testy prošly");
         return CHECK_OK;
     }
 
@@ -289,11 +257,11 @@ public class TransformToCNF extends DefaultProcedure {
         Map<ProductionRuleSide, List<ProductionRuleSide>> map = 
                                                 grammar1.getSameLeftSideMap();
         if(leftSymbol == null || rightSymbol == null){
-            return "Wrong creating symbols in parameter 2";
+            return "Wrong creation of symbols in parameter 2";
         }
         
         if(leftTermSymbol == null || rightTermSymbol == null){
-            return "Wrong creating symbols in parameter 3";
+            return "Wrong creation of symbols in parameter 3";
         }
         if(nonterminal.getSymbols().get(0).getName().equals("def") ){
             return CHECK_OK;
@@ -302,12 +270,27 @@ public class TransformToCNF extends DefaultProcedure {
         if(map.keySet().contains(nonterminal)){
             return CHECK_OK;
         } else {
-            return "Nonterminal is not on left side of any rule";
+            return "Nonterminal is not on the left side of any rule";
         }
     }
 
     @Override
     public void assignInputParameters(String... inputParameters) {
+        if ((inputParameters[0] == null || inputParameters[0].equals("")) &&
+            (inputParameters[1] == null || inputParameters[1].equals("")) &&
+            (inputParameters[2] == null || inputParameters[2].equals(""))) {
+            nonterminal = new ProductionRuleSide();
+            nonterminal.addNonterminal("def");
+           
+            leftSymbol = "<";
+            rightSymbol = ">";
+            
+            leftTermSymbol = "<";
+            rightTermSymbol = ">";
+            
+            def = true;
+        } else {
+        
         nonterminal = new ProductionRuleSide();
         if(inputParameters[0] != null){
             String parameter = inputParameters[0].trim();
@@ -336,6 +319,8 @@ public class TransformToCNF extends DefaultProcedure {
                 leftTermSymbol = parameter.substring(0, 1);
                 rightTermSymbol = parameter.substring(1);
             }
+        }
+        
         }
     }
     

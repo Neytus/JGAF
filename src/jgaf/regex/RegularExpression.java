@@ -35,9 +35,8 @@ public class RegularExpression implements Representation {
     private int encapsulationCount=0;
     public static final String LEFT_PARENTHESIS = "(";
     public static final String RIGHT_PARENTHESIS = ")";
-    //private List<RegularExpression> n_tree = new ArrayList<RegularExpression>();
-    private List<String> n_tree = new ArrayList<String>();
-    private List<Integer> leastOperationsPositions = new ArrayList<Integer>();
+    private List<String> n_tree = new ArrayList<>();
+    private List<Integer> leastOperationsPositions = new ArrayList<>();
 
 
     public RegularExpression(String ex) throws WrongExpressionException {
@@ -48,9 +47,6 @@ public class RegularExpression implements Representation {
         this.parent = parent;
         this.treePosition = treePosition;
         create(ex);
-      //  if(create(ex).getOutput() != CreationOutput.OK) {
-//            throw new WrongExpressionException();
-     //   }
     }
 
     public RegularExpression() {
@@ -70,9 +66,8 @@ public class RegularExpression implements Representation {
     private void create(String sample) throws WrongExpressionException {
         String ex = sample.trim();
         
-        alphabet = new TreeSet<String>();
+        alphabet = new TreeSet<>();
         int encapsulation = checkEncapsulation(ex);
-//        System.out.println("závorkování = "+encapsulation);
         if(encapsulation == -2) {
             
             encapsulationCount++;
@@ -81,8 +76,8 @@ public class RegularExpression implements Representation {
         } else if(encapsulation > -1) {
             throw new WrongExpressionException(CreationOutput.PARENTHESES_INBALANCED + ", " + encapsulation + ", " + encapsulation);
         }
-        List<Operation> operatorSequence = new ArrayList<Operation>();
-        List<Integer> pointerSequence = new ArrayList<Integer>();
+        List<Operation> operatorSequence = new ArrayList<>();
+        List<Integer> pointerSequence = new ArrayList<>();
         
         int depth = 0;
         for (int i = 0; i < ex.length(); i++) {
@@ -98,15 +93,10 @@ public class RegularExpression implements Representation {
             }
         }
         
-//        System.out.println("Sekvence operátorů ="+operatorSequence.toString());
-//        System.out.println("Sekvence ukazatelů ="+pointerSequence.toString());
         if (!operatorSequence.isEmpty()) {
-//            System.out.println("Je komponovany");
             setType(RegularExpresionType.COMPOSED);
-        } else { //TODO
-//            System.out.println("atomické");
+        } else { 
             if (ex.equals("")) {
-                //setType(RegularExpresionType.EPSILON);
                 if (treePosition == TreePosition.ROOT) {
                     setType(RegularExpresionType.EMPTY);
                 } else {
@@ -118,32 +108,24 @@ public class RegularExpression implements Representation {
                 setType(RegularExpresionType.ATOMIC);
                 atomicName = ex;
                 alphabet.add(ex);
-//                System.out.println("Nastavil jsem typ " +ex+ " je ="+type);
             } else {
-             //   System.out.println(ex + ",," + ex.length());
-                //System.out.println("Testuji index či co");
                 int index = getIndexIndexPosition(0, ex.length());
                 throw new WrongExpressionException(CreationOutput.NONATOMIC_SYMBOL + ", " + index + ", " + (index + ex.length() - 1));
-                //return new CreationOutput(CreationOutput.NONATOMIC_SYMBOL, index, index + ex.length());
             }
-//            System.out.println("Vracím se");
             return;
         }
-//        System.out.println("Prošel jsem");
         
         int index = getLeastPriorityOperatorIndex(operatorSequence);
         
         List<Integer> indexList = getSameLeastPriorityOperatorIndex(operatorSequence);
-//        System.out.println("Index ="+index);
-//        System.out.println("List indexů  = "+indexList.toString());
-        
+
         for(int i=0; i<indexList.size();i++){
             this.leastOperationsPositions.add(pointerSequence.get((int) indexList.get(i)));
         }
         this.operation = operatorSequence.get(index);
         
         setOperatorPosition(pointerSequence.get(index), ex.length());
-//        
+       
         
         int lefti = 0;
         int righti = 0;
@@ -153,35 +135,19 @@ public class RegularExpression implements Representation {
             if(i == indexList.size()){
                 newEx = ex.substring(lefti);
 
-//                System.out.println("Substring je ="+newEx.toString());
                 lefti= righti+1;
-//                RegularExpression help = new RegularExpression(newEx, this, TreePosition.CHILD);
-//                System.out.println("Výraz je = " +help+" typu "+help.getType());
-               // n_tree.add(help);
                 n_tree.add(newEx);
             }else{
                 int actual = (int) indexList.get(i);
                 righti = pointerSequence.get(actual);
-//                System.out.println("levy ="+lefti+"pravy ="+ righti);
 
                 newEx = ex.substring(lefti, righti);
 
-//                System.out.println("Substring je ="+newEx.toString());
                 lefti= righti+1;
-//                RegularExpression help = new RegularExpression(newEx, this, TreePosition.CHILD);
-//                System.out.println("Výraz je = " +help+" typu "+help.getType());
-//                n_tree.add(help);
                 n_tree.add(newEx);
             }
         }
-
-//        System.out.println("****************všechny možné vrcholy = "+n_tree.toString());
-        
-        
-        
-        
-//        
-//        
+      
         String left = ex.substring(0, pointerSequence.get(index));
         String right = ex.substring(pointerSequence.get(index) + 1);
 
@@ -197,7 +163,6 @@ public class RegularExpression implements Representation {
             leftChild = new RegularExpression(left, this, TreePosition.LEFT_CHILD);
             alphabet.addAll(leftChild.getAlphabet());
         }
-        //return new CreationOutput(CreationOutput.OK);
     }
 
 
@@ -215,7 +180,6 @@ public class RegularExpression implements Representation {
                 return parent.getOperatorPosition() - exLength - encapsulationCount + index;
             }
             case RIGHT_CHILD: {
-                //System.out.println(parent.getOperatorPosition() +"," + encapsulationCount +","+ index);
                 return parent.getOperatorPosition() + encapsulationCount + index + 1;
             }
             case CHILD: {
@@ -294,7 +258,7 @@ public class RegularExpression implements Representation {
     private List<Integer> getSameLeastPriorityOperatorIndex(List<Operation> operatorSequence) {
         int least = 10;
         int index = 0;
-        List<Integer> list = new ArrayList<Integer>();
+        List<Integer> list = new ArrayList<>();
         for (Operation op : operatorSequence) {
             if(least > op.getPriority()) {
                 least = op.getPriority();
@@ -410,8 +374,6 @@ public class RegularExpression implements Representation {
         String re1 = "(a+b+c)";
         String re2 = "(a+b+c) ";
         String re3 = "c*";
-//        List<List<RegularExpression>> test = new ArrayList<List<RegularExpression>>();
-//        //List<RegularExpression> inp = new ArrayList<RegularExpression>();
         RegularExpression regex = null;
         RegularExpression regex2 = null;
         RegularExpression regex3 = null;
@@ -426,33 +388,26 @@ public class RegularExpression implements Representation {
     }
 
     public List<List<RegularExpression>> getAllPosibilities(){
-        List<List<RegularExpression>> newList = new ArrayList<List<RegularExpression>>();
+        List<List<RegularExpression>> newList = new ArrayList<>();
         
-        //System.out.println("Strom je ="+n_tree.toString());
         for(int i=0; i<n_tree.size()-1;i++){
-            List<String> left = new ArrayList<String>();
-            List<String> right = new ArrayList<String>();
-            List<RegularExpression> helpList = new ArrayList<RegularExpression>();
+            List<String> left = new ArrayList<>();
+            List<String> right = new ArrayList<>();
+            List<RegularExpression> helpList = new ArrayList<>();
             //vytvoř levou
             
             for(int j=0; j<=i; j++){
                 left.add(n_tree.get(j));
-//                System.out.println("Levý blok je "+right.toString());
             }
             helpList.addAll(concatenateRegEx(left, operation));
             for(int j=i+1; j<n_tree.size(); j++){
                 right.add(n_tree.get(j));
-//                System.out.println("Pravý blok je "+right.toString());
             }
             helpList.addAll(concatenateRegEx(right, operation));
-//           
-//            System.out.println("Výraz levý je = " +leftRegEx+" typu "+leftRegEx.getType());
-//            System.out.println("Výraz pravý je = " +rightRegEx+" typu "+rightRegEx.getType());
-//            helpList.add(leftRegEx);
-//            helpList.add(rightRegEx);
+
             newList.add(helpList);
         }
-//       
+      
         return newList;
     }
 
@@ -472,24 +427,20 @@ public class RegularExpression implements Representation {
     
     public List<RegularExpression> concatenateRegEx(List<String> listRegEx, Operation op){
         StringBuilder sb = new StringBuilder();
-        List<RegularExpression> result = new ArrayList<RegularExpression>();
+        List<RegularExpression> result = new ArrayList<>();
         if(listRegEx.size() == 1) {
             result.add(new RegularExpression(listRegEx.get(0)));
             return result;
         }
-//        System.out.println("spojuji tyto prvky "+listRegEx.toString());
         int i=0;
         for(String regEx : listRegEx){
-            //System.out.println(regEx.toString());
             if(i<listRegEx.size()-1){
                 sb.append(regEx.toString()).append(op.getName());
             }else{
                 sb.append(regEx.toString());
             }
-//            System.out.println(sb.toString());
             i++;
         }
-//        System.out.println("vysledek spojení je "+sb);
         RegularExpression exp = new RegularExpression(sb.toString());
         result.add(exp);
         return result;
@@ -523,10 +474,6 @@ public class RegularExpression implements Representation {
             return false;
         }
         final RegularExpression other = (RegularExpression) obj;
-//        if (this.operatorPosition != other.operatorPosition) {
-//            System.out.println("Operace je blbá");
-//            return false;
-//        }
         if (this.alphabet != other.alphabet && (this.alphabet == null || !this.alphabet.equals(other.alphabet))) {
             System.out.println("Abeceda nesedí");
             return false;

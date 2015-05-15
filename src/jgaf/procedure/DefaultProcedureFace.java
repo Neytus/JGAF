@@ -10,11 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -22,7 +18,6 @@ import javax.swing.Timer;
 import jgaf.Representation;
 import jgaf.editor.Editor;
 import jgaf.editor.EditorsHandler;
-import jgaf.editor.NoSuchEditorException;
 import jgaf.environment.Environment;
 
 /**
@@ -30,8 +25,6 @@ import jgaf.environment.Environment;
  * @author hanis
  */
 public final class DefaultProcedureFace extends JPanel {
-
-   // private JSplitPane splitPane;
 
     private DefaultProcedureToolbar toolbar;
 
@@ -179,7 +172,6 @@ public final class DefaultProcedureFace extends JPanel {
             if(procedure.hasOutput()) {
                 outputEditor.setData(outputSequence.get(step));
                 outputEditor.repaint();
-                // outputEditor.center();
             }
             procedureLogger.setLog(composetOldLogText(step), logSequence.get(step));                        
             
@@ -285,6 +277,11 @@ public final class DefaultProcedureFace extends JPanel {
         }
         return descriptorArray;
     }
+/**
+ * JB 
+        
+        Continue with another procedure button.
+
 
     public void continueWithNewProcedure() {
         ProcedureDescriptor descriptor = (ProcedureDescriptor)JOptionPane.showInputDialog(
@@ -293,16 +290,8 @@ public final class DefaultProcedureFace extends JPanel {
                     "Procedures",
                     JOptionPane.PLAIN_MESSAGE,
                     new ImageIcon(getClass().getResource("/jgaf/icons/toolbar/24x24/transformation/open.png")),
-                    getDescriptorArray(), null);
+                    getDescriptorArray(), null);          
 
-        /*
-        System.out.println("CONTINUE with new procedure info: " + JOptionPane.PLAIN_MESSAGE + ", ");
-        System.out.println("descriptor: " + getDescriptorArray());
-        System.out.println("output sequence:" + outputSequence.size());
-        System.out.println("output sequence:" + outputSequence.get(0));
-        System.out.println("output sequence:" + outputSequence.get(outputSequence.size() - 1));
-        */
-                
         if (descriptor != null) {
         descriptor.getInputRepresentations().get(0).setRepresentation(outputSequence.get(outputSequence.size() - 1));
             try {
@@ -312,10 +301,5 @@ public final class DefaultProcedureFace extends JPanel {
             }
         }
     }
-
-
-
-
-
-
+    */
 }

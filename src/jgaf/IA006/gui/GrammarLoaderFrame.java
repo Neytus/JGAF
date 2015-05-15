@@ -15,7 +15,6 @@ import jgaf.IA006.gui.sll.SLLChecker;
 import jgaf.IA006.tools.FirstAndFollow;
 import jgaf.IA006.tools.FirstAndFollowI;
 import jgaf.IA006.tools.GrammarFactory;
-import jgaf.IA006.tools.GrammarLoader;
 import jgaf.grammar.Grammar;
 
 /**
@@ -28,7 +27,6 @@ public class GrammarLoaderFrame extends javax.swing.JPanel {
     private int k;
     private java.util.Map<LLSymbol, java.util.Set<List<LLSymbol>>> fiSet;
     private java.util.Map<LLSymbol, java.util.Set<List<LLSymbol>>> foSet;
-    private GrammarLoader gl;
     private String llCheck = "Check grammar for LL({0})";
     private String sllCheck = "Check grammar for SLL({0})";
     
@@ -83,9 +81,7 @@ public class GrammarLoaderFrame extends javax.swing.JPanel {
         initComponents();
         this.g = GrammarFactory.convertGrammar(gram);
         this.k = k;
-        setButtonLabels();
-        
-        gl = new GrammarLoader(gram);           
+        setButtonLabels();          
 
         MyFIFWorker worker = new MyFIFWorker();
         worker.execute();

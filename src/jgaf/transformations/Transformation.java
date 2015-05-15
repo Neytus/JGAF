@@ -24,8 +24,8 @@ public abstract class Transformation {
     public Transformation(Automaton input, Automaton output) {
         this.input = input;
         this.output = output;
-        this.inputSequence = new ArrayList<Automaton>();
-        this.outputSequence = new ArrayList<Automaton>();
+        this.inputSequence = new ArrayList<>();
+        this.outputSequence = new ArrayList<>();
         logState();
     }
 

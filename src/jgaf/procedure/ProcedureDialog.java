@@ -39,15 +39,7 @@ public class ProcedureDialog extends javax.swing.JDialog {
 
     private void initMyComponents(boolean fromProcedure) throws NoSuchEditorException {
         setTitle(descriptor.getName());
-        //  getContentPane().setLayout(new Borde        rLayout());
-
-        //JTextArea descriptionArea = new JTextArea();
         descriptionArea.setText(descriptor.getDescription());
-        //  getContentPane().add(descriptionArea, BorderLayout.NORTH);
-
-        //  JPanel panel = new JPanel(new GridLayout(procedure.getInputCardinality(), 3));
-
-        //    getContentPane().add(panel, BorderLayout.CENTER);
         if (!fromProcedure) {
             for (ProcedureRepresentation representation : descriptor.getInputRepresentations()) {
                 inputRepresentationsPanel.add(new InputRepresentationChooserPanel(representation));
@@ -215,15 +207,16 @@ public class ProcedureDialog extends javax.swing.JDialog {
     private void handleRunningProcedure() throws WrongProcedureInputException {
         for (ProcedureRepresentation representation : descriptor.getInputRepresentations()) {
             if(representation.getRepresentation() == null) {
-                throw new WrongProcedureInputException("All input representations has to be set.");
+                throw new WrongProcedureInputException("All input representations have to be set.");
             }
         }
         setAllParameters();
+        /*
         for (ProcedureParameter parameter : descriptor.getParameters()) {
             if(parameter.getText() == null || parameter.getText().equals("")) {
-                throw new WrongProcedureInputException("All parameters has to be set.");
+                throw new WrongProcedureInputException("All parameters have to be set.");
             }
-        }
+        }*/
         Environment.getInstance().getProcedureHandler().createAndShowNewProcedure(descriptor);
     }
 

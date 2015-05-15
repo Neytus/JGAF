@@ -43,9 +43,6 @@ public class GrammarTable extends JTable implements MouseListener, KeyListener {
         setRowHeight(25);
         setSurrendersFocusOnKeystroke(true);
 
-
-        //System.out.println(cell.getText() + ": " + cell.getFontMetrics(cell.getFont()).stringWidth(cell.getText()));
-
         getColumn(getColumnName(0)).setPreferredWidth(40);
         getColumn(getColumnName(1)).setPreferredWidth(30);
         getColumn(getColumnName(2)).setPreferredWidth(150);
@@ -78,7 +75,7 @@ public class GrammarTable extends JTable implements MouseListener, KeyListener {
 
 
     public void mouseClicked(MouseEvent e) {
-        System.out.println("mouse clicked");
+
     }
 
     public void mousePressed(MouseEvent e) {
@@ -121,7 +118,6 @@ public class GrammarTable extends JTable implements MouseListener, KeyListener {
 
     private void showPopup(KeyEvent e) {
         if (e.isControlDown()) {
-        //    ruleSidePopupMenu.show(e.getComponent(), e.getX(), e.getY());
         }
     }
 

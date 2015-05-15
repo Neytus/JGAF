@@ -130,11 +130,7 @@ public class LRParserProcedure extends Procedure {
     }
 
     public void create() {
-
-        //  if (moreGrammarChecks()) face.getParent().setVisible(false);
-//getProcedureFrame().dispose();
-
-         ItemAuto itemAuto =new ItemAuto(g, k, type);
+       ItemAuto itemAuto =new ItemAuto(g, k, type);
        itemAuto.calcAuto();
        ParserTablesCalc ptc =new ParserTablesCalc(itemAuto);
        ptc.calcActionTable();
@@ -144,11 +140,6 @@ public class LRParserProcedure extends Procedure {
         JPanel autoPanel = new ItemAutoPanel(itemAuto);
         TablePanel tablePanel = new TablePanel(ptc);
         ParserPanel parserPanel = new ParserPanel(ptc,psc);
-        
-        
-
-
-
 
         face = new LRParserFace(autoPanel,tablePanel,parserPanel);
     }
@@ -164,10 +155,6 @@ public class LRParserProcedure extends Procedure {
     public int getK() {
         return k;
     }
-    
-//    public void setNameID(String s) {
-//        super.nameID = namePrefix + " - "+s;
-//    }
     
      public String getTitle() {
         return  namePrefix + " - Parsing";

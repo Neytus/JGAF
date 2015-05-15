@@ -22,7 +22,7 @@ public class FiFoUtils {
                                       int k,
                                       Map<Symbol, Set<WString>> fiMap) {
 
-        Set<WString> ret = new HashSet<WString>();
+        Set<WString> ret = new HashSet<>();
         if (k == 0) {
             return ret;
         }
@@ -32,7 +32,7 @@ public class FiFoUtils {
 
         boolean firstRun2 = true;
         for (Symbol symbol : strg) {
-            Set<WString> symbolFi = new HashSet<WString>();
+            Set<WString> symbolFi = new HashSet<>();
             if (symbol.isNonterminal()) {
                 symbolFi = fiMap.get(symbol);
             } else {
@@ -54,11 +54,11 @@ public class FiFoUtils {
 
     public static Map<Symbol, Set<WString>> calcFiMap(Grammar grammar,
                                                       int k) {
-        Map<Symbol, Set<WString>> fiMap = new HashMap<Symbol, Set<WString>>();
+        Map<Symbol, Set<WString>> fiMap = new HashMap<>();
         if (k == 0) {
             return fiMap;
         }
-        Map<Symbol, Set<WString>> previouseFiMap = new HashMap<Symbol, Set<WString>>();
+        Map<Symbol, Set<WString>> previouseFiMap = new HashMap<>();
         Map<Symbol, Set<WString>> gramMap = CFGUtils.getGrammarMap(grammar);
 
         for (Symbol nonT : gramMap.keySet()) {
@@ -71,10 +71,10 @@ public class FiFoUtils {
             for (Symbol nonT : gramMap.keySet()) {
                 fiMap.put(nonT, new HashSet<WString>()); // changes reference - maintains ineqaulity
                 for (WString rule : gramMap.get(nonT)) {
-                    Set<WString> ruleFi = new HashSet<WString>();
+                    Set<WString> ruleFi = new HashSet<>();
                     boolean firstRun2 = true;
                     for (Symbol symbol : rule) {
-                        Set<WString> symbolFi = new HashSet<WString>();
+                        Set<WString> symbolFi = new HashSet<>();
                         if (symbol.isNonterminal()) {
                             symbolFi = previouseFiMap.get(symbol);
                         } else {
@@ -99,13 +99,13 @@ public class FiFoUtils {
 
     public static Map<Symbol, Set<WString>> calcFo(Grammar grammar,
                                                    int k) {
-        Map<Symbol, Set<WString>> foMap = new HashMap<Symbol, Set<WString>>();
+        Map<Symbol, Set<WString>> foMap = new HashMap<>();
         if (k == 0) {
             return foMap;
         }
         Map<Symbol, Set<WString>> fiMap = calcFiMap(grammar, k);
 
-        Map<Symbol, Set<WString>> previouseFoMap = new HashMap<Symbol, Set<WString>>();
+        Map<Symbol, Set<WString>> previouseFoMap = new HashMap<>();
         Map<Symbol, Set<WString>> gramMap = CFGUtils.getGrammarMap(grammar);
 
         for (Symbol nonT : gramMap.keySet()) {
@@ -143,7 +143,7 @@ public class FiFoUtils {
                             if (subRuleFi.isEmpty()) {
                                 subRuleFi.addAll(FiFoUtils.createEpsilonSet());
                             }
-                            Set<WString> nonOtherOldFo = new HashSet<WString>();
+                            Set<WString> nonOtherOldFo = new HashSet<>();
                             nonOtherOldFo.addAll(previouseFoMap.get(nonOther));
                             subRuleFi = FiFoUtils.concatSet(subRuleFi, nonOtherOldFo);
                             subRuleFi = FiFoUtils.ShorternSet(k, subRuleFi);
@@ -162,8 +162,8 @@ public class FiFoUtils {
 
     public static Set<WString> concatSet(Set<WString> a,
                                          Set<WString> b) {
-        Set<WString> tmp = new HashSet<WString>();
-        Set<WString> ret = new HashSet<WString>();
+        Set<WString> tmp = new HashSet<>();
+        Set<WString> ret = new HashSet<>();
 
         if (!(b.isEmpty() || a.isEmpty())) {
             for (WString strgFromA : a) {
@@ -179,8 +179,8 @@ public class FiFoUtils {
 
     public static Set<WString> ShorternSet(int k,
                                            Set<WString> a) {
-        Set<WString> tmp = new HashSet<WString>();
-        Set<WString> ret = new HashSet<WString>();
+        Set<WString> tmp = new HashSet<>();
+        Set<WString> ret = new HashSet<>();
         tmp.addAll(a);
         for (Iterator<WString> it = tmp.iterator(); it.hasNext();) {
             WString strg = it.next();
@@ -211,7 +211,7 @@ public class FiFoUtils {
 
     public static Set<WString> createEpsilonSet() {
 
-        Set<WString> retSet = new HashSet<WString>();
+        Set<WString> retSet = new HashSet<>();
         retSet.add(createEpsilonStr());
         return retSet;
     }

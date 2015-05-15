@@ -15,89 +15,28 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import jgaf.Constants.MathConstants;
 import jgaf.Representation;
-//import jgaf.grammar.algorithms.FAalgorithms;
 
 /**
  *
  * @author hanis
  */
-public class Grammar implements Representation {
+public class Grammar implements Representation {  
     
-    //private List<Terminal> terminalSymbols;
-    //private List<Nonterminal> nonterminalSymbols;
-    
-    /*
     private static final int INCORRECT = -1;
-    private static final int TYPE0 = 00; //Recursively enumerable
+    private static final int TYPE0 = 0; //Recursively enumerable
     private static final int TYPE1 = 10; //Context-sensitive
     private static final int TYPE2 = 20; //Context-free
-    private static final int TYPE3 = 30; //Regular   
+    private static final int TYPE3 = 30; //Regular
     private static final int TYPE2E = 21; //Context-free epsilon rules
     private static final int TYPE3E = 31; //regular epsilon rules
-    */
-    
-    public static final int INCORRECT = -1;
-    public static final int TYPE0 = 0; //Recursively enumerable
-    public static final int TYPE1 = 1; //Context-sensitive
-    public static final int TYPE2 = 2; //Context-free
-    public static final int TYPE3 = 3; //Regular
     
     private Symbol startNonterminal;
     private String name = "G";
-    //private List<ProductionRule> productionRules;
     private List<ProductionRules> productionRulesType2;
 
     public Grammar() {
-    //    this.terminalSymbols = new ArrayList<Terminal>();
-   //   this.nonterminalSymbols = new ArrayList<Nonterminal>();
-        //this.productionRules = new ArrayList<ProductionRule>();
         this.productionRulesType2 = new ArrayList<ProductionRules>();
     }
-
-
-
-//    public boolean addTerminal(String terminal) {
-//        return addTermainal(new Terminal(terminal));
-//    }
-//
-//
-//    public boolean addTermainal(Terminal terminal) {
-//        if(terminal == null) {
-//            throw new NullPointerException();
-//        }
-//        if(terminalSymbols.contains(terminal)) {
-//            return false;
-//        }
-//        terminalSymbols.add(terminal);
-//        return true;
-//    }
-//
-//
-//    public boolean addNonterminal(String nonterminal) {
-//        return addNontermainal(new Nonterminal(nonterminal));
-//    }
-//
-//
-//    public boolean addNontermainal(Nonterminal nonterminal) {
-//        if(nonterminal == null) {
-//            throw new NullPointerException();
-//        }
-//        if(nonterminalSymbols.contains(nonterminal)) {
-//            return false;
-//        }
-//        nonterminalSymbols.add(nonterminal);
-//        return true;
-//    }
-
-
-//    public SortedSet<Symbol> getSymbols() {
-//        SortedSet<Symbol> symbols = new TreeSet<Symbol>();
-//        for (ProductionRule rule : productionRules) {
-//            symbols.addAll(rule.getLeftHandSide().getSymbols());
-//            symbols.addAll(rule.getRightHandSide().getSymbols());
-//        }
-//        return symbols;
-//    }
 
     public SortedSet<Symbol> getSymbols() {
         SortedSet<Symbol> symbols = new TreeSet<Symbol>();
@@ -114,13 +53,6 @@ public class Grammar implements Representation {
     public SortedSet<Symbol> getTerminals() {
         SortedSet<Symbol> symbols = new TreeSet<Symbol>();
         for (Symbol symbol: getSymbols()) {
-            /*
-            if(symbol.isTerminal() || symbol.isEpsilon()) {
-                symbols.add(symbol);
-            }*/
-            /**
-             * JB 
-             */
             if(symbol.isTerminal()) {
                 symbols.add(symbol);
             }
@@ -137,32 +69,11 @@ public class Grammar implements Representation {
         }
         return symbols;
     }
-    
-//    public SortedSet<Symbol> getLeftHandSideSymbols() {
-//        SortedSet<Symbol> symbols = new TreeSet<Symbol>();
-//        for (ProductionRule rule : productionRules) {
-//            symbols.addAll(rule.getLeftHandSide().getSymbols());
-//        }
-//        return symbols;
-//    }
-//
-//    public SortedSet<Symbol> getLeftHandSideNonterminals(){
-//        SortedSet<Symbol> symbols = new TreeSet<Symbol>();
-//        for (Symbol symbol: getLeftHandSideSymbols()) {
-//            if(symbol.isNonterminal()) {
-//                symbols.add(symbol);
-//            }
-//        }
-//        return symbols;
-//    }
 
     public int getProductionCount() {
         return productionRulesType2.size();
     }
 
-//    public List<ProductionRule> getProductionRules() {
-//        return productionRules;
-//    }
     public List<ProductionRules> getProductionRules() {
         return productionRulesType2;
     }
@@ -181,71 +92,15 @@ public class Grammar implements Representation {
         return returnList;
     }
 
-//    public List<ProductionRules> getProductionRulesType2() {
-//        return productionRulesType2;
-//    }
-//
-//    public Grammar(Symbol startNonterminal,
-//                   List<ProductionRule> productionRules) {
-//        this.startNonterminal = startNonterminal;
-//        this.productionRules = productionRules;
-//        this.productionRulesType2 = new ArrayList<ProductionRules>();
-//        for(ProductionRule rule : productionRules){
-//            this.productionRulesType2.add(new ProductionRules(rule));
-//        }
-//    }
-    
-//    public Grammar(Symbol startNonterminal,
-//                   List<ProductionRules> productionRulesType2) {
-//        this.startNonterminal = startNonterminal;
-//        this.productionRulesType2 = productionRulesType2;
-//        this.productionRules = new ArrayList<ProductionRule>();
-//        
-//    }
-    
-//    public int removeEmptyRules() {
-//        int i = 0;
-//        int j = 0;
-//        List<Integer> rulesToRomeve = new ArrayList<Integer>();
-//        for (ProductionRule productionRule : productionRules) {
-//            if(productionRule.equals(new ProductionRule())) {
-//                j++;
-//                rulesToRomeve.add(i);
-//            }
-//            i++;
-//        }
-//        for (int k = rulesToRomeve.size() - 1; k >=0 ; k--) {
-//            productionRules.remove((int)rulesToRomeve.get(k));
-//        }
-//        return j;
-////        Set set = new HashSet();
-////        List newList = new ArrayList();
-////        for (Iterator iter = productionRules.iterator();  iter.hasNext(); ) {
-////            Object element = iter.next();
-////            if (set.add(element))
-////      newList.add(element);
-////    }
-////    arlList.clear();
-////    arlList.addAll(newList);
-////}
-
-
-
     public int removeEmptyRules() {
         int i = 0;
         int j = 0;
         List<Integer> rulesToRemove = new ArrayList<Integer>();
         for (ProductionRules productionRule : productionRulesType2) {
-            //System.out.println("Testuji pravidlo:" +productionRule.toString());
             boolean a=productionRule.getLeftHandSide().isEmpty();
             boolean b=productionRule.getRightHandSide().isEmpty();
-            //int size = productionRule.getRightHandSide().size();
-            
-//            System.out.println("a = "+a+" b = "+b+" size = "+size+ " !"+productionRule.getRightHandSide().getRules().get(0)+"! ");
             if(a && b) {
-                //System.out.println("mažu");
                 j++;
-                //System.out.println("i = "+i);
                 rulesToRemove.add(i);
             }
             i++;
@@ -254,35 +109,7 @@ public class Grammar implements Representation {
             productionRulesType2.remove((int)rulesToRemove.get(k));
         }
         return j;
-//        Set set = new HashSet();
-//        List newList = new ArrayList();
-//        for (Iterator iter = productionRules.iterator();  iter.hasNext(); ) {
-//            Object element = iter.next();
-//            if (set.add(element))
-//      newList.add(element);
-//    }
-//    arlList.clear();
-//    arlList.addAll(newList);
-//}
-
-
-
     }
-    
-
-//    public boolean removeLastEmptyRule() {
-//        int i = -1;
-//        for (int j = 0; j < productionRules.size(); j++) {
-//            if(productionRules.get(j).isEmpty()) {
-//                i = j;
-//            }
-//        }
-//        if(i == -1) {
-//            return false;
-//        }
-//        productionRules.remove(i);
-//        return false;
-//    }
 
     public boolean removeLastEmptyRule() {
         int i = -1;
@@ -320,50 +147,14 @@ public class Grammar implements Representation {
         return getStartNonterminal().equals(startNonterminal);
     }
 
-
-//    public boolean addRule(ProductionRule rule) {
-//        if(productionRules.contains(rule) && ! rule.equals(ProductionRule.EMPTY_RULE)) {
-//           // System.out.println("contains " + rule);
-//            return false;
-//        }
-//        productionRulesType2.add(new ProductionRules(rule));
-//        productionRules.add(rule);
-//        
-//        return true;
-//    }
-
-//    public boolean addRule(int index, ProductionRule rule) {
-//        if(productionRules.contains(rule)) {
-//            return false;
-//        }
-//        productionRulesType2.add(index, new ProductionRules(rule));
-//        productionRules.add(index, rule);
-//        return true;
-//    }
-
     public boolean addRule(ProductionRules rule){
-        //System.out.println("p jsou = "+productionRulesType2.toString());
         if(productionRulesType2.contains(rule) && ! rule.equals(ProductionRules.EMPTY_RULE)) {
-           // System.out.println("contains " + rule);
             return false;
         }
-        //System.out.println("pravidla jsou = "+rule.toString());
-        //System.out.println("p jsou = "+productionRulesType2.toString());
         productionRulesType2.add(rule);
-        //System.out.println("pravidla jsou = "+rule.toString());
-        
-        //System.out.println("Vložil jsem pravidlo = "+productionRulesType2.toString());
         ProductionRuleSide leftSide = rule.getLeftHandSide();
         List<ProductionRuleSide> rightSide = new ArrayList<ProductionRuleSide>();
         rightSide.addAll(rule.getRightHandSide().getRules());
-        //System.out.println(rightSide.toString());
-        //System.out.println("praá strana= "+rightSide.toString());
-//        for(ProductionRuleSide oneRule : rightSide){
-//            ProductionRule newRule = new ProductionRule(leftSide, oneRule);
-//            System.out.println("newRule = "+newRule.toString());
-////            productionRules.add(newRule);
-//        }
-//        System.out.println("productionRules jsou = "+productionRules.toString());
         return true;
     }
     
@@ -387,22 +178,14 @@ public class Grammar implements Representation {
     
     public boolean addRule(int index, ProductionRules rule){
         if(productionRulesType2.contains(rule)) {
-           // System.out.println("contains " + rule);
             return false;
         }
-        //System.out.println("index je ="+index);
-        //System.out.println("původní pravidlo bylo: "+productionRulesType2.get(index).toString());
         productionRulesType2.add(index, rule);
-        //System.out.println("původní pravidlo bylo: "+productionRulesType2.get(index).toString());
         ProductionRuleSide leftSide = rule.getLeftHandSide();
         List<ProductionRuleSide> rightSide = rule.getRightHandSide().getRules();
-        //System.out.println("pravá strana= "+rightSide.toString());
         for(ProductionRuleSide oneRule : rightSide){
             ProductionRule newRule = new ProductionRule(leftSide, oneRule);
-            //System.out.println("newRule = "+newRule.toString());
-//            productionRules.add(newRule);
         }
-        //System.out.println();
         return true;
     }
     
@@ -414,20 +197,15 @@ public class Grammar implements Representation {
         for(int i=0; i<productionRulesType2.size();i++){
             ProductionRules rule = productionRulesType2.get(i);
             if(rule.getLeftHandSide().equals(leftHandSide)){
-                System.out.println("odstraňuji pravidlo "+rule.toString());
                 rulesToRemove.add(rule);
                 index++;
             }
         }
-        System.out.println("pravidla k odstraneni "+rulesToRemove.toString());
-        System.out.println(productionRulesType2.toString());
         productionRulesType2.removeAll(rulesToRemove);
-        System.out.println("po odstraneni" +productionRulesType2.toString());
         if(index>0)return index;
         return -1;
     }
     
-    //TODO upravit
     public int removeRule(ProductionRules rule) {
         if(productionRulesType2.contains(rule)) {
             int index = productionRulesType2.indexOf(rule);
@@ -496,37 +274,7 @@ public class Grammar implements Representation {
         hash = 79 * hash + (this.productionRulesType2 != null ? this.productionRulesType2.hashCode() : 0);
         return hash;
     }
-    
-
-//    public Map<ProductionRuleSide, List<ProductionRuleSide>> getSameLeftSideMap() {
-//        Map<ProductionRuleSide, List<ProductionRuleSide>> map =
-//                new HashMap<ProductionRuleSide, List<ProductionRuleSide>>();
-//        for (ProductionRule production : productionRules) {            
-//            if(map.containsKey(production.getLeftHandSide())) {
-//                map.get(production.getLeftHandSide()).add(production.getRightHandSide());
-//            } else {
-//                List<ProductionRuleSide> rightSide = new ArrayList<ProductionRuleSide>();
-//                rightSide.add(production.getRightHandSide());
-//                map.put(production.getLeftHandSide(), rightSide);
-//            }
-//        }
-//        return map;
-//    }
-    
-//    public Map<ProductionRuleSide, List<ProductionRuleSide>> getSameLeftSideMap() {
-//        Map<ProductionRuleSide, List<ProductionRuleSide>> map =
-//                new HashMap<ProductionRuleSide, List<ProductionRuleSide>>();
-//        for (ProductionRules production : productionRulesType2) {            
-//            if(map.containsKey(production.getLeftHandSide())) {
-//                map.get(production.getLeftHandSide()).addAll(production.getRightHandSide().getRules());
-//            } else {
-//                List<ProductionRuleSide> rightSide = new ArrayList<ProductionRuleSide>();
-//                rightSide.addAll(production.getRightHandSide().getRules());
-//                map.put(production.getLeftHandSide(), rightSide);
-//            }
-//        }
-//        return map;
-//    }
+ 
     public Map<ProductionRuleSide, List<ProductionRuleSide>> getSameLeftSideMap() {
         Map<ProductionRuleSide, List<ProductionRuleSide>> map =
                 new HashMap<ProductionRuleSide, List<ProductionRuleSide>>();
@@ -567,10 +315,6 @@ public class Grammar implements Representation {
                 ProductionRuleSide nonTermForTest = listOfNonterms.get(j);
                 
                 Symbol nonTermForTestSymb = nonTermForTest.getSymbols().get(0);
-                
-                System.out.println("Kontrolované pravidlo = " 
-                        +nonTermForTestSymb.toString()+"j = "+j);
-                
                 List<ProductionRuleSide> rulesOfLeftSide = 
                                         new ArrayList<ProductionRuleSide>();
                 
@@ -588,19 +332,14 @@ public class Grammar implements Representation {
                     //pokud se symbol na první pozici pravidla rovná 
                     //neterminalu na pozici j, tak vytvorime nova pravidla
                     if(nonTermForTestSymb.equals(listRule.get(0))){
-                        
-                        System.out.println("Testované pravidlo je " +listRule.toString());
-
                         List<Symbol> leftListRule = new ArrayList<Symbol>();
                         leftListRule.addAll(listRule);
                         //potřebujeme \alfa část pravidla - první symbol vytváří rekurzi
                         leftListRule.remove(0);
-                        //System.out.println("pravidlo pro spojení je zprava je"+leftListRule.toString());
                         for(ProductionRuleSide rule : rulesOfnonTermForTest){
                             ProductionRuleSide newRuleS = new ProductionRuleSide();
                             newRuleS.setSymbolsFromProductionRuleSide(rule);
                             if(!newRuleS.equals(oneRule)){
-                                //System.out.println("pravidlo pro spojení je "+newRule.toString());
                                 newRuleS.addSymbolsFromList(leftListRule);
                                 newListOfRules.add(newRuleS);
                                 if(allRules.contains(oneRule)) allRules.remove(oneRule);
@@ -613,7 +352,6 @@ public class Grammar implements Representation {
                     
                 }
                 allRules.addAll(newListOfRules);
-                System.out.println(" pravidla jsou "+ allRules.toString());
             }
             //pokud symbol má nějakou rekurzi tak se to projeví tady
             //potřebujeme symbol na porovnávání s prvním pravidlem 
@@ -622,7 +360,6 @@ public class Grammar implements Representation {
                 List<Symbol> listRule = new ArrayList<Symbol>();
                 listRule.addAll(oneRule.getSymbols());
                 //máme levou rekurzi
-                System.out.println("Pravidlo je "+listRule.toString()+" symbol je "+leftSideSymb.toString());
                 if(listRule.get(0).equals(leftSideSymb)){
                     return true;
                 }else{
@@ -636,14 +373,6 @@ public class Grammar implements Representation {
     @Override
     public String toString() {
         return writeGrammar();
-//        StringBuilder sb = new StringBuilder();
-//        sb.append(getSymbols()).append("\n");
-//        sb.append(getNonterminals()).append("\n");
-//        sb.append(getTerminals()).append("\n");
-//        for (ProductionRule production : productionRules) {
-//            sb.append(production.toString()).append("\n");
-//        }
-//        return sb.toString();
     }
 
     public String writeGrammar() {
@@ -768,11 +497,9 @@ public class Grammar implements Representation {
 
     public boolean isCorrect() {
         if(!hasStartNonterminal()) {
-            //System.out.println("nema startovní neterminal");
             return false;
         }
         if(getNonterminals().isEmpty()) {
-            //System.out.println("nema žádne neterminály");
             return false;
         }
         for (ProductionRules productionRule : productionRulesType2) {
@@ -783,95 +510,11 @@ public class Grammar implements Representation {
                 }
             }
             if(!containsNonterminal) {
-                //System.out.println("Levá strana není neterminál. pravidlo = "+productionRule.toString());
                 return false;
             }
         }
         return true;
     }
-    
-    public boolean isRegular() {
-        return getType() == TYPE3;
-    }
-
-    public boolean isContextFree() {
-        return getType() >= TYPE2;
-    }
-
-    public boolean isContextSensitive() {
-        return getType() >= TYPE1;
-    }
-
-    public boolean isRecursivelyEnumerable() {
-        return getType() >= TYPE0;
-    }
-    
-    
-    public boolean isContextFreeE(){
-        return (getType() >= TYPE2);
-    }   
-    
-    public int getType() {
-        if(!isCorrect()) {
-            return INCORRECT;
-        }
-        boolean regular = true;
-        boolean cfg = true;
-        boolean csg = true;
-        for (ProductionRules rule : productionRulesType2) {
-            int leftSize = rule.getLeftHandSide().size();
-            
-            //boolean singleLeftNonterminal = false;
-            if(leftSize > 1 || !rule.getLeftHandSide().getSymbols().get(0).isNonterminal()) {
-                regular = false;
-                cfg = false;
-            }
-            ProductionRulesSide rightHandSide = rule.getRightHandSide();
-            for(ProductionRuleSide oneRule : rightHandSide.getRules()){
-                int rightSize = oneRule.size();
-                if(rightSize == 0){
-                    regular = false;
-//                    cfg = false;
-                }
-                if(rightSize == 1 && oneRule.getSymbols().get(0).isEpsilon()) {
-                    if(leftSize > 1 || !isStartNonterminal(rule.getLeftHandSide().getSymbols().get(0))) {
-                        regular = false;
-                        //cfg = false;
-                        csg = false;
-                    } else {
-                        continue;
-                    }
-                }
-            
-                
-                boolean rightRegular = false;
-                if((rightSize == 1 && oneRule.getSymbols().get(0).isTerminal()) ||
-                        (rightSize == 2 && oneRule.getSymbols().get(0).isTerminal() &&
-                        oneRule.getSymbols().get(1).isNonterminal())) {
-                    rightRegular = true;
-                }
-                if(!rightRegular) {
-                    regular = false;
-                }
-
-                if(leftSize > rightSize) {
-                    csg = false;
-                }
-            }
-        }      
-        if(regular) {
-            return TYPE3;
-        }
-        if(cfg) {
-            return TYPE2;
-        }
-        if(csg) {
-            return TYPE1;
-        }
-        return TYPE0;
-    }
-    
-    /*
     
     public boolean isRegular() {
         return getType() == TYPE3;
@@ -895,9 +538,8 @@ public class Grammar implements Representation {
     
     public boolean isRegularE(){
     return (getType() >= TYPE3 );
-    }
+    }   
     
-    //TODO
     public int getType() {
         if(!isCorrect()) {
             return INCORRECT;
@@ -906,51 +548,56 @@ public class Grammar implements Representation {
         boolean cfg = true;
         boolean csg = true;
         boolean regularE = true;
-        boolean cfgE=true;
+        boolean cfgE = true;
         
         for (ProductionRules rule : productionRulesType2) {
             boolean eRule=false;
             int leftSize = rule.getLeftHandSide().size();
-            int rightSize = rule.getRightHandSide().size();
-            //boolean singleLeftNonterminal = false;
+            
             if(leftSize > 1 || !rule.getLeftHandSide().getSymbols().get(0).isNonterminal()) {
                 regular = false;
                 cfg = false;
-                regularE=false;
-                cfgE=false;
+                regularE = false;
+                cfgE = false;
             }
-            
-            if(rightSize == 1 && rule.getRightHandSide().getSymbols().get(0).isEpsilon()) {
-                if(leftSize > 1 || !isStartNonterminal(rule.getLeftHandSide().getSymbols().get(0))) {
+            ProductionRulesSide rightHandSide = rule.getRightHandSide();
+            for(ProductionRuleSide oneRule : rightHandSide.getRules()){
+                int rightSize = oneRule.size();
+                if(rightSize == 0 || rightSize > 2 || (rightSize == 2 && 
+                        !(oneRule.getSymbols().get(0).isTerminal() && 
+                        oneRule.getSymbols().get(1).isNonterminal()))){
                     regular = false;
-                    cfg = false;
-                    csg = false;
-                } else {
-                    
+                    regularE = false;
                 }
-                eRule=true;
-            }
-            
-            boolean rightRegularOrE = false;
-            if((rightSize == 1 && rule.getRightHandSide().getSymbols().get(0).isTerminal()) || eRule ||
-                    (rightSize == 2 && rule.getRightHandSide().getSymbols().get(0).isTerminal() &&
-                    rule.getRightHandSide().getSymbols().get(1).isNonterminal())) {
-                rightRegularOrE = true;
                 
-            }
-            if(!rightRegularOrE) {
-                regular = false;
-                regularE= false;
-            }
-            
-            if(leftSize > rightSize) {
-                csg = false;                
+                if(rightSize == 1 && oneRule.getSymbols().get(0).isEpsilon()) {
+                    if(leftSize > 1 || !isStartNonterminal(rule.getLeftHandSide().getSymbols().get(0))) {
+                        regular = false;
+                        cfg = false;
+                        csg = false;
+                    }
+                    eRule=true;
+                }
+                
+                boolean rightRegularOrE = false;
+                if((rightSize == 1 && oneRule.getSymbols().get(0).isTerminal()) || eRule ||
+                        (rightSize == 2 && oneRule.getSymbols().get(0).isTerminal() &&
+                        oneRule.getSymbols().get(1).isNonterminal())) {
+                    rightRegularOrE = true;
+                }
+                if(!rightRegularOrE) {
+                    regular = false;
+                    regularE = false;
+                }
+
+                if(leftSize > rightSize) {
+                    csg = false;
+                }
             }
         }      
         if(regular) {
             return TYPE3;
         }
-        
         if (regularE) {
            return TYPE3E;
         }
@@ -964,15 +611,9 @@ public class Grammar implements Representation {
             return TYPE1;
         }
         
-        
         return TYPE0;
-    }*/
-
-
+    }
     
-    /*
-    TODO - pozri co je zle s "tohle nemuze byt"
-    */
     public boolean isStartToEpsRule(ProductionRuleSide leftHandSide, ProductionRuleSide rule) {
         if(!hasStartNonterminal()) {
             return false;
@@ -1057,11 +698,9 @@ public class Grammar implements Representation {
     public boolean isNormalized(){
         for(ProductionRules oneLine : productionRulesType2) {
             if (oneLine.getRightHandSide().size() > 1) {
-                System.out.println("nie je normalizovana");
                 return false;
             }
         }
-        System.out.println("JE normalizovana");
         return true;
     }
     
@@ -1074,9 +713,7 @@ public class Grammar implements Representation {
             List<Integer> rulesToDelete = new ArrayList<>();
         
             for(ProductionRules oneLine : productionRulesType2) {
-                if (oneLine.getRightHandSide().size() > 1) {
-                    System.out.println("normalizuje sa" + productionRulesType2.indexOf(oneLine) + ". pravidlo");
-                    
+                if (oneLine.getRightHandSide().size() > 1) { 
                     rulesToDelete.add(productionRulesType2.indexOf(oneLine));
                                        
                     ProductionRulesSide oneSet = new ProductionRulesSide(oneLine.getRightHandSide().getRules());

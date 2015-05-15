@@ -303,6 +303,10 @@ public class DFASimulation extends Procedure {
 
     @Override
     public String checkInputParameters() {
+        if (inputWord == null || inputWord.equals("")) {
+            return "The input word is empty.";
+        }
+        
         if(automaton.isStringOverAlphabet(inputWord)) {
             return Procedure.CHECK_OK;    
         } else {

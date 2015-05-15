@@ -7,8 +7,6 @@ package jgaf.lrextension;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.beans.*;
-import java.util.Random;
  
 public abstract class ProgressWorker<T>  extends  SwingWorker<T,Integer> {
      private Component parent;
@@ -41,7 +39,6 @@ public abstract class ProgressWorker<T>  extends  SwingWorker<T,Integer> {
     ActionListener taskPerformer = new ActionListener() {
       private boolean started=false;
      
-      //Task task = new Task(progressMonitor);
       public void actionPerformed(ActionEvent evt) {
          if (!started){
          started=true;

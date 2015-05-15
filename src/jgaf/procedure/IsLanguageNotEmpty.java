@@ -12,7 +12,6 @@ import jgaf.grammar.Grammar;
 import jgaf.grammar.ProductionRuleSide;
 import jgaf.grammar.ProductionRules;
 import jgaf.grammar.ProductionRulesSide;
-import jgaf.grammar.ProductionRulesSide;
 import jgaf.grammar.Symbol;
 import jgaf.grammar.algorithms.FAalgorithms;
 import jgaf.Constants.MathConstants;
@@ -22,6 +21,7 @@ public class IsLanguageNotEmpty extends DefaultProcedure {
     private Grammar grammar1;
     private Grammar grammar2;
     private Symbol nonterminal;
+    private boolean def = false;
 
     public IsLanguageNotEmpty() {
     }
@@ -111,9 +111,6 @@ public class IsLanguageNotEmpty extends DefaultProcedure {
                             //z aktualnich neterminalu
                             set_actual.add(leftRuleSide);
                             clearHighlighting();
-//                            for(ProductionRules oneToColor : colored){
-//                                oneToColor.setFgColor(Color.BLACK);
-//                            }
                             break;
                         }else{
                             logState("Rule doesn't fulfil conditions");
@@ -141,12 +138,6 @@ public class IsLanguageNotEmpty extends DefaultProcedure {
                 nonterminals_e.add(ruleSide.getSymbols().get(0));
             }
             nonterminalsOld = grammar1.getNonterminals();
-//            boolean equal = true;
-//            for(ProductionRuleSide ruleSide : nonterminals){
-//                
-//                if(!nonterminals_e.contains(ruleSide.getSymbols().get(0)))
-//                    equal = false;
-//            }
             if(nonterminal.equals(start)){
                 if(!nonterminalsOld.equals(nonterminals_e)){
                     logState("SetN: "+nonterminalsOld.toString() 
@@ -272,20 +263,29 @@ public class IsLanguageNotEmpty extends DefaultProcedure {
 
     @Override
     public String checkInputParameters() {
+        if (def == true) {
+            nonterminal = grammar1.getStartNonterminal();
+            return CHECK_OK;
+        }
+        
         Map<ProductionRuleSide, List<ProductionRuleSide>> map = 
                                                 grammar1.getSameLeftSideMap();
-        List<Symbol> list = new ArrayList<Symbol>();
+        List<Symbol> list = new ArrayList<>();
         list.add(nonterminal);
         ProductionRuleSide leftHandSide = new ProductionRuleSide(list);
         if(map.keySet().contains(leftHandSide)){
             return CHECK_OK;
         } else {
-            return "Nonterminal is not on left side of any rule";
+            return "Nonterminal is not on the left side of any rule";
         }
     }
 
     @Override
     public void assignInputParameters(String... inputParameters) {
+        if (inputParameters[0] == null || inputParameters[0].equals("")) {
+            def = true;
+        }
+        
         if(inputParameters[0] != null){
             String parameter = inputParameters[0].trim();
             nonterminal = new Symbol(parameter, 1);

@@ -39,9 +39,7 @@ public class Environment {
 
     private String projectPath;
 
-
-   // private ProcedureRegister procedureRegister;
-  //  private EditorRegister editorRegister;
+    
     private EditorsHandler editorHandler;
     private ProcedureHandler procedureHandler;
 
@@ -51,7 +49,6 @@ public class Environment {
         setProjectPath();
         createEditorHandler();
         createProcedureHandler();
-        //createProcedureRegister();
     }
 
 
@@ -78,7 +75,6 @@ public class Environment {
 
     private void setProjectPath() throws URISyntaxException {
         projectPath = new File(PropertiesHandler.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent();
-        System.out.println("--" + projectPath + "--");
         if (projectPath.endsWith("build")) {
             projectPath = projectPath.substring(0, projectPath.length() - 5);
         } else {
@@ -91,21 +87,15 @@ public class Environment {
     }
 
     private String getProcedureRegisterPath() {
-        //return getClass().getResource("/config/register/procedures.xml").getFile();
-        //return "config/register/procedures.xml";
         return getProjectPath() + PROCEDURE_REGISTER_PATH;
     }
 
     private String getEditorRegisterPath() {
-        //return getClass().getResource("/config/register/editors.xml").getFile();
-        //return "config/register/editors.xml";
         return getProjectPath() + EDITOR_REGISTER_PATH;
     }
 
 
     public String getPropertiesPath() {
-        //return getClass().getResource("/config/config.properties").getFile();
-        //return "config/config.properties";
         return getProjectPath() + PROPERTIES_FILE_PATH;
     }
 

@@ -86,70 +86,19 @@ public class FiFoProcedure extends Procedure {
 
     @Override
     public void create() {
-        FiSteps = new ArrayList<Map<Symbol, Set<WString>>>();
-        fiSequence = new ArrayList<List<Map<Symbol, Set<WString>>>>();
-        FoSteps = new ArrayList<Map<Symbol, Set<WString>>>();
-        foSequence = new ArrayList<List<Map<Symbol, Set<WString>>>>();
-        msgSeq = new ArrayList<String>();
-
-//        try {
-//            
-//        
-//   
+        FiSteps = new ArrayList<>();
+        fiSequence = new ArrayList<>();
+        FoSteps = new ArrayList<>();
+        foSequence = new ArrayList<>();
+        msgSeq = new ArrayList<>();
+        
         fiEqString = StringOutputUtils.fiEquationsString(g, k);
         foEqString = StringOutputUtils.foEquationsString(g, k);
 
-
         calcFi();
-
         calcFo();
 
-
-//      // FiFoUtils.calcFiMap(g, k);
-//      // fiMap=FiFoUtils.calcFo(g, k);
-//       } catch (OutOfMemoryError e) { System.out.print("dosla pamet"); return false;
-//        }
         face = new FiFoProcedureFace(this);
-//        final WorkerTest worker=new WorkerTest();
-//        
-//        JDialog dialog = new JDialog();
-//        worker.addPropertyChangeListener(
-//        new WorkerTestDialog(dialog));
-//        
-//        dialog.setVisible(true);
-//        worker.execute();
-        //the dialog will be visible until the SwingWorker is done
-
-
-//        int delay = 2000; //milliseconds
-//  ActionListener taskPerformer = new ActionListener() {
-//      public void actionPerformed(ActionEvent evt) {
-//          if (!worker.isDone()) {
-//              JDialog dialog = new JDialog();
-//        worker.addPropertyChangeListener(
-//        new WorkerTestDialog(dialog));
-//        
-//        dialog.setVisible(true);
-//      }
-//          }
-//          
-//  };
-//   Timer timer =new Timer(delay, taskPerformer);
-//        timer.setRepeats(false);
-//        timer.start();
-
-
-
-
-
-
-
-
-
-
-
-        //JOptionPane.showInputDialog(getProcedureFrame(), face);
-
     }
 
     @Override
@@ -170,8 +119,8 @@ public class FiFoProcedure extends Procedure {
 
 
 
-        fiMap = new HashMap<Symbol, Set<WString>>();
-        Map<Symbol, Set<WString>> previouseFiMap = new HashMap<Symbol, Set<WString>>();
+        fiMap = new HashMap<>();
+        Map<Symbol, Set<WString>> previouseFiMap = new HashMap<>();
         Map<Symbol, Set<WString>> gramMap = CFGUtils.getGrammarMap(g);
 
         for (Symbol nonT : gramMap.keySet()) {
@@ -179,13 +128,13 @@ public class FiFoProcedure extends Procedure {
         }
         int iteration = 0;
         fixConf("Calculating FIRST by finding minimal fixed point in recursive equations:" + fiEqString);
-        SortedSet<Symbol> sortedNonts = new TreeSet<Symbol>(gramMap.keySet());
+        SortedSet<Symbol> sortedNonts = new TreeSet<>(gramMap.keySet());
 
 
 
         while (!fiMap.equals(previouseFiMap)) {
             fixConf("iteration " + iteration);
-            Map<Symbol, Set<WString>> tmpMap = new HashMap<Symbol, Set<WString>>();
+            Map<Symbol, Set<WString>> tmpMap = new HashMap<>();
             FiSteps.add(tmpMap);
 
             previouseFiMap.putAll(fiMap);
@@ -198,12 +147,12 @@ public class FiFoProcedure extends Procedure {
                 String prefix = "\t";
                 for (WString rule : gramMap.get(nonT)) {
                     sb.append(prefix);
-                    Set<WString> ruleFi = new HashSet<WString>();
+                    Set<WString> ruleFi = new HashSet<>();
                     boolean firstRun2 = true;
                     String prefix2 = "";
                     for (Symbol symbol : rule) {
                         sb.append(prefix2);
-                        Set<WString> symbolFi = new HashSet<WString>();
+                        Set<WString> symbolFi = new HashSet<>();
                         if (symbol.isNonterminal()) {
                             symbolFi = previouseFiMap.get(symbol);
                             sb.append(StringOutputUtils.setToString(symbolFi));
@@ -238,13 +187,11 @@ public class FiFoProcedure extends Procedure {
 
     private void calcFo() {
         fixConf("Calculating FOLLOW by finding minimal fixed point in theese recursive equations:" + foEqString);
-        Map<Symbol, Set<WString>> foMap = new HashMap<Symbol, Set<WString>>();
+        Map<Symbol, Set<WString>> foMap = new HashMap<>();
 
-        //Map<Symbol, Set<WString>> fiMap = FiFoUtils.calcFiMap(g, k);
-
-        Map<Symbol, Set<WString>> previouseFoMap = new HashMap<Symbol, Set<WString>>();
+        Map<Symbol, Set<WString>> previouseFoMap = new HashMap<>();
         Map<Symbol, Set<WString>> gramMap = CFGUtils.getGrammarMap(g);
-        Map<Symbol, Set<WString>> startMap = new HashMap<Symbol, Set<WString>>();
+        Map<Symbol, Set<WString>> startMap = new HashMap<>();
         FoSteps.add(startMap);
         for (Symbol nonT : gramMap.keySet()) {
             if (nonT.equals(g.getStartNonterminal())) {
@@ -261,7 +208,7 @@ public class FiFoProcedure extends Procedure {
         while (!foMap.equals(previouseFoMap)) {
             
             fixConf("iteration: " + iteration++);
-            Map<Symbol, Set<WString>> tmpMap = new HashMap<Symbol, Set<WString>>();
+            Map<Symbol, Set<WString>> tmpMap = new HashMap<>();
             FoSteps.add(tmpMap);
             previouseFoMap.putAll(foMap);
 
@@ -300,7 +247,7 @@ public class FiFoProcedure extends Procedure {
                                 
                             }else {subrulePlusStr=StringOutputUtils.setToString(subRuleFi) +
                                     StringOutputUtils.oPlusK(k);}
-                            Set<WString> nonOtherOldFo = new HashSet<WString>();
+                            Set<WString> nonOtherOldFo = new HashSet<>();
                             nonOtherOldFo.addAll(previouseFoMap.get(nonOther));
                             
                             sb.append( subrulePlusStr+ 
@@ -332,12 +279,6 @@ public class FiFoProcedure extends Procedure {
         fiSequence.add(cl.deepClone(FiSteps));
         foSequence.add(cl.deepClone(FoSteps));
         msgSeq.add(s);
-//        if (msgSeq.isEmpty()){
-//        msgSeq.add(s);
-//        }else{
-//        String msgs =msgSeq.get(msgSeq.size()-1);
-//        msgSeq.add(msgs + "\n" + s);
-//        }
     }
 
     public Grammar getG() {

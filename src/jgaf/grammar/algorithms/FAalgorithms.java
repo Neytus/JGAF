@@ -221,7 +221,6 @@ public class FAalgorithms {
 
         boolean control = false;
         int i=0;
-        System.out.println("N_"+i+MathConstants.EMPTY_SET);
         do{
             i++;
             set_previous.clear();

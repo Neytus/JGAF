@@ -22,7 +22,6 @@ public class RulePopupMenu extends JPopupMenu {
     private GrammarEditor editor;
     private ProductionRules rule;
 
-   // private JMenuItem changeButton;
     private JMenuItem deleteButton;
 
 

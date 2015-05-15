@@ -50,7 +50,7 @@ public class ProcedureRegister {
     }
 
     public List<ProcedureDescriptor> getSimulations() {
-        List<ProcedureDescriptor> simulations = new ArrayList<ProcedureDescriptor>();
+        List<ProcedureDescriptor> simulations = new ArrayList<>();
         for (ProcedureDescriptor procedureDescriptor : descriptorList) {
             if(procedureDescriptor.getType().equals(ProcedureDescriptor.SIMULATION)) {
                 simulations.add(procedureDescriptor);
@@ -62,7 +62,7 @@ public class ProcedureRegister {
 
 
     public List<ProcedureDescriptor> getTransformations() {
-        List<ProcedureDescriptor> transformations = new ArrayList<ProcedureDescriptor>();
+        List<ProcedureDescriptor> transformations = new ArrayList<>();
         for (ProcedureDescriptor procedureDescriptor : descriptorList) {
             if(procedureDescriptor.getType().equals(ProcedureDescriptor.TRANSFORMATION)) {
                 transformations.add(procedureDescriptor);
@@ -74,7 +74,7 @@ public class ProcedureRegister {
 
 
     public List<ProcedureDescriptor> getAnalyses() {
-        List<ProcedureDescriptor> analyses = new ArrayList<ProcedureDescriptor>();
+        List<ProcedureDescriptor> analyses = new ArrayList<>();
         for (ProcedureDescriptor procedureDescriptor : descriptorList) {
             if(procedureDescriptor.getType().equals(ProcedureDescriptor.ANALYSIS)) {
                 analyses.add(procedureDescriptor);

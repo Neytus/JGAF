@@ -27,8 +27,6 @@ public class WString extends ArrayList<Symbol> {
     }
 
     public WString(String s) {
-        //duplicade code from ProductionRuleSide - refactor
-
         s = s.trim();
         if (s.equalsIgnoreCase("eps.")) {
             add(new Symbol());

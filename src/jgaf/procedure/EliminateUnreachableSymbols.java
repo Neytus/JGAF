@@ -21,7 +21,7 @@ public class EliminateUnreachableSymbols extends DefaultProcedure {
     private Grammar grammar1;
     private Grammar grammar2;
     private Symbol nonterminal;
-    
+    private boolean def;
              
     
     
@@ -36,13 +36,13 @@ public class EliminateUnreachableSymbols extends DefaultProcedure {
         FAalgorithms helpAlgs = new FAalgorithms();
         
         Map<ProductionRuleSide, List<ProductionRuleSide>> rules =
-                new HashMap<ProductionRuleSide, List<ProductionRuleSide>>();
+                new HashMap<>();
         rules.putAll(grammar1.getSameLeftSideMap());
         //logState("vložili jsme všechna pravidla do množiny pravidel");
         Symbol start = grammar1.getStartNonterminal();
 
-        Set<Symbol> set_previous = new HashSet<Symbol>();
-        Set<Symbol> set_actual = new HashSet<Symbol>();
+        Set<Symbol> set_previous = new HashSet<>();
+        Set<Symbol> set_actual = new HashSet<>();
         //zaciname v pocatecnim symbolu
         if(nonterminal.equals(start)){
             set_previous.add(start);
@@ -72,7 +72,6 @@ public class EliminateUnreachableSymbols extends DefaultProcedure {
                             helpContain.addSymbol(nonterminal);
                             if (s.isNonterminal()){
                                 if(!s.equals(nonterminal)){
-                                    continue;
                                 }else{
                                     Symbol symbol = oneEntry.getKey().getSymbols().get(0);
                                     set_previous.add(symbol);
@@ -92,7 +91,6 @@ public class EliminateUnreachableSymbols extends DefaultProcedure {
         if(set_previous.isEmpty()){
             logState("Nonterminal is not reacheable!");
         } else {
-            //logState("počáteční množina N: "+set_previous);
             //pocitame tak dlouho dokud si nejsou dve po sobe jdouci mnoziny rovny
             int i=0;
             while (!set_previous.equals(set_actual)) {
@@ -107,22 +105,20 @@ public class EliminateUnreachableSymbols extends DefaultProcedure {
                 //naplnime mnozinu mnozinou spoctenou v predchozi iteraci
                 set_previous.addAll(set_actual);
                 logState("Set V_"+i+" is "+set_previous.toString());
-                //System.out.println("množina předchozí iterace N: "+set_previous.toString());
                 //pocitame pro vsechny symboly z predesle iterace
                 for (Symbol symb : set_previous) {
                     logState("Testing symbol "+symb.getName()+"from V_"+i);
                     List<ProductionRuleSide> setOfRules =
-                            new ArrayList<ProductionRuleSide>();
+                            new ArrayList<>();
                     ProductionRuleSide helpLeftNonTerminal = new ProductionRuleSide();
                     helpLeftNonTerminal.addSymbol(symb);
 
-                    List<ProductionRuleSide> helpSetOfRules = new ArrayList<ProductionRuleSide>();
+                    List<ProductionRuleSide> helpSetOfRules = new ArrayList<>();
                     helpSetOfRules.addAll(rules.get(helpLeftNonTerminal));
                     
                     if(helpSetOfRules != null){
                         setOfRules.addAll(helpSetOfRules);
 
-    //                    System.out.println("prava strana je:" +setOfRules.toString());
                         List<ProductionRules> colored = 
                                 grammar1.getProductionsOfGivenNonterminal(helpLeftNonTerminal);
                         for (ProductionRuleSide oneRule : setOfRules) {
@@ -133,7 +129,7 @@ public class EliminateUnreachableSymbols extends DefaultProcedure {
                             }
                             logState("Testing rule "+helpLeftNonTerminal.toString()
                                     +" -> "+oneRule.toString());
-                            List<Symbol> oneRuleSymbols = new ArrayList<Symbol>();
+                            List<Symbol> oneRuleSymbols = new ArrayList<>();
                             oneRuleSymbols.addAll(oneRule.getSymbols());
                             for (Symbol s : oneRuleSymbols) {
                                 ProductionRuleSide helpContain = new ProductionRuleSide();
@@ -178,7 +174,6 @@ public class EliminateUnreachableSymbols extends DefaultProcedure {
                     logState("nonterminal is reachable!");
                 }
                 //ziskani novych pravidel z puvodnich pravidel
-                //System.out.println("Aktuální množina u konce je"+set_actual.toString());
                 for (Symbol s : set_actual) {
                     ProductionRuleSide oneSymb = new ProductionRuleSide();
                     oneSymb.addSymbol(s);
@@ -214,8 +209,6 @@ public class EliminateUnreachableSymbols extends DefaultProcedure {
                  if (set_actual.equals(helpAlgs.prodRulesToSymbols(helpList))) { 
                     grammar2.addAllRules(grammar1);
                     logState("Rules are same");
-
-                    //System.out.println(grammar2.toString());
                 }
             }
         }
@@ -236,9 +229,14 @@ public class EliminateUnreachableSymbols extends DefaultProcedure {
 
     @Override
     public String checkInputParameters() {
+        if (def == true) {
+            nonterminal = grammar1.getStartNonterminal();
+            return CHECK_OK;
+        }
+        
         Map<ProductionRuleSide, List<ProductionRuleSide>> map = 
                                                 grammar1.getSameLeftSideMap();
-        List<Symbol> list = new ArrayList<Symbol>();
+        List<Symbol> list = new ArrayList<>();
         list.add(nonterminal);
         ProductionRuleSide leftHandSide = new ProductionRuleSide(list);
         if(map.keySet().contains(leftHandSide)){
@@ -250,6 +248,10 @@ public class EliminateUnreachableSymbols extends DefaultProcedure {
 
     @Override
     public void assignInputParameters(String... inputParameters) {
+        if (inputParameters[0] == null || inputParameters[0].equals("")) {
+            def = true;
+        }
+        
         if(inputParameters[0] != null){
             String parameter = inputParameters[0].trim();
             nonterminal = new Symbol(parameter, 1);

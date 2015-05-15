@@ -69,7 +69,6 @@ public class InputRepresentationChooserPanel extends javax.swing.JPanel {
             radioFromFile.setSelected(true);
             fromWhat = FROM_FILE;
         } else {
-            System.out.println("qas" + representation.getDescription());
             comboModel = new ChooserComboboxModel(appropriateEditors);
             comboEditors.setModel(comboModel);
             comboEditors.setSelectedIndex(0);

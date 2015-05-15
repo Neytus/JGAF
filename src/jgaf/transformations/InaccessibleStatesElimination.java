@@ -45,8 +45,8 @@ public class InaccessibleStatesElimination extends Transformation {
         initialState.getVisualProperties().setFillColor(Color.red);
         output.addState(initialState);
         logState();
-        List<State> oldStates = new ArrayList<State>();
-        List<State> newStates = new ArrayList<State>();
+        List<State> oldStates = new ArrayList<>();
+        List<State> newStates = new ArrayList<>();
         newStates.add(initialState);
         do {
             clearHighlighting();

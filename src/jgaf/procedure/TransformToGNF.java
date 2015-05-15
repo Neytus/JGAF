@@ -37,11 +37,11 @@ public class TransformToGNF extends DefaultProcedure {
         logState("start");
 
         Map<ProductionRuleSide, List<ProductionRuleSide>> rules =
-                new HashMap<ProductionRuleSide, List<ProductionRuleSide>>();
+                new HashMap<>();
 
         rules.putAll(grammar1.getSameLeftSideMap());
 
-        List<ProductionRuleSide> listOfNonterms = new ArrayList<ProductionRuleSide>();
+        List<ProductionRuleSide> listOfNonterms = new ArrayList<>();
         
         //potřebujeme libovolne usporadani - pouzijeme dané, jen musíme prenést 
         //pravidla z mapy do pole, ve kterém můžeme prohledávat jednotlivé bunky
@@ -55,18 +55,15 @@ public class TransformToGNF extends DefaultProcedure {
             logState("Setted nonterminal is "+nonterminal.getName());
         }
         
-        System.out.println("Seřazení = "+listOfNonterms.toString());
-        
         logState("Ordering is "+listOfNonterms.toString());
         Grammar helpGramm = new Grammar();
         for(int i=listOfNonterms.size()-1; i>=0; i--){
             helpGramm = (Grammar) grammar2.clone();
         
-            List<ProductionRuleSide> allRules = new ArrayList<ProductionRuleSide>();
+            List<ProductionRuleSide> allRules = new ArrayList<>();
             
             //máme kvůli přidávání nových pravidel
-            List<ProductionRuleSide> newListOfRules = 
-                                        new ArrayList<ProductionRuleSide>();
+            List<ProductionRuleSide> newListOfRules = new ArrayList<>();
             //potrebujeme pravidlo A_i pro test
             ProductionRuleSide leftSide = listOfNonterms.get(i);
             int ind = i;
@@ -76,7 +73,7 @@ public class TransformToGNF extends DefaultProcedure {
                 ind = listOfNonterms.indexOf(leftSide);
             }
             logState("A_i = "+leftSide.toString());
-            List<ProductionRuleSide> rulesToRemove = new ArrayList<ProductionRuleSide>();
+            List<ProductionRuleSide> rulesToRemove = new ArrayList<>();
             
             if(ind == listOfNonterms.size()-1){
                 newListOfRules.addAll(rules.get(leftSide));
@@ -86,23 +83,17 @@ public class TransformToGNF extends DefaultProcedure {
                 logState("Eliminate all rules with nonterminal on first position");
 
             }
-            for(int j=ind+1; j<listOfNonterms.size();j++){
-                //newListOfRules = new ArrayList<ProductionRuleSide>();
-                //Symbol leftSideSymb = leftSide.getSymbols().get(0);
-                
+            for(int j=ind+1; j<listOfNonterms.size();j++){               
                 //potrebujeme pravidlo A_j pro test
-                
                 ProductionRuleSide nonTermForTest = listOfNonterms.get(j);
                 logState("A_j = "+nonTermForTest.toString());
                 
                 Symbol nonTermForTestSymb = nonTermForTest.getSymbols().get(0);
                 
                 
-                List<ProductionRuleSide> rulesOfLeftSide = 
-                                        new ArrayList<ProductionRuleSide>();
+                List<ProductionRuleSide> rulesOfLeftSide = new ArrayList<>();
                 
-                List<ProductionRuleSide> rulesOfnonTermForTest = 
-                                        new ArrayList<ProductionRuleSide>();
+                List<ProductionRuleSide> rulesOfnonTermForTest = new ArrayList<>();
                 
                 rulesOfLeftSide.addAll(rules.get(leftSide));
                 rulesOfLeftSide.addAll(allRules);                
@@ -127,26 +118,15 @@ public class TransformToGNF extends DefaultProcedure {
                         }
                     }
                     if(nonTermForTestSymb.equals(listRule.get(0))){
-                        
-//                        ProductionRules ruleToRemove = 
-//                                        new ProductionRules(leftSide, new ProductionRulesSide(oneRule));
-                        
                         logState("Rule has form A_i -> A_j"+MathConstants.ALPHA);
-//                        List<ProductionRuleSide> r = helpAlgs.makeRulesForLeftRecursion(oneRule, 
-//                                                        rulesOfnonTermForTest);
-                        
-//                        List<ProductionRuleSide> r = new ArrayList<ProductionRuleSide>();
-
-                        List<Symbol> leftListRule = new ArrayList<Symbol>();
+                        List<Symbol> leftListRule = new ArrayList<>();
                         leftListRule.addAll(listRule);
                         //potřebujeme \alfa část pravidla - první symbol vytváří rekurzi
                         leftListRule.remove(0);
-                        //System.out.println("pravidlo pro spojení je zprava je"+leftListRule.toString());
                         for(ProductionRuleSide rule : rulesOfnonTermForTest){
                             ProductionRuleSide newRuleS = new ProductionRuleSide();
                             newRuleS.setSymbolsFromProductionRuleSide(rule);
                             if(!newRuleS.equals(oneRule)){
-                                //System.out.println("pravidlo pro spojení je "+newRule.toString());
                                 newRuleS.addSymbolsFromList(leftListRule);
                                 ProductionRuleSide newL = new ProductionRuleSide(leftSide);
                                 ProductionRules newRule = 
@@ -160,17 +140,9 @@ public class TransformToGNF extends DefaultProcedure {
                                 rulesToRemove.add(oneRule);
                             }
                             grammar2.clearHighlighting();
-                            //System.out.println("nove pravidlo po spojení je"+newRule.toString());
                         }
-                        
-                        //logState("Nová pravidla jsou "+nonTermForTestSymb.getName()+" -> "+newListOfRules.toString());
-                        //System.out.println("nová pravidla jsou "+newListOfRules.toString());
                     }else{
                         logState("Rule hasn't form A_i -> A_j"+MathConstants.ALPHA);
-//                        ProductionRules newRule = 
-//                                            new ProductionRules(leftSide, new ProductionRulesSide(oneRule));
-//                        grammar2.addRule(newRule);
-//                        logState("Přidáme pravidlo "+newRule);
                         newListOfRules.add(oneRule);
                         continue;
                     } 
@@ -179,10 +151,6 @@ public class TransformToGNF extends DefaultProcedure {
             }
                
             logState("Second partt - adapt rules with terminals "+MathConstants.ALPHA);
-//            Symbol leftSideSymb = leftSide.getSymbols().get(0);
-//            Symbol newLeftSideSymb = new Symbol(leftSideSymb.getName()+"'",1);
-//            ProductionRuleSide newLeftNonterm = new ProductionRuleSide();
-//            newLeftNonterm.addSymbol(newLeftSideSymb);
             List<ProductionRules> colored = 
                                 grammar1.getProductionsOfGivenNonterminal(leftSide);
             List<ProductionRules> colored2 = 
@@ -199,8 +167,8 @@ public class TransformToGNF extends DefaultProcedure {
             }
             
             for(ProductionRuleSide oneRule : allRules){
-                Set<Symbol> newNfromTerm = new HashSet<Symbol>();
-                List<Symbol> listRule = new ArrayList<Symbol>();
+                Set<Symbol> newNfromTerm = new HashSet<>();
+                List<Symbol> listRule = new ArrayList<>();
                 listRule.addAll(oneRule.getSymbols());
                 
                 for(ProductionRules ruleToColor : colored){
@@ -221,8 +189,6 @@ public class TransformToGNF extends DefaultProcedure {
                 for(Symbol testedSymbol : listRule){
                     if(testedSymbol.isTerminal() && index!=0){
                         Symbol newNonterm = new Symbol(leftSymbol+testedSymbol.getName()+rightSymbol,1);
-//                        ProductionRuleSide newLeftNonterm = new ProductionRuleSide();
-//                        newLeftNonterm.addSymbol(newLeftSideSymb);
                         newRuleList.add(newNonterm);
                         newNfromTerm.add(testedSymbol);
                     }else{
@@ -235,14 +201,14 @@ public class TransformToGNF extends DefaultProcedure {
                 ProductionRuleSide newL = new ProductionRuleSide(leftSide);
                 ProductionRules newRule = 
                                           new ProductionRules(newL, new ProductionRulesSide(newRuleS));
-//                                
+                              
                 grammar2.addRule(newRule);
                 grammar2.setFgColorToProd(Color.RED, newRule);
                 logState("Add rule "+newRule.toString());
                 
                 grammar2.clearHighlighting();
                 if(!newNfromTerm.isEmpty()){
-                    logState("Adding new nonterminals from terminalsů");
+                    logState("Adding new nonterminals from terminals");
                     for(Symbol symbol : newNfromTerm){
                         ProductionRuleSide newLeftSide = new ProductionRuleSide();
                         newLeftSide.addNonterminal(leftSymbol+symbol.getName()+rightSymbol);
@@ -306,7 +272,7 @@ public class TransformToGNF extends DefaultProcedure {
         if(leftSymbol == null || rightSymbol == null){
             return "Wrong creating symbols in parameter 2";
         }
-        List<Symbol> list = new ArrayList<Symbol>();
+        List<Symbol> list = new ArrayList<>();
         if(ordering.size()==1 && ordering.get(0).getSymbols().get(0).getName().equals("def")){
         }else{
             for(ProductionRuleSide oneSymbol : ordering) {
@@ -327,14 +293,28 @@ public class TransformToGNF extends DefaultProcedure {
         list.add(nonterminal);
         ProductionRuleSide leftHandSide = new ProductionRuleSide(list);
         if(!map.keySet().contains(leftHandSide)){
-            return "Parameter is not def and or nonterminal is not at left side of any rule";
+            return "Nonterminal is not at the left side of any rule";
         }
         return CHECK_OK;
     }
 
     @Override
     public void assignInputParameters(String... inputParameters) {
-        ordering = new ArrayList<ProductionRuleSide>();
+        if ((inputParameters[0] == null || inputParameters[0].equals("")) &&
+            (inputParameters[1] == null || inputParameters[1].equals("")) &&
+            (inputParameters[2] == null || inputParameters[2].equals(""))) {
+            nonterminal = new Symbol("def", 1);
+           
+            leftSymbol = "<";
+            rightSymbol = ">";
+            
+            ordering = new ArrayList<>();
+            ProductionRuleSide newNonterminal = new ProductionRuleSide();
+            newNonterminal.addNonterminal("def");
+            ordering.add(newNonterminal);
+        } else {
+        
+        ordering = new ArrayList<>();
         if(inputParameters[0] != null){
             String parameter = inputParameters[0].trim();
             nonterminal = new Symbol(parameter, 1);
@@ -367,6 +347,8 @@ public class TransformToGNF extends DefaultProcedure {
                 ordering.add(newNonterminal);
                 System.out.println("orderign "+ordering.toString()+ " size "+ordering.size());
             }
+        }
+        
         }
     }
     

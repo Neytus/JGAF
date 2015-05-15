@@ -85,12 +85,12 @@ public class AboutBoxDialog extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(254, 254, 254));
 
-        labelName.setFont(new java.awt.Font("Arial", 1, 36));
+        labelName.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
         labelName.setText("JGAF");
 
-        labelVersion.setText("version 1.0.1");
+        labelVersion.setText("version 2.0.2");
 
-        labelName1.setFont(new java.awt.Font("Arial", 1, 24));
+        labelName1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         labelName1.setText("Java Grammars and Automata Framework");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -124,7 +124,7 @@ public class AboutBoxDialog extends javax.swing.JDialog {
             }
         });
 
-        labelVersion1.setText("Project is hosted at http://code.google.com/p/jgaf/");
+        labelVersion1.setText("Project is hosted at https://github.com/Neytus/JGAF");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,7 +138,7 @@ public class AboutBoxDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelVersion1)
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addContainerGap(245, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

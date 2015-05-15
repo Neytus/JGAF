@@ -63,8 +63,6 @@ public class RegularExpressionEditor extends Editor {
     }
 
     public void undo() {
-        //System.out.println("undo");
-        //System.out.println(undoHandler.writeUndoStack());
         undoHandler.undo();
         repaint();
 
@@ -134,14 +132,10 @@ public class RegularExpressionEditor extends Editor {
             return;
         }
         if(undo) {
-     //       System.out.println("putting: " + regexString + ", " + re);
             undoHandler.addStep(new ChangeRegexStep(this, re, regexString));
         }
-      //  System.out.println("old:" + regexString);
-    //    System.out.println("new:" + re);
         regexString = re;
         try {
-    //        System.out.println("valid");
             re = re.replaceAll(EPSILON_SUBSTITUTION, MathConstants.EPSILON);
             if(re.equals("")) {
                 re = MathConstants.EMPTY_SET;
@@ -156,18 +150,13 @@ public class RegularExpressionEditor extends Editor {
             } else {
                 regex = new RegularExpression(re);
             }
-            //face.addInfoText(regex.writeConcise() + "\n");
             face.writeInfo(regex.writeAlphabet());
             face.getRegexPane().setNormalText(re);
             setRegex(regex);
-            //addInfoText(re + "-------------\n" + regex.geiveMePositionos() + "\n-------------\n");
         } catch (WrongExpressionException ex) {
-     //       System.out.println("invalid");
             String[] split = ex.getMessage().split(", ");
-            //face.addInfoText(ex.getMessage() + "\n");
             face.writeWarning("RE is not well-formed : " +
                     ex.getMessage().substring(0, ex.getMessage().indexOf(",")) + ".");
-            //System.out.println("--" + split[1]+"--");
             int from = Integer.valueOf(split[1]);
             int to = Integer.valueOf(split[2]);
             face.getRegexPane().setHighlightedText(re, from, to);

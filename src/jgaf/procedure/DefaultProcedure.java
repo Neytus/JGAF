@@ -27,9 +27,9 @@ public abstract class DefaultProcedure extends Procedure {
 
 
     public DefaultProcedure() {
-        this.inputSequence = new ArrayList<List<Representation>>();
-        this.outputSequence = new ArrayList<Representation>();
-        this.logSequence = new ArrayList<String>();
+        this.inputSequence = new ArrayList<>();
+        this.outputSequence = new ArrayList<>();
+        this.logSequence = new ArrayList<>();
     }
 
 
@@ -37,7 +37,7 @@ public abstract class DefaultProcedure extends Procedure {
 
 
     public final void logState(String message) {
-        List<Representation> newInputList = new ArrayList<Representation>();
+        List<Representation> newInputList = new ArrayList<>();
         for (ProcedureRepresentation procedureRepresenation : getDescriptor().getInputRepresentations()) {
             newInputList.add(procedureRepresenation.getRepresentation().clone());
         }

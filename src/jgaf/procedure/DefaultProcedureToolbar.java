@@ -8,7 +8,6 @@ package jgaf.procedure;
 import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -145,7 +144,6 @@ public class DefaultProcedureToolbar extends JToolBar {
         delayText = new JTextField(String.valueOf(DEFAULT_DELAY));
         delayText.setPreferredSize(new Dimension(100, (int) delayText.getPreferredSize().getHeight()));
         delayText.setToolTipText("delay");
-      //  delayText.setFocusable(false);
         add(delayText);
         add(new JLabel("ms"));
 
@@ -164,7 +162,11 @@ public class DefaultProcedureToolbar extends JToolBar {
             }
         });
         add(openButton);
-
+/*
+        JB 
+        
+        Continue with another procedure button.
+        */
 
         procedureButton = new JButton();
         procedureButton.setIcon(new ImageIcon(getClass().getResource("/jgaf/icons/toolbar/24x24/transformation/continue.png")));
@@ -172,12 +174,14 @@ public class DefaultProcedureToolbar extends JToolBar {
         procedureButton.setFocusable(false);
         procedureButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         procedureButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        /*
         procedureButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 face.continueWithNewProcedure();
             }
         });
-        add(procedureButton);
+                */
+        //add(procedureButton);
 
 
 
